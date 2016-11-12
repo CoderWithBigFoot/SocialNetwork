@@ -206,6 +206,14 @@
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
+          <AssociationSet Name="ReposterPost" Association="SocialNetwork.ReposterPost">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="LikerPost" Association="SocialNetwork.LikerPost">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Profile">
           <Key>
@@ -221,6 +229,8 @@
           <NavigationProperty Name="SubscribedOn" Relationship="SocialNetwork.FollowerSubscriber" FromRole="Profile1" ToRole="Profile" />
           <NavigationProperty Name="Comments" Relationship="SocialNetwork.ProfileComment" FromRole="Profile" ToRole="Comment" />
           <NavigationProperty Name="PublishedPosts" Relationship="SocialNetwork.ProfilePost" FromRole="Profile" ToRole="Post" />
+          <NavigationProperty Name="RepostedPosts" Relationship="SocialNetwork.ReposterPost" FromRole="Profile" ToRole="Post" />
+          <NavigationProperty Name="LikedPosts" Relationship="SocialNetwork.LikerPost" FromRole="Profile" ToRole="Post" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -233,6 +243,8 @@
           <NavigationProperty Name="Comments" Relationship="SocialNetwork.PostComment" FromRole="Post" ToRole="Comment" />
           <NavigationProperty Name="Publisher" Relationship="SocialNetwork.ProfilePost" FromRole="Post" ToRole="Profile" />
           <Property Name="ProfileId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reposters" Relationship="SocialNetwork.ReposterPost" FromRole="Post" ToRole="Profile" />
+          <NavigationProperty Name="LikeVoices" Relationship="SocialNetwork.LikerPost" FromRole="Post" ToRole="Profile" />
         </EntityType>
         <EntityType Name="Hashtag">
           <Key>
@@ -296,6 +308,14 @@
               <PropertyRef Name="ProfileId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="ReposterPost">
+          <End Type="SocialNetwork.Profile" Role="Profile" Multiplicity="*" />
+          <End Type="SocialNetwork.Post" Role="Post" Multiplicity="*" />
+        </Association>
+        <Association Name="LikerPost">
+          <End Type="SocialNetwork.Profile" Role="Profile" Multiplicity="*" />
+          <End Type="SocialNetwork.Post" Role="Post" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>

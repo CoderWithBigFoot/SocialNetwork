@@ -6,14 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="e7408f0a0fb24325980ab096d40328f9" Name="Diagram1" >
         <EntityTypeShape EntityType="SocialNetwork.Profile" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="SocialNetwork.Post" Width="1.5" PointX="3.25" PointY="0.5" />
-        <EntityTypeShape EntityType="SocialNetwork.Hashtag" Width="1.5" PointX="5.125" PointY="0.5" />
-        <EntityTypeShape EntityType="SocialNetwork.Comment" Width="1.5" PointX="3.625" PointY="3.375" />
+        <EntityTypeShape EntityType="SocialNetwork.Post" Width="1.5" PointX="4.25" PointY="0.5" />
+        <EntityTypeShape EntityType="SocialNetwork.Hashtag" Width="1.5" PointX="7.125" PointY="0.5" />
+        <EntityTypeShape EntityType="SocialNetwork.Comment" Width="1.5" PointX="6.875" PointY="3.625" />
         <AssociationConnector Association="SocialNetwork.FollowerSubscriber" />
         <AssociationConnector Association="SocialNetwork.PostHashtag" />
         <AssociationConnector Association="SocialNetwork.PostComment" />
         <AssociationConnector Association="SocialNetwork.ProfileComment" />
         <AssociationConnector Association="SocialNetwork.ProfilePost" />
+        <AssociationConnector Association="SocialNetwork.ReposterPost" />
+        <AssociationConnector Association="SocialNetwork.LikerPost" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
