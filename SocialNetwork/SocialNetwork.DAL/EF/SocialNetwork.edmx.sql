@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/12/2016 20:55:02
+-- Date Created: 11/12/2016 21:40:54
 -- Generated from EDMX file: F:\University\Programming\GitHubLocal\SocialNetwork\SocialNetwork\SocialNetwork.DAL\EF\SocialNetwork.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,50 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_FollowerSubscriber_Profile]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[FollowerSubscriber] DROP CONSTRAINT [FK_FollowerSubscriber_Profile];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FollowerSubscriber_Profile1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[FollowerSubscriber] DROP CONSTRAINT [FK_FollowerSubscriber_Profile1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostHashtag_Post]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostHashtag] DROP CONSTRAINT [FK_PostHashtag_Post];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostHashtag_Hashtag]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostHashtag] DROP CONSTRAINT [FK_PostHashtag_Hashtag];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_PostComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProfileComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_ProfileComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProfilePost]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_ProfilePost];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Profiles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Profiles];
+GO
+IF OBJECT_ID(N'[dbo].[Posts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Posts];
+GO
+IF OBJECT_ID(N'[dbo].[Hashtags]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Hashtags];
+GO
+IF OBJECT_ID(N'[dbo].[Comments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Comments];
+GO
+IF OBJECT_ID(N'[dbo].[FollowerSubscriber]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[FollowerSubscriber];
+GO
+IF OBJECT_ID(N'[dbo].[PostHashtag]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PostHashtag];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -34,7 +73,7 @@ CREATE TABLE [dbo].[Profiles] (
     [Sername] nvarchar(max)  NOT NULL,
     [IdentityName] nvarchar(max)  NOT NULL,
     [CustomInfo] nvarchar(max)  NOT NULL,
-    [DateOfBirth] nvarchar(max)  NOT NULL
+    [DateOfBirth] datetime  NOT NULL
 );
 GO
 

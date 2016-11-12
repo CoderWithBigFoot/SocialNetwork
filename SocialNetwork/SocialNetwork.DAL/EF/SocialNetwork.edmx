@@ -50,7 +50,7 @@
     <Property Name="Sername" Type="nvarchar(max)" Nullable="false" />
     <Property Name="IdentityName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CustomInfo" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DateOfBirth" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Posts">
     <Key>
@@ -216,7 +216,7 @@
           <Property Name="Sername" Type="String" Nullable="false" />
           <Property Name="IdentityName" Type="String" Nullable="false" />
           <Property Name="CustomInfo" Type="String" Nullable="false" />
-          <Property Name="DateOfBirth" Type="String" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Followers" Relationship="SocialNetwork.FollowerSubscriber" FromRole="Profile" ToRole="Profile1" />
           <NavigationProperty Name="SubscribedOn" Relationship="SocialNetwork.FollowerSubscriber" FromRole="Profile1" ToRole="Profile" />
           <NavigationProperty Name="Comments" Relationship="SocialNetwork.ProfileComment" FromRole="Profile" ToRole="Comment" />
