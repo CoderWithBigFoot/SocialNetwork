@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SocialNetwork.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SocialNetworkStoreContainer">
+    <EntitySet Name="Profiles" EntityType="SocialNetwork.Store.Profiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Posts" EntityType="SocialNetwork.Store.Posts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Hashtags" EntityType="SocialNetwork.Store.Hashtags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comments" EntityType="SocialNetwork.Store.Comments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FollowerSubscriber" EntityType="SocialNetwork.Store.FollowerSubscriber" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PostHashtag" EntityType="SocialNetwork.Store.PostHashtag" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_FollowerSubscriber_Profile" Association="SocialNetwork.Store.FK_FollowerSubscriber_Profile">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="FollowerSubscriber" EntitySet="FollowerSubscriber" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FollowerSubscriber_Profile1" Association="SocialNetwork.Store.FK_FollowerSubscriber_Profile1">
+      <End Role="Profile1" EntitySet="Profiles" />
+      <End Role="FollowerSubscriber" EntitySet="FollowerSubscriber" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostHashtag_Post" Association="SocialNetwork.Store.FK_PostHashtag_Post">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="PostHashtag" EntitySet="PostHashtag" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostHashtag_Hashtag" Association="SocialNetwork.Store.FK_PostHashtag_Hashtag">
+      <End Role="Hashtag" EntitySet="Hashtags" />
+      <End Role="PostHashtag" EntitySet="PostHashtag" />
+    </AssociationSet>
+    <AssociationSet Name="PostComment" Association="SocialNetwork.Store.PostComment">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="ProfileComment" Association="SocialNetwork.Store.ProfileComment">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="ProfilePost" Association="SocialNetwork.Store.ProfilePost">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Profiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Sername" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IdentityName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomInfo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PublishDate" Type="datetime" Nullable="false" />
+    <Property Name="ProfileId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hashtags">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PostId" Type="int" Nullable="false" />
+    <Property Name="ProfileId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FollowerSubscriber">
+    <Key>
+      <PropertyRef Name="SubscribedOn_Id" />
+      <PropertyRef Name="Followers_Id" />
+    </Key>
+    <Property Name="SubscribedOn_Id" Type="int" Nullable="false" />
+    <Property Name="Followers_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostHashtag">
+    <Key>
+      <PropertyRef Name="Posts_Id" />
+      <PropertyRef Name="Hashtags_Id" />
+    </Key>
+    <Property Name="Posts_Id" Type="int" Nullable="false" />
+    <Property Name="Hashtags_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="PostComment">
+    <End Role="Post" Type="SocialNetwork.Store.Posts" Multiplicity="1" />
+    <End Role="Comment" Type="SocialNetwork.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfileComment">
+    <End Role="Profile" Type="SocialNetwork.Store.Profiles" Multiplicity="1" />
+    <End Role="Comment" Type="SocialNetwork.Store.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="ProfileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfilePost">
+    <End Role="Profile" Type="SocialNetwork.Store.Profiles" Multiplicity="1" />
+    <End Role="Post" Type="SocialNetwork.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="ProfileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FollowerSubscriber_Profile">
+    <End Role="Profile" Type="SocialNetwork.Store.Profiles" Multiplicity="1" />
+    <End Role="FollowerSubscriber" Type="SocialNetwork.Store.FollowerSubscriber" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FollowerSubscriber">
+        <PropertyRef Name="SubscribedOn_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FollowerSubscriber_Profile1">
+    <End Role="FollowerSubscriber" Type="SocialNetwork.Store.FollowerSubscriber" Multiplicity="*" />
+    <End Role="Profile1" Type="SocialNetwork.Store.Profiles" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Profile1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FollowerSubscriber">
+        <PropertyRef Name="Followers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostHashtag_Post">
+    <End Role="Post" Type="SocialNetwork.Store.Posts" Multiplicity="1" />
+    <End Role="PostHashtag" Type="SocialNetwork.Store.PostHashtag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostHashtag">
+        <PropertyRef Name="Posts_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostHashtag_Hashtag">
+    <End Role="PostHashtag" Type="SocialNetwork.Store.PostHashtag" Multiplicity="*" />
+    <End Role="Hashtag" Type="SocialNetwork.Store.Hashtags" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Hashtag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostHashtag">
+        <PropertyRef Name="Hashtags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SocialNetwork" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SocialNetworkContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Profiles" EntityType="SocialNetwork.Profile" />
+          <EntitySet Name="Posts" EntityType="SocialNetwork.Post" />
+          <EntitySet Name="Hashtags" EntityType="SocialNetwork.Hashtag" />
+          <EntitySet Name="Comments" EntityType="SocialNetwork.Comment" />
+          <AssociationSet Name="FollowerSubscriber" Association="SocialNetwork.FollowerSubscriber">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Profile1" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="PostHashtag" Association="SocialNetwork.PostHashtag">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Hashtag" EntitySet="Hashtags" />
+          </AssociationSet>
+          <AssociationSet Name="PostComment" Association="SocialNetwork.PostComment">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="ProfileComment" Association="SocialNetwork.ProfileComment">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="ProfilePost" Association="SocialNetwork.ProfilePost">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Sername" Type="String" Nullable="false" />
+          <Property Name="IdentityName" Type="String" Nullable="false" />
+          <Property Name="CustomInfo" Type="String" Nullable="false" />
+          <Property Name="DateOfBirth" Type="String" Nullable="false" />
+          <NavigationProperty Name="Followers" Relationship="SocialNetwork.FollowerSubscriber" FromRole="Profile" ToRole="Profile1" />
+          <NavigationProperty Name="SubscribedOn" Relationship="SocialNetwork.FollowerSubscriber" FromRole="Profile1" ToRole="Profile" />
+          <NavigationProperty Name="Comments" Relationship="SocialNetwork.ProfileComment" FromRole="Profile" ToRole="Comment" />
+          <NavigationProperty Name="PublishedPosts" Relationship="SocialNetwork.ProfilePost" FromRole="Profile" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" Nullable="false" />
+          <Property Name="PublishDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Hashtags" Relationship="SocialNetwork.PostHashtag" FromRole="Post" ToRole="Hashtag" />
+          <NavigationProperty Name="Comments" Relationship="SocialNetwork.PostComment" FromRole="Post" ToRole="Comment" />
+          <NavigationProperty Name="Publisher" Relationship="SocialNetwork.ProfilePost" FromRole="Post" ToRole="Profile" />
+          <Property Name="ProfileId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hashtag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="SocialNetwork.PostHashtag" FromRole="Hashtag" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="SocialNetwork.PostComment" FromRole="Comment" ToRole="Post" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Commentator" Relationship="SocialNetwork.ProfileComment" FromRole="Comment" ToRole="Profile" />
+          <Property Name="ProfileId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FollowerSubscriber">
+          <End Type="SocialNetwork.Profile" Role="Profile" Multiplicity="*" />
+          <End Type="SocialNetwork.Profile" Role="Profile1" Multiplicity="*" />
+        </Association>
+        <Association Name="PostHashtag">
+          <End Type="SocialNetwork.Post" Role="Post" Multiplicity="*" />
+          <End Type="SocialNetwork.Hashtag" Role="Hashtag" Multiplicity="*" />
+        </Association>
+        <Association Name="PostComment">
+          <End Type="SocialNetwork.Post" Role="Post" Multiplicity="1" />
+          <End Type="SocialNetwork.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProfileComment">
+          <End Type="SocialNetwork.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="SocialNetwork.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProfilePost">
+          <End Type="SocialNetwork.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="SocialNetwork.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="ProfileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SocialNetworkStoreContainer" CdmEntityContainer="SocialNetworkContainer">
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialNetwork.Profile)">
+        <MappingFragment StoreEntitySet="Profiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sername" ColumnName="Sername" />
+          <ScalarProperty Name="IdentityName" ColumnName="IdentityName" />
+          <ScalarProperty Name="CustomInfo" ColumnName="CustomInfo" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialNetwork.Post)">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hashtags">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialNetwork.Hashtag)">
+        <MappingFragment StoreEntitySet="Hashtags">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="IsTypeOf(SocialNetwork.Comment)">
+        <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FollowerSubscriber" TypeName="SocialNetwork.FollowerSubscriber" StoreEntitySet="FollowerSubscriber">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="SubscribedOn_Id" />
+      </EndProperty>
+      <EndProperty Name="Profile1">
+        <ScalarProperty Name="Id" ColumnName="Followers_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PostHashtag" TypeName="SocialNetwork.PostHashtag" StoreEntitySet="PostHashtag">
+      <EndProperty Name="Post">
+        <ScalarProperty Name="Id" ColumnName="Posts_Id" />
+      </EndProperty>
+      <EndProperty Name="Hashtag">
+        <ScalarProperty Name="Id" ColumnName="Hashtags_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
