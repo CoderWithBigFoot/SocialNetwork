@@ -13,10 +13,10 @@ namespace SocialNetwork.DAL.EF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SocialNetworkContainer : DbContext
+    public partial class SocialNetworkContext : DbContext
     {
-        public SocialNetworkContainer()
-            : base("name=SocialNetworkContainer")
+        public SocialNetworkContext()
+            : base("name=SocialNetworkConnection")
         {
         }
     

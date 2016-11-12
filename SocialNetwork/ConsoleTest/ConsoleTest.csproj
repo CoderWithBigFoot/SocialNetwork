@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{95C57B8F-E901-4A79-980F-06597023B4BF}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{C4C6EAA4-005E-4611-AA24-D979A3898DA7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocialNetwork.DAL</RootNamespace>
-    <AssemblyName>SocialNetwork.DAL</AssemblyName>
+    <RootNamespace>ConsoleTest</RootNamespace>
+    <AssemblyName>ConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,8 +44,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,58 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EF\Comment.cs">
-      <DependentUpon>SocialNetwork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Hashtag.cs">
-      <DependentUpon>SocialNetwork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Post.cs">
-      <DependentUpon>SocialNetwork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\Profile.cs">
-      <DependentUpon>SocialNetwork.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\SocialNetwork.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SocialNetwork.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\SocialNetwork.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SocialNetwork.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="EF\SocialNetwork.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SocialNetwork.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
-    <None Include="EF\SocialNetwork.edmx.diagram">
-      <DependentUpon>SocialNetwork.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="EF\SocialNetwork.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SocialNetwork.Context.cs</LastGenOutput>
-      <DependentUpon>SocialNetwork.edmx</DependentUpon>
-    </Content>
-    <Content Include="EF\SocialNetwork.edmx.sql" />
-    <Content Include="EF\SocialNetwork.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SocialNetwork.cs</LastGenOutput>
-      <DependentUpon>SocialNetwork.edmx</DependentUpon>
-    </Content>
+    <ProjectReference Include="..\SocialNetwork.DAL\SocialNetwork.DAL.csproj">
+      <Project>{95c57b8f-e901-4a79-980f-06597023b4bf}</Project>
+      <Name>SocialNetwork.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
