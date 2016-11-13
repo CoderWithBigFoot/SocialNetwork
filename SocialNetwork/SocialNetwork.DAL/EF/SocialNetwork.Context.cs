@@ -15,8 +15,8 @@ namespace SocialNetwork.DAL.EF
     
     public partial class SocialNetworkContext : DbContext
     {
-        public SocialNetworkContext()
-            : base("name=SocialNetworkConnection")
+        public SocialNetworkContext(string connectionString="SocialNetworkConnection")
+            : base(connectionString)
         {
         }
     
