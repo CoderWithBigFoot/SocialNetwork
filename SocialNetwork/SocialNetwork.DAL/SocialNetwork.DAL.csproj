@@ -51,6 +51,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EF\Comment.cs">
+      <DependentUpon>SocialNetwork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Hashtag.cs">
+      <DependentUpon>SocialNetwork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Post.cs">
+      <DependentUpon>SocialNetwork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Profile.cs">
+      <DependentUpon>SocialNetwork.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SocialNetwork.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SocialNetwork.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SocialNetwork.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SocialNetwork.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\SocialNetwork.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -73,6 +95,19 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EF\SocialNetwork.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SocialNetwork.Context.cs</LastGenOutput>
+      <DependentUpon>SocialNetwork.edmx</DependentUpon>
+    </Content>
+    <Content Include="EF\SocialNetwork.edmx.sql" />
+    <Content Include="EF\SocialNetwork.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SocialNetwork.cs</LastGenOutput>
+      <DependentUpon>SocialNetwork.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

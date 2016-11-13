@@ -12,6 +12,8 @@
     <EntitySet Name="Comments" EntityType="SocialNetwork.Store.Comments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FollowerSubscriber" EntityType="SocialNetwork.Store.FollowerSubscriber" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PostHashtag" EntityType="SocialNetwork.Store.PostHashtag" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReposterPost" EntityType="SocialNetwork.Store.ReposterPost" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LikerPost" EntityType="SocialNetwork.Store.LikerPost" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_FollowerSubscriber_Profile" Association="SocialNetwork.Store.FK_FollowerSubscriber_Profile">
       <End Role="Profile" EntitySet="Profiles" />
       <End Role="FollowerSubscriber" EntitySet="FollowerSubscriber" />
@@ -39,6 +41,22 @@
     <AssociationSet Name="ProfilePost" Association="SocialNetwork.Store.ProfilePost">
       <End Role="Profile" EntitySet="Profiles" />
       <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReposterPost_Profile" Association="SocialNetwork.Store.FK_ReposterPost_Profile">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="ReposterPost" EntitySet="ReposterPost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReposterPost_Post" Association="SocialNetwork.Store.FK_ReposterPost_Post">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="ReposterPost" EntitySet="ReposterPost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LikerPost_Profile" Association="SocialNetwork.Store.FK_LikerPost_Profile">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="LikerPost" EntitySet="LikerPost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LikerPost_Post" Association="SocialNetwork.Store.FK_LikerPost_Post">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="LikerPost" EntitySet="LikerPost" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Profiles">
@@ -92,6 +110,22 @@
     </Key>
     <Property Name="Posts_Id" Type="int" Nullable="false" />
     <Property Name="Hashtags_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReposterPost">
+    <Key>
+      <PropertyRef Name="Reposters_Id" />
+      <PropertyRef Name="RepostedPosts_Id" />
+    </Key>
+    <Property Name="Reposters_Id" Type="int" Nullable="false" />
+    <Property Name="RepostedPosts_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LikerPost">
+    <Key>
+      <PropertyRef Name="LikeVoices_Id" />
+      <PropertyRef Name="LikedPosts_Id" />
+    </Key>
+    <Property Name="LikeVoices_Id" Type="int" Nullable="false" />
+    <Property Name="LikedPosts_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="PostComment">
     <End Role="Post" Type="SocialNetwork.Store.Posts" Multiplicity="1" />
@@ -174,6 +208,54 @@
       </Principal>
       <Dependent Role="PostHashtag">
         <PropertyRef Name="Hashtags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReposterPost_Profile">
+    <End Role="Profile" Type="SocialNetwork.Store.Profiles" Multiplicity="1" />
+    <End Role="ReposterPost" Type="SocialNetwork.Store.ReposterPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReposterPost">
+        <PropertyRef Name="Reposters_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReposterPost_Post">
+    <End Role="ReposterPost" Type="SocialNetwork.Store.ReposterPost" Multiplicity="*" />
+    <End Role="Post" Type="SocialNetwork.Store.Posts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReposterPost">
+        <PropertyRef Name="RepostedPosts_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LikerPost_Profile">
+    <End Role="Profile" Type="SocialNetwork.Store.Profiles" Multiplicity="1" />
+    <End Role="LikerPost" Type="SocialNetwork.Store.LikerPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LikerPost">
+        <PropertyRef Name="LikeVoices_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LikerPost_Post">
+    <End Role="LikerPost" Type="SocialNetwork.Store.LikerPost" Multiplicity="*" />
+    <End Role="Post" Type="SocialNetwork.Store.Posts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LikerPost">
+        <PropertyRef Name="LikedPosts_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -377,6 +459,22 @@
       </EndProperty>
       <EndProperty Name="Hashtag">
         <ScalarProperty Name="Id" ColumnName="Hashtags_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ReposterPost" TypeName="SocialNetwork.ReposterPost" StoreEntitySet="ReposterPost">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="Reposters_Id" />
+      </EndProperty>
+      <EndProperty Name="Post">
+        <ScalarProperty Name="Id" ColumnName="RepostedPosts_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LikerPost" TypeName="SocialNetwork.LikerPost" StoreEntitySet="LikerPost">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="LikeVoices_Id" />
+      </EndProperty>
+      <EndProperty Name="Post">
+        <ScalarProperty Name="Id" ColumnName="LikedPosts_Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
