@@ -24,6 +24,7 @@ namespace SocialNetwork.DAL.Repositories
         {
             if (context.Hashtags.Find(item.Id) == null) { return; }
             
+            
             foreach (var currentPost in item.Posts) {
                 currentPost.Hashtags.Remove(item);
             }

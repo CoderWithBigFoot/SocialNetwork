@@ -24,11 +24,8 @@ namespace SocialNetwork.DAL.Repositories
             if (context.Posts.Find(item.Id) == null) { return; }
 
             //published posts from publisher
-            var publisher = context.Profiles.FirstOrDefault(x => x.PublishedPosts.Contains(item));   
-            if (publisher != null) {
-                publisher.PublishedPosts.Remove(item);
-            }
-
+            item.Publisher.PublishedPosts.Remove(item);
+            
             //comments and Comments from profile
             var linkedCommments = context.Comments.Where(x => x.Post == item);
             var linkedCommentators = linkedCommments.Select(x => new { x.Commentator, x.Id });   
@@ -38,6 +35,7 @@ namespace SocialNetwork.DAL.Repositories
             foreach (var mappingObject in linkedCommentators) {
                 mappingObject.Commentator.Comments.Remove(context.Comments.Find(mappingObject.Id));
             }
+
 
             //RepostedPosts from profile delete
             foreach (var prof in item.Reposters) {

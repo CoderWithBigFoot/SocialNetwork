@@ -20,13 +20,14 @@ namespace SocialNetwork.DAL.Repositories
             context.Profiles.Add(item);
         }
 
+
         public void Delete(Profile item)
         {
             if (context.Profiles.Find(item.Id) == null) { return; }
 
-           var deletePublishedPostsCollection = context.Posts.Where(x => x.Publisher == item); //published posts
-            context.Posts.RemoveRange(deletePublishedPostsCollection);
-
+            //delete published posts
+            context.Posts.RemoveRange(item.PublishedPosts);
+            
             var deleteRepostsCollection = context.Posts.Where(x => x.Reposters.Contains(item)); // reposts
             if (deleteRepostsCollection != null)
             {
@@ -45,7 +46,15 @@ namespace SocialNetwork.DAL.Repositories
 
             var deleteCommentsCollection = context.Comments.Where(x => x.Commentator == item); //comments
             context.Comments.RemoveRange(deleteCommentsCollection);
+           
 
+            if (deleteCommentsCollection != null)
+            {
+                foreach (var comment in deleteCommentsCollection)
+                {
+                    comment.Post.Comments.Remove(comment);
+                }
+            }
 
 
 
@@ -67,6 +76,7 @@ namespace SocialNetwork.DAL.Repositories
 
             context.Profiles.Remove(item);
         }
+
 
         public IEnumerable<Profile> Find(Func<Profile, bool> predicate)
         {
