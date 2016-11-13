@@ -8,6 +8,9 @@ using SocialNetwork.DAL.EF;
 
 namespace ConsoleTest
 {
+    class TestClass {
+        public string Name { set; get; }
+    }
     class Program //когда скипаешь то надо руками остальное скипатЬ(само не скипнется)
     {
         static void Main(string[] args)
@@ -133,31 +136,33 @@ namespace ConsoleTest
                     Post post1 = context.Posts.FirstOrDefault(x => x.Content == "post1");
                     Post post2 = context.Posts.FirstOrDefault(x => x.Content == "post2");
 
-                    Console.WriteLine(post1.Publisher.Name);
-                    Console.WriteLine(post2.Publisher.Name);
+                    #region posts
+                    /* post1.Hashtags.Add(new Hashtag() {
+                         Name = "cat"
+                     });
+                     post1.Hashtags.Add(new Hashtag() {
+                         Name = "dog"
+                     });
+                     context.SaveChanges();
+                     */
+                    /* Hashtag hash1 = context.Hashtags.FirstOrDefault(x => x.Name == "cat");
+                     Hashtag hash2 = context.Hashtags.FirstOrDefault(x => x.Name == "dog");
 
-                    /*post1.LikeVoices.Add(prof2);
-                    post1.Reposters.Add(prof2);
+                     context.Hashtags.Remove(hash2);
+                     post1.Hashtags.Remove(hash2);
 
+                     Console.WriteLine(context.SaveChanges());*/
+                    #endregion
 
-                    post1.Comments.Add(new Comment() {
-                        Content = "post1 from prof2 comment",
-                        Commentator = prof2,
-                        Post = post1
-                    });
-                    */
-                    Console.WriteLine($"post 1 has {post1.Reposters.Count} reposts" );
-                    Console.WriteLine($"post 1 has {post1.LikeVoices.Count} likes");
-                    Console.WriteLine($"prof2 has {prof2.Comments.Count} comments");
-                    //context.SaveChanges();
-
-
+                    context.Posts.Remove(post1);
+                    context.Profiles.Remove(prof1);
+                    
                     Console.WriteLine(context.SaveChanges());
 
                 }
-                
 
-             
+
+
 
             }
             catch (Exception ex) {
