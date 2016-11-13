@@ -22,6 +22,8 @@ namespace SocialNetwork.DAL.Repositories
 
         public void Delete(Profile item)
         {
+            if (context.Profiles.Find(item.Id) == null) { return; }
+
            var deletePublishedPostsCollection = context.Posts.Where(x => x.Publisher == item); //published posts
             context.Posts.RemoveRange(deletePublishedPostsCollection);
 
@@ -76,7 +78,7 @@ namespace SocialNetwork.DAL.Repositories
         }
         public Profile Get(int id)
         {
-            return context.Profiles.FirstOrDefault(x => x.Id == id);
+            return context.Profiles.Find(id);
         }
         public IEnumerable<Profile> GetAllItems()
         {
