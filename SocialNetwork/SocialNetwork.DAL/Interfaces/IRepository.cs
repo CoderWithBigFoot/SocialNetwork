@@ -12,6 +12,5 @@ namespace SocialNetwork.DAL.Interfaces
         T Get(int id);
         IEnumerable<T> Find(Func<T,bool> predicate);
         void Create(T item);
-        void Delete(T item);
     }
 }

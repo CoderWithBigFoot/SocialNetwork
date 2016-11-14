@@ -20,62 +20,49 @@ namespace SocialNetwork.DAL.Repositories
             context.Profiles.Add(item);
         }
 
-
+        //while incorrect
+        /*
         public void Delete(Profile item)
         {
+
             if (context.Profiles.Find(item.Id) == null) { return; }
-
-            //delete published posts
+            //удалить публикованые посты еще у тех, кто их репостил или лайкал
+            //remove published posts
             context.Posts.RemoveRange(item.PublishedPosts);
-            
-            var deleteRepostsCollection = context.Posts.Where(x => x.Reposters.Contains(item)); // reposts
-            if (deleteRepostsCollection != null)
-            {
-                foreach (var currentRepost in deleteRepostsCollection)
-                {
-                    currentRepost.Reposters.Remove(item);
+            //remove this user from Reposters
+            var repostedPosts = context.Posts.Where(x => x.Reposters.Contains(item));
+            if (repostedPosts != null) {
+                foreach (var post in repostedPosts) {
+                    post.Reposters.Remove(item);
                 }
             }
-
-            var deleteLikedPostsCollection = context.Posts.Where(x => x.LikeVoices.Contains(item));//likes
-            if (deleteLikedPostsCollection != null) {
-                foreach (var likedPost in deleteLikedPostsCollection) {
-                    likedPost.LikeVoices.Remove(item);
-                }
-            }
-
-            var deleteCommentsCollection = context.Comments.Where(x => x.Commentator == item); //comments
-            context.Comments.RemoveRange(deleteCommentsCollection);
-           
-
-            if (deleteCommentsCollection != null)
-            {
-                foreach (var comment in deleteCommentsCollection)
-                {
-                    comment.Post.Comments.Remove(comment);
+            //remove this user from LikeVoices
+            var likedPosts = context.Posts.Where(x => x.LikeVoices.Contains(item));
+            if (likedPosts != null) {
+                foreach (var post in likedPosts) {
+                    post.LikeVoices.Remove(item);
                 }
             }
 
 
 
-            var deleteSubscribersOnCollection = context.Profiles.Where(x => x.SubscribedOn.Contains(item)); //subscribedOn
-            if (deleteSubscribersOnCollection != null)
-            {
-                foreach (var currentProfile in deleteSubscribersOnCollection)
-                {
-                    currentProfile.SubscribedOn.Remove(item);
-                }
+            //remove this user from subscribedOn's
+            foreach (var user in item.Followers) {
+                user.SubscribedOn.Remove(item);
             }
-
-            var deleteFollowersCollection = context.Profiles.Where(x => x.Followers.Contains(item)); //followers
-            if (deleteFollowersCollection != null) {
-                foreach (var currentProfile in deleteFollowersCollection) {
-                    currentProfile.Followers.Remove(item);
-                }
+            //remove this user from Followers
+            foreach (var user in item.SubscribedOn) {
+                user.Followers.Remove(item);
             }
+            //remove comments of that user
+            foreach (var comment in item.Comments) {
+                comment.Post.Comments.Remove(comment);
+            }
+            context.Comments.RemoveRange(item.Comments);
 
             context.Profiles.Remove(item);
         }
+        */
 
 
         public IEnumerable<Profile> Find(Func<Profile, bool> predicate)

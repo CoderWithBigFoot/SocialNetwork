@@ -78,6 +78,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SocialNetwork.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICanBeDeletedRepository.cs" />
+    <Compile Include="Interfaces\IDelete.cs" />
     <Compile Include="Interfaces\IProfileRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />

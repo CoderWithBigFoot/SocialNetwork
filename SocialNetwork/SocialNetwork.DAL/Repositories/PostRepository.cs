@@ -19,38 +19,28 @@ namespace SocialNetwork.DAL.Repositories
         {
             context.Posts.Add(item);
         }
+        /*
         public void Delete(Post item)
         {
             if (context.Posts.Find(item.Id) == null) { return; }
-
-            //published posts from publisher
-            item.Publisher.PublishedPosts.Remove(item);
-            
-            //comments and Comments from profile
-            var linkedCommments = context.Comments.Where(x => x.Post == item);
-            var linkedCommentators = linkedCommments.Select(x => new { x.Commentator, x.Id });   
-
-            context.Comments.RemoveRange(linkedCommments);
-
-            foreach (var mappingObject in linkedCommentators) {
-                mappingObject.Commentator.Comments.Remove(context.Comments.Find(mappingObject.Id));
+            //remove hashtags
+            foreach (var hashtag in context.Hashtags.Where(x => x.Posts.Contains(item))) {
+                item.Hashtags.Remove(hashtag);
+            }
+            item.Hashtags.Remove(context.Hashtags.Where(x=>x.Name == "cat").FirstOrDefault());
+            //context.SaveChanges();
+            //maybe autodelete linked comments  -- check after
+            //maybe autodelete this post in PublishedPosts 
+            foreach (var profile in item.Reposters) {
+                profile.RepostedPosts.Remove(item);
+            }
+            foreach (var profile in item.LikeVoices) {
+                profile.LikedPosts.Remove(item);
             }
 
+            context.Posts.Remove(item);
 
-            //RepostedPosts from profile delete
-            foreach (var prof in item.Reposters) {
-                prof.RepostedPosts.Remove(item);
-            }
-            //LikedPosts from profile delete
-            foreach (var prof in item.LikeVoices) {
-                prof.LikedPosts.Remove(item);
-            }
-            //Hashtags from hashtags delete
-            foreach (var hashtag in item.Hashtags) {
-                hashtag.Posts.Remove(item);
-            }
-
-        }
+        }*/
         public IEnumerable<Post> Find(Func<Post, bool> predicate)
         {
             return context.Posts.Where(predicate);

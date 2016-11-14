@@ -16,7 +16,7 @@ namespace SocialNetwork.DAL.Repositories
         private HashtagRepository hashtagRepository;
         private CommentRepository commentRepository;
 
-        public UnitOfWork(string connectionString) {
+        public UnitOfWork(string connectionString="SocialNetworkConnection") {
             context = new SocialNetworkContext(connectionString);
         }
 
@@ -36,7 +36,7 @@ namespace SocialNetwork.DAL.Repositories
                 return postRepository;
             }
         }
-        public IRepository<Hashtag> Hashtags {
+        public ICanBeDeletedRepository<Hashtag> Hashtags {
             get {
                 if (hashtagRepository == null) {
                     hashtagRepository = new HashtagRepository(context);
@@ -44,7 +44,7 @@ namespace SocialNetwork.DAL.Repositories
                 return hashtagRepository;
             }
         }
-        public IRepository<Comment> Comments {
+        public ICanBeDeletedRepository<Comment> Comments {
             get {
                 if (commentRepository == null) {
                     commentRepository = new CommentRepository(context);
@@ -53,8 +53,8 @@ namespace SocialNetwork.DAL.Repositories
             }
         }
 
-        public void Save() {
-            context.SaveChanges();
+        public int Save() {
+           return context.SaveChanges();
         }
 
 

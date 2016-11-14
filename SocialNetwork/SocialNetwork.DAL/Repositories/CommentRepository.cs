@@ -7,7 +7,7 @@ using SocialNetwork.DAL.EF;
 using SocialNetwork.DAL.Interfaces;
 namespace SocialNetwork.DAL.Repositories
 {
-    public class CommentRepository : IRepository<Comment>
+    public class CommentRepository : ICanBeDeletedRepository<Comment>
     {
         private SocialNetworkContext context { set; get; }
         public CommentRepository(SocialNetworkContext context) {
@@ -31,7 +31,6 @@ namespace SocialNetwork.DAL.Repositories
             
 
         }
-
         public IEnumerable<Comment> Find(Func<Comment, bool> predicate)
         {
             return context.Comments.Where(predicate);
