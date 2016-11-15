@@ -29,13 +29,13 @@ namespace SocialNetwork.BLL.Services
                 return 0;
             }
         }
-        public ICollection<HashtagDTO> AllHashtags(string identityName)
+        public IEnumerable<HashtagDTO> AllHashtags(string identityName)
         {
             try
             {
                 SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
                 ICollection<SocialNetwork.DAL.EF.Hashtag> allProfileHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
-
+                            
                 foreach (var currentPost in profile.PublishedPosts)
                 {
                     foreach (var currentHashtag in currentPost.Hashtags)
@@ -89,25 +89,35 @@ namespace SocialNetwork.BLL.Services
             try
             {
                 Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
-
-                var result = eachHashtagCount.OrderByDescending(x => x.Value).Take(count);
-
-            
-
+                return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);
             }
             catch (NullReferenceException) {
                 return null;
             }
         }
 
-
-
-
-
-
-        public Dictionary<HashtagDTO, int> MostPopularHashtagsFrequency(string identityName, int count)
+        
+        public Dictionary<HashtagDTO, int> MostPopularHashtagsFrequency(string identityName, int count,TimeInterval interval=TimeInterval.Day)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+                int divider = 1;
+                switch (interval) {
+                    case TimeInterval.Day:divider = 1;break;
+                    case TimeInterval.Week:divider = 7;break;
+                    case TimeInterval.Month:divider = 30;break;
+                }
+                
+
+
+
+            }
+            catch (NullReferenceException) {
+                return null;
+            }
+
+
         }
 
 
