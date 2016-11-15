@@ -48,10 +48,11 @@
     <Compile Include="DTO\HashtagDTO.cs" />
     <Compile Include="DTO\PostDTO.cs" />
     <Compile Include="DTO\ProfileDTO.cs" />
-    <Compile Include="Interfaces\IGetProfileInfoService.cs" />
+    <Compile Include="Interfaces\IGetProfileInfo.cs" />
     <Compile Include="Interfaces\IGetStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GetProfileInfoService.cs" />
+    <Compile Include="Services\GetStatisticsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SocialNetwork.DAL\SocialNetwork.DAL.csproj">

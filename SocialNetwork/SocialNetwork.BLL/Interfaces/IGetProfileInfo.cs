@@ -8,7 +8,7 @@ using SocialNetwork.DAL.EF;
 
 namespace SocialNetwork.BLL.Interfaces
 {
-   public interface IGetProfileInfoService
+   public interface IGetProfileInfo : IDisposable
     {
         ProfileDTO GetProfile(int id);
         ProfileDTO GetProfile(string identityName);
@@ -16,7 +16,5 @@ namespace SocialNetwork.BLL.Interfaces
         ICollection<ProfileDTO> GetFollowers(string identityName);
         ICollection<ProfileDTO> GetSubscriptions(string identityName);
 
-        int GetCountOfFollowers(string identityName);
-        int GetCountOfSubscriptions(string identityName);
     }
 }

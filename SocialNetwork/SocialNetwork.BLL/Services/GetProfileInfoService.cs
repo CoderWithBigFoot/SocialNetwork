@@ -10,7 +10,7 @@ using SocialNetwork.DAL.Interfaces;
 using AutoMapper;
 namespace SocialNetwork.BLL.Services
 {
-   public class GetProfileInfoService : IGetProfileInfoService
+   public class GetProfileInfoService : IGetProfileInfo
     {
         private IUnitOfWork uow;
 
@@ -50,7 +50,9 @@ namespace SocialNetwork.BLL.Services
             return null;
         }
 
-
+        public void Dispose() {
+            uow.Dispose();
+        }
 
 
     }
