@@ -18,19 +18,20 @@ namespace SocialNetwork.BLL.Services
             this.uow = uow;
         }
 
-        public ProfileDTO GetProfileById(int id) {
+        public ProfileDTO GetProfile(int id) {
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
             return Mapper.Map<ProfileDTO>(uow.Profiles.Get(id));
 
         }
-        public ProfileDTO GetProfileByIdentityName(string identityName) {
+        public ProfileDTO GetProfile(string identityName) {
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
             return Mapper.Map<ProfileDTO>(uow.Profiles.FindByIdentityName(identityName));
         }
 
 
-        public ICollection<ProfileDTO> GetFollowers(int id) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.Get(id);
+
+        public ICollection<ProfileDTO> GetFollowers(string identityName) {
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
             if (profile != null) {
                 ICollection<SocialNetwork.DAL.EF.Profile> followers = profile.Followers;
                 Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
@@ -39,8 +40,8 @@ namespace SocialNetwork.BLL.Services
             return null;
         }
 
-        public ICollection<ProfileDTO> GetSubscriptions(int id) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.Get(id);
+        public ICollection<ProfileDTO> GetSubscriptions(string identityName) {
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
             if (profile != null) {
                 ICollection<SocialNetwork.DAL.EF.Profile> subscriptions = profile.SubscribedOn;
                 Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile,ProfileDTO>());

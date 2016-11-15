@@ -10,12 +10,13 @@ namespace SocialNetwork.BLL.Interfaces
 {
    public interface IGetProfileInfoService
     {
-        ProfileDTO GetProfileById(int id);
-        ProfileDTO GetProfileByIdentityName(string identityName);
+        ProfileDTO GetProfile(int id);
+        ProfileDTO GetProfile(string identityName);
 
-        ProfileDTO GetFollowers(int id);
-        ProfileDTO GetSubscriptions(int id);
+        ICollection<ProfileDTO> GetFollowers(string identityName);
+        ICollection<ProfileDTO> GetSubscriptions(string identityName);
 
-
+        int GetCountOfFollowers(string identityName);
+        int GetCountOfSubscriptions(string identityName);
     }
 }
