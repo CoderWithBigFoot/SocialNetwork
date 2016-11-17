@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.EF;
-
+using AutoMapper;
 namespace ConsoleTest
 {
     class TestClass {
+        public string Name { set; get; }
+    }
+    class SecondTestClass {
         public string Name { set; get; }
     }
     class Program //когда скипаешь то надо руками остальное скипатЬ(само не скипнется)
@@ -163,8 +166,19 @@ namespace ConsoleTest
                     post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
                     uow.Posts.Create(post1);*/
 
-                double a = 1.5;
-                Console.WriteLine(Math.Round(a,0));
+                //Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
+                Dictionary<SecondTestClass, int> a = new Dictionary<SecondTestClass, int>();
+                a.Add(new SecondTestClass() { Name = "zheka" }, 1);
+
+                Dictionary<TestClass, int> b;
+               
+
+                Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass,TestClass>());
+
+                b = Mapper.Map<Dictionary<TestClass, int>>(a);
+                foreach (var current in b) {
+                    Console.WriteLine(current.Key.Name + " " + current.Value);
+                }
 
             }
             catch (Exception ex) {

@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SocialNetwork.BLL.DTO;
-using SocialNetwork.BLL.Interfaces;
+using SocialNetwork.BLL.Interfaces.Statistics;
 using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.Interfaces;
 using AutoMapper;
 
-namespace SocialNetwork.BLL.Services
+namespace SocialNetwork.BLL.Services.Statistics
 {
-   public class GetStatisticsService : IGetStatistics
+   public class GetProfileStatisticsService : IGetProfileStatistics
     {
         private IUnitOfWork uow;
-        public GetStatisticsService(IUnitOfWork uow) {
+        public GetProfileStatisticsService(IUnitOfWork uow) {
             this.uow = uow;
         }
 

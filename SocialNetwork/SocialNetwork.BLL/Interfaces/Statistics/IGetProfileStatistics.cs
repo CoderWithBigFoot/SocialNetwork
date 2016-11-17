@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SocialNetwork.BLL.DTO;
 using SocialNetwork.DAL.EF;
-namespace SocialNetwork.BLL.Interfaces
+namespace SocialNetwork.BLL.Interfaces.Statistics
 {
-   public interface IGetStatistics : IDisposable
+   public interface IGetProfileStatistics : IDisposable
     {
         int PublishedPostsCount(string identityName);
 

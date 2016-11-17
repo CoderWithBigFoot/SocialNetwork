@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SocialNetwork.BLL.DTO;
 using SocialNetwork.DAL.EF;
 
-namespace SocialNetwork.BLL.Interfaces
+namespace SocialNetwork.BLL.Interfaces.BasicInfo
 {
    public interface IGetProfileInfo : IDisposable
     {
