@@ -167,17 +167,13 @@ namespace ConsoleTest
                     uow.Posts.Create(post1);*/
 
                 //Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
-                Dictionary<SecondTestClass, int> a = new Dictionary<SecondTestClass, int>();
-                a.Add(new SecondTestClass() { Name = "zheka" }, 1);
 
-                Dictionary<TestClass, int> b;
-               
+                List<int> a = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
 
-                Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass,TestClass>());
-
-                b = Mapper.Map<Dictionary<TestClass, int>>(a);
-                foreach (var current in b) {
-                    Console.WriteLine(current.Key.Name + " " + current.Value);
+                IEnumerable<int> result = a.Skip(8).Take(10);
+                Console.WriteLine(result.Count());
+                foreach (var c in result) {
+                    Console.WriteLine(c);
                 }
 
             }

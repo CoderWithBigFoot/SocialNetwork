@@ -23,7 +23,6 @@ namespace SocialNetwork.BLL.Services.BasicInfo
             Mapper.Initialize(cfg => cfg.CreateMap<Post, PostDTO>());
             return Mapper.Map<PostDTO>(uow.Posts.Get(postId));
         }
-
         public IEnumerable<HashtagDTO> GetHashtagCollection(int postId) {
             try
             {
@@ -36,7 +35,8 @@ namespace SocialNetwork.BLL.Services.BasicInfo
             }
         }
 
-        public IEnumerable<CommentDTO> GetComments(int postId,int offset,int count) {
+        // the skip and take are checked(works correctly)
+        public IEnumerable<CommentDTO> GetComments(int postId,int offset,int count) { 
             try
             {
                 Post post = uow.Posts.Get(postId);
@@ -55,7 +55,6 @@ namespace SocialNetwork.BLL.Services.BasicInfo
             try
             {
                 Post post = uow.Posts.Get(postId);
-
                 return post.Reposters.Count;
             }
             catch (NullReferenceException) {
