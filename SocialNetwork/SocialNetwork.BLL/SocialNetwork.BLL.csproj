@@ -50,8 +50,11 @@
     <Compile Include="DTO\ProfileDTO.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetPostInfo.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetProfileInfo.cs" />
+    <Compile Include="Interfaces\Interaction\IPostInteraction.cs" />
+    <Compile Include="Interfaces\Interaction\IProfileConfigurator.cs" />
+    <Compile Include="Interfaces\Interaction\IProfileInteraction.cs" />
     <Compile Include="Interfaces\Statistics\IGetProfileStatistics.cs" />
-    <Compile Include="Interfaces\Interaction\ISearchingService.cs" />
+    <Compile Include="Interfaces\Interaction\ISearching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BasicInfo\GetPostInfoService.cs" />
     <Compile Include="Services\Enums\TimeInterval.cs" />

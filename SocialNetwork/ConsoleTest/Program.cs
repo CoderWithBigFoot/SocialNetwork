@@ -168,13 +168,14 @@ namespace ConsoleTest
 
                 //Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
 
-                List<int> a = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
+                List<TestClass> test = new List<TestClass>() {
+                    new TestClass() { Name = "zheka"},
+                    new TestClass() { Name = "serega"}
+                };
+                Mapper.Initialize(cfg => cfg.CreateMap<TestClass,SecondTestClass>());
+                List<SecondTestClass> newList = Mapper.Map<List<SecondTestClass>>(test);
 
-                IEnumerable<int> result = a.Skip(8).Take(10);
-                Console.WriteLine(result.Count());
-                foreach (var c in result) {
-                    Console.WriteLine(c);
-                }
+                foreach (var c in newList) { Console.WriteLine(c.Name); }
 
             }
             catch (Exception ex) {

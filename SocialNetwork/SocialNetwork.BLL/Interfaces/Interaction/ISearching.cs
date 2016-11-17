@@ -7,7 +7,7 @@ using SocialNetwork.BLL.DTO;
 using SocialNetwork.DAL.EF;
 namespace SocialNetwork.BLL.Interfaces.Interaction
 {
-   public interface ISearchingService : IDisposable
+   public interface ISearching : IDisposable
     {
         IEnumerable<ProfileDTO> ProfilesByHashtags(IEnumerable<HashtagDTO> hashtags,int offset);
         IEnumerable<PostDTO> PostsByHashtags(IEnumerable<HashtagDTO> hashtags,int offset);

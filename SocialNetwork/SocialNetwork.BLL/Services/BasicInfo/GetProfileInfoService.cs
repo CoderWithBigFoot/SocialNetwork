@@ -38,21 +38,19 @@ namespace SocialNetwork.BLL.Services.BasicInfo
 
                     ICollection<SocialNetwork.DAL.EF.Profile> followers = profile.Followers;
                     Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
-                    return Mapper.Map<ICollection<SocialNetwork.DAL.EF.Profile>, ICollection<ProfileDTO>>(followers);                
+                    return Mapper.Map<ICollection<ProfileDTO>>(followers);                
             }
             catch (NullReferenceException) {
                 return null;
-            }
-            
+            }           
         }
-
         public ICollection<ProfileDTO> GetSubscriptions(string identityName) {
             try
             {
                 SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
                     ICollection<SocialNetwork.DAL.EF.Profile> subscriptions = profile.SubscribedOn;
                     Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
-                    return Mapper.Map<ICollection<SocialNetwork.DAL.EF.Profile>, ICollection<ProfileDTO>>(subscriptions);   
+                    return Mapper.Map<ICollection<ProfileDTO>>(subscriptions);   
             }
             catch (NullReferenceException) {
                 return null;
