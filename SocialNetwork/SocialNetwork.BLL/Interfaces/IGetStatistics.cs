@@ -18,10 +18,10 @@ namespace SocialNetwork.BLL.Interfaces
         /// <param name="identityName">Identity name of user</param>
         /// <param name="count">Count of posts to select</param>
         /// <returns></returns>
-        IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName,int count);
+        IEnumerable<KeyValuePair<HashtagDTO,int>>MostPopularHashtags(string identityName,int count);
 
         Dictionary<HashtagDTO, int> EachHashtagCount(string identityName); // count of posts for each hashtag
-        Dictionary<HashtagDTO, int> MostPopularHashtagsFrequency(string identityName,int count,TimeInterval interval=TimeInterval.Day);
+        Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName,int count,TimeInterval interval=TimeInterval.Day);
                                                                                     // how often a user publishes posts on these hashtags(calculate from )
                                                                                     //DateTime.Now and date of first post publication
                                                                                         //per one day or another interval

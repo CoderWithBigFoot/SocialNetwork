@@ -81,37 +81,43 @@ namespace SocialNetwork.BLL.Services
                 return null;
             }
         }
-
-
-
         public IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName, int count)
         {
             try
             {
                 Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
                 return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);
+
             }
             catch (NullReferenceException) {
                 return null;
             }
         }
-
-        
-        public Dictionary<HashtagDTO, int> MostPopularHashtagsFrequency(string identityName, int count,TimeInterval interval=TimeInterval.Day)
+        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count,TimeInterval interval=TimeInterval.Week)
         {
             try
             {
                 SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-                int divider = 1;
+                int period = 0;
                 switch (interval) {
-                    case TimeInterval.Day:divider = 1;break;
-                    case TimeInterval.Week:divider = 7;break;
-                    case TimeInterval.Month:divider = 30;break;
+                    case TimeInterval.Day:period = 1;break;
+                    case TimeInterval.Week:period = 7;break;
+                    case TimeInterval.Month:period = 30;break;
                 }
-                
 
+                IEnumerable<KeyValuePair<HashtagDTO, int>> mostPopularHashtags = this.MostPopularHashtags(identityName, count);
+                DateTime firstPublicationDate = profile.PublishedPosts.OrderBy(x => x.PublishDate).ElementAt(0).PublishDate;
+                Dictionary<HashtagDTO, double> result = new Dictionary<HashtagDTO, double>();
+                double frequency = 0;
 
-
+                foreach (var popularHashtagCount in mostPopularHashtags) {
+                    if (!result.ContainsKey(popularHashtagCount.Key)) {
+                         frequency = popularHashtagCount.Value/(((DateTime.Now-firstPublicationDate).TotalDays)/period); // maybe here Math.Round() is needed
+                         result.Add(popularHashtagCount.Key, frequency);
+                         frequency = 0; 
+                    }
+                }
+                return result;
             }
             catch (NullReferenceException) {
                 return null;

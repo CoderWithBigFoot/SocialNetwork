@@ -162,18 +162,9 @@ namespace ConsoleTest
                     };
                     post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
                     uow.Posts.Create(post1);*/
-            
-                using (UnitOfWork uow = new UnitOfWork()) {
-                    Profile prof1 = uow.Profiles.FindByIdentityName("prof1");
-                    Profile prof2 = uow.Profiles.FindByIdentityName("prof2");
-                    Post post1 = uow.Posts.Find(x=>x.Content == "post1").FirstOrDefault();
 
-
-                    post1.LikeVoices.Remove(prof2);
-
-
-                    Console.WriteLine(uow.Save());
-                }
+                double a = 1.5;
+                Console.WriteLine(Math.Round(a,0));
 
             }
             catch (Exception ex) {
