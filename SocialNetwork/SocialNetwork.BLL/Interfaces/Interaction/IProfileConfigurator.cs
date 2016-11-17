@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.BLL.Interfaces.Interaction
 {
-   public interface IProfileConfigurator : IDisposable // for change accaunt settings
+   public interface IProfileConfigurator : IDisposable // for change account settings
     {
         bool ChangeName(string identityName,string newName);
         bool ChangeSername(string identityName,string newSername);

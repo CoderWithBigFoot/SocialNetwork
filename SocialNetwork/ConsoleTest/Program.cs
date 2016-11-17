@@ -15,7 +15,7 @@ namespace ConsoleTest
     class SecondTestClass {
         public string Name { set; get; }
     }
-    class Program //когда скипаешь то надо руками остальное скипатЬ(само не скипнется)
+    class Program 
     {
         static void Main(string[] args)
         {
@@ -168,14 +168,7 @@ namespace ConsoleTest
 
                 //Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
 
-                List<TestClass> test = new List<TestClass>() {
-                    new TestClass() { Name = "zheka"},
-                    new TestClass() { Name = "serega"}
-                };
-                Mapper.Initialize(cfg => cfg.CreateMap<TestClass,SecondTestClass>());
-                List<SecondTestClass> newList = Mapper.Map<List<SecondTestClass>>(test);
-
-                foreach (var c in newList) { Console.WriteLine(c.Name); }
+               
 
             }
             catch (Exception ex) {

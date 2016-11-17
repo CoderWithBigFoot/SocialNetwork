@@ -9,7 +9,7 @@ namespace SocialNetwork.BLL.Interfaces.Interaction
    public interface IProfileInteraction : IDisposable
     {
         bool Subscribe(string identityName); // for who
-        bool DeleteSubscription(string identityName);
-        bool DeleteFollower(string identityName);
+        bool RemoveSubscription(string identityName);
+        bool RemoveFollower(string identityName);
     }
 }
