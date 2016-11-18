@@ -36,7 +36,7 @@ namespace SocialNetwork.DAL.Repositories
                 return postRepository;
             }
         }
-        public ICanBeDeletedRepository<Hashtag> Hashtags {
+        public IHashtagRepository<Hashtag> Hashtags {
             get {
                 if (hashtagRepository == null) {
                     hashtagRepository = new HashtagRepository(context);

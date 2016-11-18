@@ -10,7 +10,9 @@ using SocialNetwork.DAL.Interfaces;
 using AutoMapper;
 
 namespace SocialNetwork.BLL.Services.Statistics
-{
+{//need to zero check and null check
+    //if zero - there are no posts
+    //if null / there are no user
    public class GetProfileStatisticsService : IGetProfileStatistics
     {
         private IUnitOfWork uow;
@@ -125,7 +127,24 @@ namespace SocialNetwork.BLL.Services.Statistics
 
 
         }
+        
+        public Dictionary<HashtagDTO, int> SelectedHashtagsCount(string identityName, IEnumerable<HashtagDTO> hashtags) {
+            try
+            {
+                Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
+                Dictionary<HashtagDTO, int> result = new Dictionary<HashtagDTO, int>();
 
+                foreach (var currentHashtag in hashtags) {
+                    if (eachHashtagCount.ContainsKey(currentHashtag)) {
+                        result.Add(currentHashtag, eachHashtagCount[currentHashtag]);
+                    }
+                }
+                return result;
+            }
+            catch (NullReferenceException) {
+                return null;
+            }
+        }
 
 
         public void Dispose() {

@@ -7,7 +7,7 @@ using SocialNetwork.DAL.EF;
 using SocialNetwork.DAL.Interfaces;
 namespace SocialNetwork.DAL.Repositories
 {
-    public class HashtagRepository : ICanBeDeletedRepository<Hashtag>
+    public class HashtagRepository : IHashtagRepository<Hashtag>
     {
         private SocialNetworkContext context { set; get; }
         public HashtagRepository(SocialNetworkContext context) {
@@ -17,6 +17,7 @@ namespace SocialNetwork.DAL.Repositories
 
         public void Create(Hashtag item)
         {
+            if (context.Hashtags.Contains(item)) { return; }
             context.Hashtags.Add(item);
         }
         public void Delete(Hashtag item)
@@ -36,6 +37,9 @@ namespace SocialNetwork.DAL.Repositories
         public Hashtag Get(int id)
         {
             return context.Hashtags.Find(id);
+        }
+        public Hashtag FindByName(string name) {
+            return context.Hashtags.FirstOrDefault(x => x.Name == name);
         }
         public IEnumerable<Hashtag> GetAllItems()
         {

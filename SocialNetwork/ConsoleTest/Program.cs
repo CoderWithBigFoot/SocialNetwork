@@ -15,6 +15,22 @@ namespace ConsoleTest
     class SecondTestClass {
         public string Name { set; get; }
     }
+    class TestClassComparer : IEqualityComparer<TestClass>
+    {
+        public bool Equals(TestClass x, TestClass y)
+        {
+
+            if (x == null && y == null) { return true; }
+            else if (x == null | y == null) { return false; }
+            else if (x.Name == y.Name) { return true; }
+            else { return false; }
+        }
+
+        public int GetHashCode(TestClass obj)
+        {
+            return obj.GetHashCode();
+        }
+    }
     class Program 
     {
         static void Main(string[] args)
@@ -166,10 +182,18 @@ namespace ConsoleTest
                     post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
                     uow.Posts.Create(post1);*/
 
-                //Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
+                List<TestClass> test = new List<TestClass>() {
+                    new TestClass() { Name = "1" },
+                    new TestClass() { Name = "2"},
+                    new TestClass() { Name = "4"},
+                    new TestClass() { Name = "1"}
+                };
+                /*var result = test.FirstOrDefault(x => x.Name == "3");
+                if (result==null) { Console.WriteLine("null"); }
+                Console.WriteLine(result);*/
 
-               
-
+                
+                foreach (var c in test.Distinct(new TestClassComparer())) { Console.WriteLine(c.Name); }
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);

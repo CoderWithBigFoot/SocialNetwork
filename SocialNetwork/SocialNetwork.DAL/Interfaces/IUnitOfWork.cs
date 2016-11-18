@@ -11,7 +11,7 @@ namespace SocialNetwork.DAL.Interfaces
     {
         IProfileRepository<Profile> Profiles { get; }
         IRepository<Post> Posts { get; }
-        ICanBeDeletedRepository<Hashtag> Hashtags {  get; }
+        IHashtagRepository<Hashtag> Hashtags {  get; }
         ICanBeDeletedRepository<Comment> Comments {  get; }
 
         int Save();

@@ -22,12 +22,11 @@ namespace SocialNetwork.BLL.Interfaces.Statistics
 
         Dictionary<HashtagDTO, int> EachHashtagCount(string identityName); // count of posts for each hashtag
         Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName,int count,TimeInterval interval=TimeInterval.Day);
-                                                                                    // how often a user publishes posts on these hashtags(calculate from )
-                                                                                    //DateTime.Now and date of first post publication
-                                                                                        //per one day or another interval
-                                                                                        //result int must be rounded to up
-        
-                                                                                 
+        // how often a user publishes posts on these hashtags(calculate from )
+        //DateTime.Now and date of first post publication
+        //per one day or another interval
+        //result int must be rounded to up
 
+        Dictionary<HashtagDTO, int> SelectedHashtagsCount(string identityName, IEnumerable<HashtagDTO> hashtags);                                                                   
     }
 }

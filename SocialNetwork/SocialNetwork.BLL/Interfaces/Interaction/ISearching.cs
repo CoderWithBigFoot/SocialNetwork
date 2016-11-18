@@ -9,7 +9,7 @@ namespace SocialNetwork.BLL.Interfaces.Interaction
 {
    public interface ISearching : IDisposable
     {
-        IEnumerable<ProfileDTO> ProfilesByHashtags(IEnumerable<HashtagDTO> hashtags,int offset);
+        IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags,int offset,int hashtagsCount);
         IEnumerable<PostDTO> PostsByHashtags(IEnumerable<HashtagDTO> hashtags,int offset);
 
         IEnumerable<PostDTO> DefaultPostsSearching(int offset);

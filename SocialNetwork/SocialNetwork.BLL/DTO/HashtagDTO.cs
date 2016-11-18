@@ -8,7 +8,7 @@ namespace SocialNetwork.BLL.DTO
 {
    public class HashtagDTO
     {
-        public int Id { get; set; }
+       // public int Id { get; set; }
         public string Name { get; set; }
     }
 }
