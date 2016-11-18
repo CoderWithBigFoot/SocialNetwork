@@ -40,7 +40,7 @@ namespace SocialNetwork.BLL.Services.Interaction
         /// <param name="hashtags">Popular hashtags</param>
         /// <param name="offset">Offset</param>
         /// <returns></returns>
-       public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int profilesCount,int hashtagsCount) {
+        public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int profilesCount,int hashtagsCount) {
 
             try {
 
@@ -80,8 +80,6 @@ namespace SocialNetwork.BLL.Services.Interaction
             }
 
         }
-
-
         public IEnumerable<PostDTO> PostsByHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int postsCount) {
 
             try
@@ -99,7 +97,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                 }
 
                 Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post,PostDTO>());
-                return Mapper.Map<IEnumerable<PostDTO>>(resultPosts.OrderByDescending(x => x.Hashtags.Count).Skip(offset).Take(postsCount));
+                return Mapper.Map<IEnumerable<PostDTO>>(resultPosts.OrderByDescending(x => x.PublishDate).Skip(offset).Take(postsCount));
 
             }
             catch (NullReferenceException) {
@@ -108,6 +106,11 @@ namespace SocialNetwork.BLL.Services.Interaction
 
         }
 
+
+        public IEnumerable<PostDTO> DefaultPostSearching(int offset, int popularHashtagsCount,string identityName) {
+            
+
+        }
 
     }
 }
