@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.BLL.Infrastructure.Exceptions
 {
-   public class CannotRemoveSubscriptionException : Exception
+   public class SubscriptionNotFoundException : Exception
     {
-        public CannotRemoveSubscriptionException(string message) : base(message) { }
+        public SubscriptionNotFoundException(string message) : base(message) { }
     }
 }

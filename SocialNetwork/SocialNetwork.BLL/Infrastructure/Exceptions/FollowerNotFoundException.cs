@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.BLL.Infrastructure.Exceptions
 {
-   public class CannotRemoveFollowerException : Exception
+   public class FollowerNotFoundException : Exception
     {
-        public CannotRemoveFollowerException(string message) : base(message) { }
+        public FollowerNotFoundException(string message) : base(message) { }
     }
 }

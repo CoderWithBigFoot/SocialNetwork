@@ -41,7 +41,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                 throw new ProfileNotFoundException("Profile not found");
             }
 
-            if (!caller.SubscribedOn.Contains(target)) { throw new CannotRemoveSubscriptionException("Such subscribtion was not found"); }
+            if (!caller.SubscribedOn.Contains(target)) { throw new SubscriptionNotFoundException("Such subscribtion was not found"); }
 
             caller.SubscribedOn.Remove(target);
             uow.Save();
@@ -55,7 +55,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                 throw new ProfileNotFoundException("Profile not found");
             }
 
-            if (!caller.Followers.Contains(target)) { throw new CannotRemoveFollowerException("Such follower was not found"); }
+            if (!caller.Followers.Contains(target)) { throw new FollowerNotFoundException("Such follower was not found"); }
 
             caller.Followers.Remove(target);
             uow.Save();

@@ -49,8 +49,8 @@
     <Compile Include="DTO\PostDTO.cs" />
     <Compile Include="DTO\PostForPublicateDTO.cs" />
     <Compile Include="DTO\ProfileDTO.cs" />
-    <Compile Include="Infrastructure\Exceptions\CannotRemoveFollowerException.cs" />
-    <Compile Include="Infrastructure\Exceptions\CannotRemoveSubscriptionException.cs" />
+    <Compile Include="Infrastructure\Exceptions\FollowerNotFoundException.cs" />
+    <Compile Include="Infrastructure\Exceptions\SubscriptionNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\IncorrectProfileConfigurationException.cs" />
     <Compile Include="Infrastructure\Exceptions\InvalidSubscriptionException.cs" />
     <Compile Include="Infrastructure\Exceptions\PostNotFoundException.cs" />

@@ -21,6 +21,7 @@ namespace SocialNetwork.BLL.Services.Interaction
         }
 
         private ICollection<SocialNetwork.DAL.EF.Hashtag> GetExistingHashtags(IEnumerable<HashtagDTO> hashtags) {
+            if (hashtags == null) { return null; }
             ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
             SocialNetwork.DAL.EF.Hashtag hashtag;
             foreach (var currentHashtag in hashtags)

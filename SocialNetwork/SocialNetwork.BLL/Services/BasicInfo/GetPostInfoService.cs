@@ -8,6 +8,7 @@ using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.Interfaces;
 using SocialNetwork.DAL.EF;
 using SocialNetwork.BLL.Interfaces.BasicInfo;
+using SocialNetwork.BLL.Infrastructure.Exceptions;
 using AutoMapper;
 
 namespace SocialNetwork.BLL.Services.BasicInfo
@@ -25,48 +26,39 @@ namespace SocialNetwork.BLL.Services.BasicInfo
         }
 
         public IEnumerable<HashtagDTO> GetHashtagCollection(int postId) {
-            try
-            {
+           
                 Post post = uow.Posts.Get(postId);
+                if (post == null) { throw new PostNotFoundException("Post was not found"); }
+
                 Mapper.Initialize(cfg => cfg.CreateMap<Hashtag, HashtagDTO>());
                 return Mapper.Map<IEnumerable<HashtagDTO>>(post.Hashtags);
-            }
-            catch (NullReferenceException) {
-                return null;
-            }
+            
+            
         }
         public IEnumerable<CommentDTO> GetComments(int postId,int offset,int count=10) { 
-            try
-            {
+            
                 Post post = uow.Posts.Get(postId);
+                if (post == null) { throw new PostNotFoundException("Post was not found"); }
+
                 Mapper.Initialize(cfg=>cfg.CreateMap<Comment,CommentDTO>());
                 return Mapper.Map<IEnumerable<CommentDTO>>(post.Comments).Skip(offset).Take(count);
 
-            }
-            catch (NullReferenceException) {
-                return null;
-            }
+           
         }
 
         public int GetReposters(int postId) {
-            try
-            {
+           
                 Post post = uow.Posts.Get(postId);
-                return post.Reposters.Count;
-            }
-            catch (NullReferenceException) {
-                return 0;
-            }
+                if (post == null) { throw new PostNotFoundException("Post was not found"); }
+                return post.Reposters.Count;     
         }
+
         public int GetLikes(int postId) {
-            try
-            {
-                Post post = uow.Posts.Get(postId);
-                return post.LikeVoices.Count;
-            }
-            catch (NullReferenceException) {
-                return 0;
-            }
+            
+            Post post = uow.Posts.Get(postId);
+            if (post == null) { throw new PostNotFoundException("Post was not found"); }
+            return post.LikeVoices.Count;
+           
         }
 
         public void Dispose() {
