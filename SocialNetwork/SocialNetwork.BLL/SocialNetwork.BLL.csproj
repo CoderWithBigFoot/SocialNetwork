@@ -47,16 +47,18 @@
     <Compile Include="DTO\CommentDTO.cs" />
     <Compile Include="DTO\HashtagDTO.cs" />
     <Compile Include="DTO\PostDTO.cs" />
+    <Compile Include="DTO\PostForPublicateDTO.cs" />
     <Compile Include="DTO\ProfileDTO.cs" />
     <Compile Include="Infrastructure\Exceptions\CannotRemoveFollowerException.cs" />
     <Compile Include="Infrastructure\Exceptions\CannotRemoveSubscriptionException.cs" />
+    <Compile Include="Infrastructure\Exceptions\IncorrectProfileConfigurationException.cs" />
     <Compile Include="Infrastructure\Exceptions\InvalidSubscriptionException.cs" />
     <Compile Include="Infrastructure\Exceptions\PostNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\ProfileNotFoundException.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetPostInfo.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetProfileInfo.cs" />
     <Compile Include="Interfaces\Interaction\IPostInteraction.cs" />
-    <Compile Include="Interfaces\Interaction\IProfileConfigurator.cs" />
+    <Compile Include="Interfaces\Interaction\IProfileConfiguration.cs" />
     <Compile Include="Interfaces\Interaction\IProfileInteraction.cs" />
     <Compile Include="Interfaces\Statistics\IGetProfileStatistics.cs" />
     <Compile Include="Interfaces\Interaction\ISearching.cs" />
@@ -65,7 +67,8 @@
     <Compile Include="Services\Enums\TimeInterval.cs" />
     <Compile Include="Services\BasicInfo\GetProfileInfoService.cs" />
     <Compile Include="Services\Interaction\PostInteractionService.cs" />
-    <Compile Include="Services\Interaction\ProfileInteraction.cs" />
+    <Compile Include="Services\Interaction\ProfileConfiguration.cs" />
+    <Compile Include="Services\Interaction\ProfileInteractionService.cs" />
     <Compile Include="Services\Interaction\SearchingService.cs" />
     <Compile Include="Services\Statistics\GetProfileStatisticsService.cs" />
   </ItemGroup>

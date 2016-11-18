@@ -34,11 +34,11 @@ namespace SocialNetwork.BLL.Services.Interaction
             return existingHashtags;
         }
 
-       
+      
         public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int profilesCount,int hashtagsCount) {
 
             try {
-
+                
                 ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = GetExistingHashtags(hashtags);
 
                 

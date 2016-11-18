@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SocialNetwork.BLL.DTO;
 using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.Interfaces;
 using SocialNetwork.BLL.Interfaces.Interaction;
 using SocialNetwork.BLL.Infrastructure.Exceptions;
-using AutoMapper;
 namespace SocialNetwork.BLL.Services.Interaction
 {
-   public class ProfileInteraction : IProfileInteraction
+   public class ProfileInteractionService : IProfileInteraction
     {
         private IUnitOfWork uow;
-        public ProfileInteraction(IUnitOfWork uow) {
+        public ProfileInteractionService(IUnitOfWork uow) {
             this.uow = uow;
         }
 

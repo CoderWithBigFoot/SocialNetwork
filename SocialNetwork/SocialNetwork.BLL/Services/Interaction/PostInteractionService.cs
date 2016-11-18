@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SocialNetwork.BLL.DTO;
-using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.Interfaces;
 using SocialNetwork.BLL.Interfaces.Interaction;
 using SocialNetwork.BLL.Infrastructure.Exceptions;
-using AutoMapper;
+using SocialNetwork.BLL.DTO;
+using SocialNetwork.DAL.Repositories;
+
 namespace SocialNetwork.BLL.Services.Interaction
 {
    public class PostInteractionService : IPostInteraction
@@ -71,6 +71,12 @@ namespace SocialNetwork.BLL.Services.Interaction
             uow.Save();
             return result;
         }
+
+        public bool PublishPost(PostForPublicateDTO newPost, IEnumerable<HashtagDTO> hashtags) {
+            SocialNetwork.DAL.EF.Profile publisher = uow.Profiles.FindByIdentityName(newPost.PublisherIdentityName);
+
+        }
+
 
         public void Dispose() {
             uow.Dispose();
