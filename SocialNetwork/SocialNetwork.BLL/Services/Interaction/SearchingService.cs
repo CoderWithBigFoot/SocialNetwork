@@ -34,12 +34,7 @@ namespace SocialNetwork.BLL.Services.Interaction
             return existingHashtags;
         }
 
-        /// <summary>
-        /// Searching users,that have one of the hashtagsCollection(parameter) like a popular hashtag
-        /// </summary>
-        /// <param name="hashtags">Popular hashtags</param>
-        /// <param name="offset">Offset</param>
-        /// <returns></returns>
+       
         public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int profilesCount,int hashtagsCount) {
 
             try {
@@ -106,11 +101,38 @@ namespace SocialNetwork.BLL.Services.Interaction
 
         }
 
+        public IEnumerable<PostDTO> DefaultPostsSearching(int offset,int postsCount, int popularHashtagsCount,string identityName) {
 
-        public IEnumerable<PostDTO> DefaultPostSearching(int offset, int popularHashtagsCount,string identityName) {
-            
+            IEnumerable<KeyValuePair<HashtagDTO, int>> mostPopularHashtagsCount = profileStatistics.MostPopularHashtags(identityName, popularHashtagsCount);
+            ICollection<HashtagDTO> mostPopularHashtags = new List<HashtagDTO>();//most popupal hashtags of user
 
+            foreach (var current in mostPopularHashtagsCount) {
+                if (!mostPopularHashtags.Contains(current.Key)) {
+                    mostPopularHashtags.Add(current.Key);
+                }
+            }
+
+           return this.PostsByHashtags(mostPopularHashtags, offset, postsCount);
+        }
+        public IEnumerable<ProfileDTO> DefaultProfilesSearching(int offset, int profilesCount,int popularHashtagsCount, string identityName) {
+            IEnumerable<KeyValuePair<HashtagDTO, int>> mostPopularHashtagsCount = profileStatistics.MostPopularHashtags(identityName, popularHashtagsCount);
+            ICollection<HashtagDTO> mostPopularHashtags = new List<HashtagDTO>();//most popupal hashtags of user
+
+            foreach (var current in mostPopularHashtagsCount)
+            {
+                if (!mostPopularHashtags.Contains(current.Key))
+                {
+                    mostPopularHashtags.Add(current.Key);
+                }
+            }
+
+            return this.ProfilesByPopularHashtags(mostPopularHashtags, offset, profilesCount, popularHashtagsCount);
         }
 
+
+
+        public void Dispose() {
+            uow.Dispose();
+        }
     }
 }
