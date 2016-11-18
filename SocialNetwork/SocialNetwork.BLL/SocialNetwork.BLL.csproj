@@ -48,6 +48,10 @@
     <Compile Include="DTO\HashtagDTO.cs" />
     <Compile Include="DTO\PostDTO.cs" />
     <Compile Include="DTO\ProfileDTO.cs" />
+    <Compile Include="Infrastructure\Exceptions\CannotRemoveFollowerException.cs" />
+    <Compile Include="Infrastructure\Exceptions\CannotRemoveSubscriptionException.cs" />
+    <Compile Include="Infrastructure\Exceptions\InvalidSubscriptionException.cs" />
+    <Compile Include="Infrastructure\Exceptions\ProfileNotFoundException.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetPostInfo.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetProfileInfo.cs" />
     <Compile Include="Interfaces\Interaction\IPostInteraction.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="Services\BasicInfo\GetPostInfoService.cs" />
     <Compile Include="Services\Enums\TimeInterval.cs" />
     <Compile Include="Services\BasicInfo\GetProfileInfoService.cs" />
+    <Compile Include="Services\Interaction\ProfileInteraction.cs" />
     <Compile Include="Services\Interaction\SearchingService.cs" />
     <Compile Include="Services\Statistics\GetProfileStatisticsService.cs" />
   </ItemGroup>
@@ -72,7 +77,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\Exceptions\" />
     <Folder Include="Infrastructure\Modules\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

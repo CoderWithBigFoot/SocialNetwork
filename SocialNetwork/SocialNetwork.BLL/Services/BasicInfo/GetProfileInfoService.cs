@@ -48,6 +48,7 @@ namespace SocialNetwork.BLL.Services.BasicInfo
             try
             {
                 SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+                
                     ICollection<SocialNetwork.DAL.EF.Profile> subscriptions = profile.SubscribedOn;
                     Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
                     return Mapper.Map<ICollection<ProfileDTO>>(subscriptions);   
