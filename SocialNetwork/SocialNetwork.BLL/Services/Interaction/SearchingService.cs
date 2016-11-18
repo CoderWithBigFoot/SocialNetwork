@@ -20,25 +20,33 @@ namespace SocialNetwork.BLL.Services.Interaction
             this.profileStatistics = profileStatistics;
         }
 
+        private ICollection<SocialNetwork.DAL.EF.Hashtag> GetExistingHashtags(IEnumerable<HashtagDTO> hashtags) {
+            ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
+            SocialNetwork.DAL.EF.Hashtag hashtag;
+            foreach (var currentHashtag in hashtags)
+            {
+                hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
+                if (hashtag != null)
+                {
+                    existingHashtags.Add(hashtag);
+                }
+            }
+            return existingHashtags;
+        }
+
         /// <summary>
         /// Searching users,that have one of the hashtagsCollection(parameter) like a popular hashtag
         /// </summary>
         /// <param name="hashtags">Popular hashtags</param>
         /// <param name="offset">Offset</param>
         /// <returns></returns>
-       public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int hashtagsCount) {
+       public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int profilesCount,int hashtagsCount) {
 
             try {
 
-                ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
+                ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = GetExistingHashtags(hashtags);
 
-                SocialNetwork.DAL.EF.Hashtag hashtag;
-                foreach (var currentHashtag in hashtags) {
-                    hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
-                    if (hashtag != null) {
-                        existingHashtags.Add(hashtag);
-                    }
-                }
+                
 
                 Mapper.Initialize(cfg => {
                     cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, HashtagDTO>() ;
@@ -65,8 +73,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                     }
                 }
 
-                return Mapper.Map<IEnumerable<ProfileDTO>>(result);
-                
+                return Mapper.Map<IEnumerable<ProfileDTO>>(result).Skip(offset).Take(profilesCount);              
             }
             catch (NullReferenceException){
                 return null;
@@ -74,6 +81,32 @@ namespace SocialNetwork.BLL.Services.Interaction
 
         }
 
+
+        public IEnumerable<PostDTO> PostsByHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int postsCount) {
+
+            try
+            {
+                ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = GetExistingHashtags(hashtags);
+
+                ICollection<SocialNetwork.DAL.EF.Post> resultPosts = new List<SocialNetwork.DAL.EF.Post>();
+
+                foreach (var hashtag in existingHashtags) {
+                    foreach (var hashtagsPost in hashtag.Posts) {
+                        if (!resultPosts.Contains(hashtagsPost)) {
+                            resultPosts.Add(hashtagsPost);
+                        }
+                    }
+                }
+
+                Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post,PostDTO>());
+                return Mapper.Map<IEnumerable<PostDTO>>(resultPosts.OrderByDescending(x => x.Hashtags.Count).Skip(offset).Take(postsCount));
+
+            }
+            catch (NullReferenceException) {
+                return null;
+            }
+
+        }
 
 
     }
