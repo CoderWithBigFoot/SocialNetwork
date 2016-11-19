@@ -61,6 +61,9 @@
     <Compile Include="Infrastructure\Exceptions\InvalidSubscriptionException.cs" />
     <Compile Include="Infrastructure\Exceptions\PostNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\ProfileNotFoundException.cs" />
+    <Compile Include="Infrastructure\NinjectModules\ProfileStatisticsModule.cs" />
+    <Compile Include="Infrastructure\NinjectModules\ProvidersModule.cs" />
+    <Compile Include="Infrastructure\NinjectModules\UnitOfWorkModule.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetPostInfo.cs" />
     <Compile Include="Interfaces\BasicInfo\IGetProfileInfo.cs" />
     <Compile Include="Interfaces\Interaction\IPostInteraction.cs" />
@@ -97,9 +100,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infrastructure\NinjectModules\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
