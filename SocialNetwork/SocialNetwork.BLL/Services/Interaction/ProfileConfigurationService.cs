@@ -9,10 +9,10 @@ using SocialNetwork.BLL.Infrastructure.Exceptions;
 
 namespace SocialNetwork.BLL.Services.Interaction
 {
-   public class ProfileConfiguration : IProfileConfiguration
+   public class ProfileConfigurationService : IProfileConfiguration
     {
         private IUnitOfWork uow;
-        public ProfileConfiguration(IUnitOfWork uow) {
+        public ProfileConfigurationService(IUnitOfWork uow) {
             this.uow = uow;
         }
 

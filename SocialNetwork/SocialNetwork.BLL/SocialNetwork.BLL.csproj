@@ -82,7 +82,7 @@
     <Compile Include="Services\Enums\TimeInterval.cs" />
     <Compile Include="Services\BasicInfo\GetProfileInfoService.cs" />
     <Compile Include="Services\Interaction\PostInteractionService.cs" />
-    <Compile Include="Services\Interaction\ProfileConfiguration.cs" />
+    <Compile Include="Services\Interaction\ProfileConfigurationService.cs" />
     <Compile Include="Services\Interaction\ProfileInteractionService.cs" />
     <Compile Include="Services\Interaction\SearchingService.cs" />
     <Compile Include="Services\Registration\ProfileRegistrationService.cs" />

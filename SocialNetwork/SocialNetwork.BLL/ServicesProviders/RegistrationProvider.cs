@@ -11,7 +11,7 @@ namespace SocialNetwork.BLL.ServicesProviders
 {
    public class RegistrationProvider : IRegistration
     {
-        private IRegistrator registrationService;
+        private ProfileRegistrationService registrationService;
         private IUnitOfWork uow;
 
         public RegistrationProvider(IUnitOfWork uow) {

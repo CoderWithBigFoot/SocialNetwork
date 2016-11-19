@@ -14,7 +14,7 @@ namespace SocialNetwork.BLL.ServicesProviders
    public class InteractionProvider : IInteraction
     {
         private PostInteractionService postInteractionService;
-        private ProfileConfiguration profileConfigurationService;
+        private ProfileConfigurationService profileConfigurationService;
         private ProfileInteractionService profileInteractionService;
         private SearchingService searchingService;
         private IUnitOfWork uow;
@@ -36,7 +36,7 @@ namespace SocialNetwork.BLL.ServicesProviders
        public IProfileConfiguration ProfileConfigurationService {
             get {
                 if (profileConfigurationService == null) {
-                    profileConfigurationService = new ProfileConfiguration(uow);
+                    profileConfigurationService = new ProfileConfigurationService(uow);
                 }
                 return profileConfigurationService;
             }
