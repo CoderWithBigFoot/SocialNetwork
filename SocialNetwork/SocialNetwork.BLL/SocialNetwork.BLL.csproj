@@ -49,6 +49,7 @@
     <Compile Include="DTO\PostDTO.cs" />
     <Compile Include="DTO\PostForPublicateDTO.cs" />
     <Compile Include="DTO\ProfileDTO.cs" />
+    <Compile Include="DTO\ProfileForRegistrationDTO.cs" />
     <Compile Include="Infrastructure\Exceptions\FollowerNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\PublishedPostsNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\SubscriptionNotFoundException.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Interfaces\Interaction\IPostInteraction.cs" />
     <Compile Include="Interfaces\Interaction\IProfileConfiguration.cs" />
     <Compile Include="Interfaces\Interaction\IProfileInteraction.cs" />
+    <Compile Include="Interfaces\Registration\IRegistration.cs" />
     <Compile Include="Interfaces\Statistics\IGetProfileStatistics.cs" />
     <Compile Include="Interfaces\Interaction\ISearching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Services\Interaction\ProfileConfiguration.cs" />
     <Compile Include="Services\Interaction\ProfileInteractionService.cs" />
     <Compile Include="Services\Interaction\SearchingService.cs" />
+    <Compile Include="Services\Registration\RegistrationService.cs" />
     <Compile Include="Services\Statistics\GetProfileStatisticsService.cs" />
   </ItemGroup>
   <ItemGroup>
