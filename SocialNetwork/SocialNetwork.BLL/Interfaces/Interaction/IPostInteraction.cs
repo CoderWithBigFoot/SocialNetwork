@@ -11,7 +11,6 @@ namespace SocialNetwork.BLL.Interfaces.Interaction
         //comments maybe here
         bool Like(int postId,string identityName);
         bool Repost(int postId, string identityName);
-        bool PublishPost(PostForPublicateDTO newPost,IEnumerable<HashtagDTO> hashtags);
-        bool RemovePost(PostDTO toRemovePost);
+        void PublishPost(PostForPublicateDTO newPost,IEnumerable<HashtagDTO> hashtags);
     }
 }

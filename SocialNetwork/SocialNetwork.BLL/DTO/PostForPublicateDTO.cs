@@ -8,7 +8,7 @@ namespace SocialNetwork.BLL.DTO
 {
    public class PostForPublicateDTO
     {
-       public string Contenet { set; get; }
+       public string Content { set; get; }
        public System.DateTime PublishDate { get; set; }
        public string PublisherIdentityName { set; get; }
     }

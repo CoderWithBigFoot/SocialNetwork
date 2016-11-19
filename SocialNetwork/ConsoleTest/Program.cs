@@ -11,6 +11,7 @@ namespace ConsoleTest
 {
     class TestClass {
         public string Name { set; get; }
+        public string Sername { set; get; }
     }
     class SecondTestClass {
         public string Name { set; get; }
@@ -31,8 +32,13 @@ namespace ConsoleTest
             return obj.GetHashCode();
         }
     }
-    class Program 
+    class Program
     {
+        public static void ShowString(string str) {
+            if (str == null) { throw new ArgumentNullException(); }
+            Console.WriteLine(str);
+        }
+
         static void Main(string[] args)
         {
             try
@@ -181,19 +187,13 @@ namespace ConsoleTest
                     };
                     post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
                     uow.Posts.Create(post1);*/
-
-                List<TestClass> test = new List<TestClass>() {
-                    new TestClass() { Name = "1" },
-                    new TestClass() { Name = "2"},
-                    new TestClass() { Name = "4"},
-                    new TestClass() { Name = "1"}
-                };
-                /*var result = test.FirstOrDefault(x => x.Name == "3");
-                if (result==null) { Console.WriteLine("null"); }
-                Console.WriteLine(result);*/
-
-                
-                foreach (var c in test.Distinct(new TestClassComparer())) { Console.WriteLine(c.Name); }
+                string str;
+                str = null;
+                try
+                { 
+                    ShowString(str);
+                }
+                catch (ArgumentNullException) { Console.WriteLine("Null exception"); }
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
