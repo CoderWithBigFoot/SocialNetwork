@@ -25,17 +25,19 @@ namespace SocialNetwork.BLL.Services.Interaction
             return true;
                 
         }
-
         private bool IsNullOrEmptyOrWhiteSpace(string str) {
             if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) { return true; }
             return false;
         }
 
+        private SocialNetwork.DAL.EF.Profile GetProfile(string identityName) {
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            return profile;
+        }
 
         public void ChangeName(string identityName, string newName) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-
-            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
             if (IsNullOrEmptyOrWhiteSpace(newName)) { throw new IncorrectProfileConfigurationException("Name cannot be a null or empty"); }
             if (!this.CheckStringForLettersOnly(newName)) { throw new IncorrectProfileConfigurationException("Name must be consist of letters only"); }
         
@@ -43,11 +45,8 @@ namespace SocialNetwork.BLL.Services.Interaction
             profile.Name = newName;
             uow.Save();
         }
-
         public void ChangeSername(string identityName, string newSername) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-
-            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
             if (IsNullOrEmptyOrWhiteSpace(newSername)) { throw new IncorrectProfileConfigurationException("Sername cannot be a null or empty"); }
             if (!this.CheckStringForLettersOnly(newSername)) { throw new IncorrectProfileConfigurationException("Sername must be consist of letters only"); }
 
@@ -56,20 +55,15 @@ namespace SocialNetwork.BLL.Services.Interaction
         }
 
         public void ChangeDateOfBirth(string identityName,DateTime newDateOfBirth) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-
-            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
 
             profile.DateOfBirth = newDateOfBirth;
             uow.Save();
         }
 
         public void ChangeStatus(string identityName, string newStatus) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-
-            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
             if (IsNullOrEmptyOrWhiteSpace(newStatus)) { throw new IncorrectProfileConfigurationException("Status cannot be a null or empty"); }
-
             profile.CustomInfo = newStatus;
             uow.Save();
         }

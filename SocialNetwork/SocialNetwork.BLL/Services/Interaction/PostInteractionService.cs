@@ -18,15 +18,23 @@ namespace SocialNetwork.BLL.Services.Interaction
             this.uow = uow;
         }
 
+        private SocialNetwork.DAL.EF.Post GetPost(int postId) {
+            SocialNetwork.DAL.EF.Post post = uow.Posts.Get(postId);
+            if (post == null) { throw new PostNotFoundException("Post was not found"); }
+            return post;
+        }
+        private SocialNetwork.DAL.EF.Profile GetProfile(string identityName) {
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            return profile;
+        }
         public bool Like(int postId, string identityName) {
 
-            SocialNetwork.DAL.EF.Post post = uow.Posts.Get(postId);
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+            SocialNetwork.DAL.EF.Post post = this.GetPost(postId);
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName) ;
             bool result = false;
 
-            if (post == null) { throw new PostNotFoundException("Post was not found"); }
-            if(profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
-
+ 
             if (post.LikeVoices.Contains(profile)) {
                 post.LikeVoices.Remove(profile);
                 result = false;
@@ -40,12 +48,9 @@ namespace SocialNetwork.BLL.Services.Interaction
             return result;
         }
         public bool Repost(int postId, string identityName) {
-            SocialNetwork.DAL.EF.Post post = uow.Posts.Get(postId);
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+            SocialNetwork.DAL.EF.Post post = this.GetPost(postId);
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
             bool result = false;
-
-            if (post == null) { throw new PostNotFoundException("Post was not found"); }
-            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
 
             if (profile.RepostedPosts.Contains(post)) {
                 //we can delete the post from reposts only from the home page
@@ -63,10 +68,10 @@ namespace SocialNetwork.BLL.Services.Interaction
         //if there is no such hashtag - add it
         private ICollection<SocialNetwork.DAL.EF.Hashtag> GetExistingAndNewHashtags(IEnumerable<HashtagDTO> hashtags)
         {
-            if (hashtags == null) { throw new ArgumentNullException(); }
+            if (hashtags == null) { throw new ArgumentNullException("Hashtags must consist of at least one hashtag"); }
             ICollection<SocialNetwork.DAL.EF.Hashtag> existingAndNewHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
             SocialNetwork.DAL.EF.Hashtag hashtag;
-
+            SocialNetwork.DAL.EF.Hashtag newHashtag;
             foreach (var currentHashtag in hashtags)
             {
                 hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
@@ -75,28 +80,29 @@ namespace SocialNetwork.BLL.Services.Interaction
                     existingAndNewHashtags.Add(hashtag);
                 }
                 if (hashtag == null) {
-                    uow.Hashtags.Create(new DAL.EF.Hashtag() {
+                    newHashtag = new DAL.EF.Hashtag()
+                    {
                         Name = hashtag.Name
-                    });
+                    };
+                    uow.Hashtags.Create(newHashtag);
+                    existingAndNewHashtags.Add(hashtag);
                 }
             }
+            uow.Save();
             return existingAndNewHashtags;
         }
+
         public void PublishPost(PostForPublicateDTO newPost, IEnumerable<HashtagDTO> hashtags) {
-            SocialNetwork.DAL.EF.Profile publisher = uow.Profiles.FindByIdentityName(newPost.PublisherIdentityName);
+            SocialNetwork.DAL.EF.Profile publisher = this.GetProfile(newPost.PublisherIdentityName);
             SocialNetwork.DAL.EF.Post publishedPost = new DAL.EF.Post();
 
-            if (publisher == null) { throw new ProfileNotFoundException("Publisher was not found"); }
-            ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = this.GetExistingAndNewHashtags(hashtags); 
-
-        
-
+            ICollection<SocialNetwork.DAL.EF.Hashtag> existingAndNewHashtags = this.GetExistingAndNewHashtags(hashtags); 
             Mapper.Initialize(cfg => cfg.CreateMap<PostForPublicateDTO,SocialNetwork.DAL.EF.Post>());
             
 
             publishedPost = Mapper.Map<SocialNetwork.DAL.EF.Post>(newPost);
             publishedPost.Publisher = publisher;
-            publishedPost.Hashtags = existingHashtags;
+            publishedPost.Hashtags = existingAndNewHashtags;
 
             uow.Posts.Create(publishedPost);
             uow.Save();
