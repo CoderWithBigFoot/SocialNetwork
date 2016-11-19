@@ -10,7 +10,12 @@ namespace SocialNetwork.WEB.Controllers
     public class HomeController : Controller
     {
         private IBasicInfo basicInfo;
-        public ActionResult Index(IBasicInfo info)
+       
+        public HomeController(IBasicInfo basicInfo,IInteraction interaction,IRegistration registr,IStatistics stat) {
+            this.basicInfo = basicInfo;
+        }
+
+        public ActionResult Index()
         {
            
             return View();

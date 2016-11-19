@@ -41,12 +41,12 @@ namespace SocialNetwork.WEB.App_Start
         private static IKernel CreateKernel()
         {
             var modules = new INinjectModule[] {
-                new ProfileStatisticsModule(),
+                //new ProfileStatisticsModule(),
                 new ProvidersModule(),
                 new UnitOfWorkModule("SocialNetworkConnection")
             };
 
-            var kernel = new StandardKernel();
+            var kernel = new StandardKernel(modules);
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
