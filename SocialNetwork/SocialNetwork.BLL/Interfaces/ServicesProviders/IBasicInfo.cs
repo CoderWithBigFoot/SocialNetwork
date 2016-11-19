@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SocialNetwork.BLL.Interfaces.BasicInfo;
 namespace SocialNetwork.BLL.Interfaces.ServicesProviders
 {
-   public interface IBasicInfo
+   public interface IBasicInfo : IDisposable
     {
         IGetPostInfo PostInfoService {  get; }
         IGetProfileInfo ProfileInfoService { get; }

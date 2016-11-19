@@ -27,6 +27,9 @@ namespace SocialNetwork.BLL.ServicesProviders
             }
         }
 
+        public void Dispose() {
+            uow.Dispose();
+        }
 
     }
 }

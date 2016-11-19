@@ -57,5 +57,9 @@ namespace SocialNetwork.BLL.ServicesProviders
                 return searchingService;
             }
         }
+
+        public void Dispose() {
+            uow.Dispose();
+        }
     }
 }

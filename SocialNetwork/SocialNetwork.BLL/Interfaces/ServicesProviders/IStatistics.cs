@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SocialNetwork.BLL.Interfaces.Statistics;
 namespace SocialNetwork.BLL.Interfaces.ServicesProviders
 {
-   public interface IStatistics
+   public interface IStatistics : IDisposable
     {
         IGetProfileStatistics GetProfileStatisticsService { get; }
     }

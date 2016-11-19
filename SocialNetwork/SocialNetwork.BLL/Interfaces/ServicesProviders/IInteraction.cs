@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SocialNetwork.BLL.Interfaces.Interaction;
 namespace SocialNetwork.BLL.Interfaces.ServicesProviders
 {
-   public interface IInteraction
+   public interface IInteraction : IDisposable
     {
         IPostInteraction PostInteractionService { get; }
         IProfileConfiguration ProfileConfigurationService { get; }

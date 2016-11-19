@@ -28,5 +28,9 @@ namespace SocialNetwork.BLL.ServicesProviders
                 return profileStatisticsService;
             }
         }
+
+        public void Dispose() {
+            uow.Dispose();
+        }
     }
 }

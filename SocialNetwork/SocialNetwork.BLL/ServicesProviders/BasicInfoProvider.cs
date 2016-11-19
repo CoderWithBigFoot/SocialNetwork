@@ -36,8 +36,10 @@ namespace SocialNetwork.BLL.ServicesProviders
                 return profileInfoService;
             }
         }
-        
 
+        public void Dispose() {
+            uow.Dispose();
+        }
 
 
 
