@@ -11,10 +11,10 @@ using SocialNetwork.DAL.Interfaces;
 using AutoMapper;
 namespace SocialNetwork.BLL.Services.Registration
 {
-    public class RegistrationService : IRegistration
+    public class ProfileRegistrationService : IRegistrator
     {
         private IUnitOfWork uow;
-        public RegistrationService(IUnitOfWork uow) {
+        public ProfileRegistrationService(IUnitOfWork uow) {
             this.uow = uow;
         }
 

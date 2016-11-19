@@ -34,6 +34,10 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,10 +66,18 @@
     <Compile Include="Interfaces\Interaction\IPostInteraction.cs" />
     <Compile Include="Interfaces\Interaction\IProfileConfiguration.cs" />
     <Compile Include="Interfaces\Interaction\IProfileInteraction.cs" />
-    <Compile Include="Interfaces\Registration\IRegistration.cs" />
+    <Compile Include="Interfaces\Registration\IRegistrator.cs" />
+    <Compile Include="Interfaces\ServicesProviders\IBasicInfo.cs" />
+    <Compile Include="Interfaces\ServicesProviders\IInteraction.cs" />
+    <Compile Include="Interfaces\ServicesProviders\IRegistration.cs" />
+    <Compile Include="Interfaces\ServicesProviders\IStatistics.cs" />
     <Compile Include="Interfaces\Statistics\IGetProfileStatistics.cs" />
     <Compile Include="Interfaces\Interaction\ISearching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesProviders\BasicInfoProvider.cs" />
+    <Compile Include="ServicesProviders\InteractionProvider.cs" />
+    <Compile Include="ServicesProviders\RegistrationProvider.cs" />
+    <Compile Include="ServicesProviders\StatisticsProvider.cs" />
     <Compile Include="Services\BasicInfo\GetPostInfoService.cs" />
     <Compile Include="Services\Enums\TimeInterval.cs" />
     <Compile Include="Services\BasicInfo\GetProfileInfoService.cs" />
@@ -73,7 +85,7 @@
     <Compile Include="Services\Interaction\ProfileConfiguration.cs" />
     <Compile Include="Services\Interaction\ProfileInteractionService.cs" />
     <Compile Include="Services\Interaction\SearchingService.cs" />
-    <Compile Include="Services\Registration\RegistrationService.cs" />
+    <Compile Include="Services\Registration\ProfileRegistrationService.cs" />
     <Compile Include="Services\Statistics\GetProfileStatisticsService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,7 +98,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\Modules\" />
+    <Folder Include="Infrastructure\NinjectModules\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

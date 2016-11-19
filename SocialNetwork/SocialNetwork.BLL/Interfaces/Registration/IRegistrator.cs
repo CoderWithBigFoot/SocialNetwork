@@ -7,7 +7,7 @@ using SocialNetwork.BLL.DTO;
 
 namespace SocialNetwork.BLL.Interfaces.Registration
 {
-   public interface IRegistration : IDisposable
+   public interface IRegistrator : IDisposable
     {
         void UserRegistration(ProfileForRegistrationDTO profile);
     }
