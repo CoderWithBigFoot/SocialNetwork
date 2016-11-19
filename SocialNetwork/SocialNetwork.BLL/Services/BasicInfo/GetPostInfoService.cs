@@ -21,8 +21,10 @@ namespace SocialNetwork.BLL.Services.BasicInfo
         }
 
         public PostDTO GetPost(int postId) {
+            SocialNetwork.DAL.EF.Post post = uow.Posts.Get(postId);
+            if (post == null) { throw new PostNotFoundException("Post was not found"); }
             Mapper.Initialize(cfg => cfg.CreateMap<Post, PostDTO>());
-            return Mapper.Map<PostDTO>(uow.Posts.Get(postId));
+            return Mapper.Map<PostDTO>(post);
         }
 
         public IEnumerable<HashtagDTO> GetHashtagCollection(int postId) {
@@ -45,20 +47,17 @@ namespace SocialNetwork.BLL.Services.BasicInfo
 
            
         }
-
-        public int GetReposters(int postId) {
+        public int GetRepostsCount(int postId) {
            
                 Post post = uow.Posts.Get(postId);
                 if (post == null) { throw new PostNotFoundException("Post was not found"); }
                 return post.Reposters.Count;     
         }
-
-        public int GetLikes(int postId) {
+        public int GetLikesCount(int postId) {
             
             Post post = uow.Posts.Get(postId);
             if (post == null) { throw new PostNotFoundException("Post was not found"); }
-            return post.LikeVoices.Count;
-           
+            return post.LikeVoices.Count;          
         }
 
         public void Dispose() {

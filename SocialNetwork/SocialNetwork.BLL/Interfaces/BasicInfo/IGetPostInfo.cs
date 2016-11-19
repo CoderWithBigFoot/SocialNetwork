@@ -10,11 +10,9 @@ namespace SocialNetwork.BLL.Interfaces.BasicInfo
    public interface IGetPostInfo : IDisposable
     {
         PostDTO GetPost(int postId);
-
         IEnumerable<HashtagDTO> GetHashtagCollection(int postId);
         IEnumerable<CommentDTO> GetComments(int postId,int offset,int count);
-
-        int GetReposters(int postId);
-        int GetLikes(int postId);  
+        int GetRepostsCount(int postId);
+        int GetLikesCount(int postId);  
     }
 }

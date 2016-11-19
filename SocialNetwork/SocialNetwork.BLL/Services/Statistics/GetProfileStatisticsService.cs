@@ -15,33 +15,33 @@ namespace SocialNetwork.BLL.Services.Statistics
     //if zero - there are no posts
     //if null / there are no user
    public class GetProfileStatisticsService : IGetProfileStatistics
-    {
+    {//во всех чекнуть на наличие постов
         private IUnitOfWork uow;
         public GetProfileStatisticsService(IUnitOfWork uow) {
             this.uow = uow;
         }
 
+        private SocialNetwork.DAL.EF.Profile GetProfile(string identityName) {
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+            if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            return profile;
+        }
         public int PublishedPostsCount(string identityName)
         {
-           
-                SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
             if (profile == null) { throw new ProfileNotFoundException("Profile was not found");}
-                return profile.PublishedPosts.Count;
-            
+            return profile.PublishedPosts.Count; 
         }
         public IEnumerable<HashtagDTO> AllHashtags(string identityName)
         {
-            
-                SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-                if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
+            ICollection<SocialNetwork.DAL.EF.Hashtag> allProfileHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
+            if (profile.PublishedPosts.Count == 0) { throw new PublishedPostsNotFoundException("Profile has no published posts"); }
 
-                ICollection<SocialNetwork.DAL.EF.Hashtag> allProfileHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
-                            
                 foreach (var currentPost in profile.PublishedPosts)
                 {
                     foreach (var currentHashtag in currentPost.Hashtags)
                     {
-
                         if (!allProfileHashtags.Contains(currentHashtag))
                         {
                             allProfileHashtags.Add(currentHashtag);
@@ -51,17 +51,14 @@ namespace SocialNetwork.BLL.Services.Statistics
 
                 Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, HashtagDTO>());
                 return Mapper.Map<ICollection<HashtagDTO>>(allProfileHashtags);
-           
         }
         public Dictionary<HashtagDTO, int> EachHashtagCount(string identityName)
         {
-            
-                SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-                if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
-                
-                Dictionary<SocialNetwork.DAL.EF.Hashtag, int> result = new Dictionary<SocialNetwork.DAL.EF.Hashtag, int>();
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
+            Dictionary<SocialNetwork.DAL.EF.Hashtag, int> result = new Dictionary<SocialNetwork.DAL.EF.Hashtag, int>();
+            if (profile.PublishedPosts.Count == 0) { throw new PublishedPostsNotFoundException("Profile has no published posts"); }
 
-                foreach (var currentPost in profile.PublishedPosts) {
+            foreach (var currentPost in profile.PublishedPosts) {
                     foreach (var currentHashtag in currentPost.Hashtags) {
                         if (!result.ContainsKey(currentHashtag)) {//////////////////////////////////
                             result.Add(currentHashtag, 1);
@@ -71,7 +68,6 @@ namespace SocialNetwork.BLL.Services.Statistics
                         }
                     }                  
                 }
-
                 Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, HashtagDTO>());
                 return Mapper.Map<Dictionary<HashtagDTO, int>>(result);
             
@@ -80,11 +76,10 @@ namespace SocialNetwork.BLL.Services.Statistics
         {
                 Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
                 return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);    
-        }
+        }      
         public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count,TimeInterval interval=TimeInterval.Week)
-        {           
-                SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-                if (profile == null) { throw new ProfileNotFoundException("Profile was not found");}
+        {
+            SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
                 int period = 0;
                 switch (interval) {
                     case TimeInterval.Day:period = 1;break;
@@ -106,31 +101,22 @@ namespace SocialNetwork.BLL.Services.Statistics
                 }
                 return result;
           
-        }
-        
+        }     
         public Dictionary<HashtagDTO, int> SelectedHashtagsCount(string identityName, IEnumerable<HashtagDTO> hashtags) {
            
                 Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
                 Dictionary<HashtagDTO, int> result = new Dictionary<HashtagDTO, int>();
 
-            try
-            {
+                if (hashtags == null) { throw new ArgumentNullException("Hashtags must consist of at least one element"); }
                 foreach (var currentHashtag in hashtags)
                 {
                     if (eachHashtagCount.ContainsKey(currentHashtag))
                     {
                         result.Add(currentHashtag, eachHashtagCount[currentHashtag]);
                     }
-                }
-            }
-            catch (NullReferenceException) {
-                return null;
-            }
-                return result;
-           
+                } 
+                return result;    
         }
-
-
         public void Dispose() {
             uow.Dispose();
         }

@@ -28,7 +28,7 @@ namespace SocialNetwork.BLL.Services.BasicInfo
         }
 
         public ProfileDTO GetProfile(string identityName) {
-            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.Get(id);
+            SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
             if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
 
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
@@ -58,7 +58,6 @@ namespace SocialNetwork.BLL.Services.BasicInfo
            
             
         }
-
         public void Dispose() {
             uow.Dispose();
         }

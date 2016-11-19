@@ -10,16 +10,8 @@ namespace SocialNetwork.BLL.Interfaces.Statistics
    public interface IGetProfileStatistics : IDisposable
     {
         int PublishedPostsCount(string identityName);
-
         IEnumerable<HashtagDTO> AllHashtags(string identityName);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="identityName">Identity name of user</param>
-        /// <param name="count">Count of posts to select</param>
-        /// <returns></returns>
         IEnumerable<KeyValuePair<HashtagDTO,int>>MostPopularHashtags(string identityName,int count);
-
         Dictionary<HashtagDTO, int> EachHashtagCount(string identityName); // count of posts for each hashtag
         Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName,int count,TimeInterval interval=TimeInterval.Day);
         // how often a user publishes posts on these hashtags(calculate from )
