@@ -170,7 +170,7 @@ namespace SocialNetwork.WEB.Controllers
                     
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                   
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("MainPage", "Home");
                 }
                 AddErrors(result);
             }
@@ -363,7 +363,7 @@ namespace SocialNetwork.WEB.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("MainPage", "Manage");
             }
 
             if (ModelState.IsValid)
@@ -399,7 +399,7 @@ namespace SocialNetwork.WEB.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MainPage", "Home");
         }
 
         //
@@ -456,7 +456,7 @@ namespace SocialNetwork.WEB.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MainPage", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

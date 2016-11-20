@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @{ Layout = null;}
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top ">
@@ -21,9 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li>Link</li>
+                    <li>Link</li>
+                    <li>Link</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -31,17 +31,20 @@
     </div>
     <br>
 
-    <div class="container container-custom">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-3">.col-sm-4</div>
+            <div class="col-sm-3">Link</div>
 
             <div class="col-sm-9">
-               @RenderBody()
+                @{Html.RenderPartial("../Partials/HomepagePartial",ViewData["currentProfileInfo"]);}
+
+
+
             </div>
         </div>
     </div>
     <div class="container">
-       <hr/>
+        <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - SocialNetwork</p>
         </footer>
@@ -49,6 +52,5 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
