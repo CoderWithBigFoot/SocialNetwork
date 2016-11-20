@@ -36,9 +36,15 @@
     
     <div class="container">
         <div class="row">
-            <div class="col-sm-1 col-md-offset-1">Link</div>
+            <div class="col-md-2 col-md-offset-1">
+                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-home"></span>  My profile</a><br>
+                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-search"></span>  Find</a><br>
+                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-tasks"></span>  News</a><br>
+                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-cog"></span>  Settings</a><br>
 
-            <div class="col-sm-8" id="partialsPlace">
+            </div>
+
+            <div class="col-md-9" id="partialsPlace">
                 <!--@{Html.RenderPartial("../Partials/HomepagePartial",Model);}-->
 
                 @if (Model == null)
@@ -46,32 +52,36 @@
                     <div>Cannot show the information</div>
                 }
                 else{
-                    <div class="row">
-                        <div class="common-info-block">
+                        <div class="common-info-block common-info-block-text">
+                            <div class="row">
+                                <div class="col-md-3">Name: </div>
+                                <div class="col-md-9">@Model.Name</div>
+                                    
+                                <div class="col-md-3">Sername: </div>
+                                <div class="col-md-9">@Model.Sername</div>
+                                     
+                                <div class="col-md-3">Identity name: </div>
+                                <div class="col-md-9">@Model.IdentityName</div>
 
-                        <div class="col-md-2">Name:</div>
-                        <div class="col-md-10">@Model.Name </div>
-                            
-                        <div class="col-md-2">Sername:</div>
-                        <div class="col-md-10">@Model.Sername</div>
-                            
-                        <div class="col-md-2">E-mail:</div>
-                        <div class="col-md-10">@Model.IdentityName</div>
+                                <div class="col-md-3">Profile id: </div>
+                                <div class="col-md-9">@Model.Id</div>
+
+                                <div class="col-md-3">Date of birth: </div>
+                                <div class="col-md-9">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
+                       
+                                <div class="col-md-3">Status: </div>
+                                <div class="col-md-9">@Model.CustomInfo</div>
                         
-                        <div class="col-md-2"> Profile id:</div>
-                        <div class="col-md-10" id="profileId">@Model.Id</div>
-
-                        <div class="col-md-2">Date of birth:</div>
-                        <div class="col-md-10">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
-
-                        <div class="col-md-2">Status:</div>
-                        <div class="col-md-10">@Model.CustomInfo</div>  
                         </div>
+                      </div>
+
 
                         <br>
 
-
+                        <div class="common-info-block">
+                            <a href=""></a>
                         </div>
+                       
                 }
                 </div>
             

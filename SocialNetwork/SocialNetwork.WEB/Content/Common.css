@@ -1,6 +1,22 @@
 ﻿.common-info-block {
-    overflow-y:visible;
-    width:inherit;
     background-color:white;
-    border-radius:5px;
+    border-radius:3px;
+    width:inherit;
+    height:auto;
+}
+
+.common-info-block-text {
+    padding:5px;
+    font-size:medium;
+    font-style:normal;
+    font-family:'Lucida';
+    color:gray;
+}
+a.nav-bar-link {
+text-decoration:none;
+}
+.nav-bar-link {
+    font-size:medium;
+    text-decoration:none;
+    margin-top:20px;
 }
