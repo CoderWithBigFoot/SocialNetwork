@@ -6,9 +6,12 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Common.css" rel="stylesheet" />
     @{ Layout = null;}
 </head>
-<body>
+
+<body style="background-color:whitesmoke;">
+    @model SocialNetwork.WEB.Models.ProfileViewModels.ProfileViewModel
     <div class="navbar navbar-inverse navbar-fixed-top ">
         <div class="container">
             <div class="navbar-header">
@@ -30,19 +33,60 @@
         </div>
     </div>
     <br>
-
+    
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">Link</div>
+            <div class="col-sm-1 col-md-offset-1">Link</div>
 
-            <div class="col-sm-9">
-                @{Html.RenderPartial("../Partials/HomepagePartial",ViewData["currentProfileInfo"]);}
+            <div class="col-sm-8" id="partialsPlace">
+                <!--@{Html.RenderPartial("../Partials/HomepagePartial",Model);}-->
+
+                @if (Model == null)
+                {
+                    <div>Cannot show the information</div>
+                }
+                else{
+                    <div class="row">
+                        <div class="common-info-block">
+
+                        <div class="col-md-2">Name:</div>
+                        <div class="col-md-10">@Model.Name </div>
+                            
+                        <div class="col-md-2">Sername:</div>
+                        <div class="col-md-10">@Model.Sername</div>
+                            
+                        <div class="col-md-2">E-mail:</div>
+                        <div class="col-md-10">@Model.IdentityName</div>
+                        
+                        <div class="col-md-2"> Profile id:</div>
+                        <div class="col-md-10" id="profileId">@Model.Id</div>
+
+                        <div class="col-md-2">Date of birth:</div>
+                        <div class="col-md-10">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
+
+                        <div class="col-md-2">Status:</div>
+                        <div class="col-md-10">@Model.CustomInfo</div>  
+                        </div>
+
+                        <br>
+
+
+                        </div>
+                }
+                </div>
+            
 
 
 
-            </div>
+
+
+
         </div>
     </div>
+
+
+
+
     <div class="container">
         <hr />
         <footer>

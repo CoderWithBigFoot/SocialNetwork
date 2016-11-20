@@ -54,19 +54,19 @@ namespace SocialNetwork.BLL.Services.Interaction
             uow.Save();
         }
 
-        public IEnumerable<PostDTO> GetPublications(string identityName) {
+        public IEnumerable<PostDTO> GetPublications(string identityName,int offset,int count) {
             SocialNetwork.DAL.EF.Profile publicator = this.GetProfile(identityName);
             if (publicator.PublishedPosts.Count == 0) { throw new PublishedPostsNotFoundException("There are no published posts"); }
 
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
-            return Mapper.Map<IEnumerable<PostDTO>>(publicator.PublishedPosts);
+            return Mapper.Map<IEnumerable<PostDTO>>(publicator.PublishedPosts.Skip(offset).Take(count));
         }
-        public IEnumerable<PostDTO> GetReposts(string identityName) {
+        public IEnumerable<PostDTO> GetReposts(string identityName,int offset,int count) {
             SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);
             if (reposter.RepostedPosts.Count == 0) { throw new RepostsNotFoundException("There are no reposted posts"); }
 
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
-            return Mapper.Map<IEnumerable<PostDTO>>(reposter.RepostedPosts);
+            return Mapper.Map<IEnumerable<PostDTO>>(reposter.RepostedPosts.Skip(offset).Take(count));
         }
         public void RemoveRepost(int postId,string identityName) {
             SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);

@@ -10,7 +10,7 @@ using SocialNetwork.BLL.Interfaces.ServicesProviders;
 using AutoMapper;
 namespace SocialNetwork.WEB.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CommonController : Controller
     {
         private IBasicInfo basicInfo;
@@ -27,14 +27,16 @@ namespace SocialNetwork.WEB.Controllers
             {
                 ProfileDTO profileInfo = basicInfo.ProfileInfoService.GetProfile(HttpContext.User.Identity.Name);
                 Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
-                ViewData["currentProfileInfo"] = Mapper.Map<ProfileViewModel>(profileInfo);
-                return View();
+                //ViewBag.currentUserInfo = Mapper.Map<ProfileViewModel>(profileInfo);
+                return View(Mapper.Map<ProfileViewModel>(profileInfo));
             }
             catch (ProfileNotFoundException ex) {
                 return PartialView(ex.Message);
             }
         }
 
-        
+        /*public IEnumerable<PostDTO> GetPublications() {
+            
+        }*/
     }
 }

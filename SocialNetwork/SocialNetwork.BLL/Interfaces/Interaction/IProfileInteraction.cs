@@ -12,8 +12,8 @@ namespace SocialNetwork.BLL.Interfaces.Interaction
         void RemoveSubscription(string callerIdentityName, string targetIdentityName);
         void RemoveFollower(string callerIdentityName, string targetIdentityName);
 
-        IEnumerable<PostDTO> GetPublications(string identityName);
-        IEnumerable<PostDTO> GetReposts(string identityName);
+        IEnumerable<PostDTO> GetPublications(string identityName,int offset,int count);
+        IEnumerable<PostDTO> GetReposts(string identityName,int offset,int count);
         void RemoveRepost(int postId,string identityName);
     }
 }

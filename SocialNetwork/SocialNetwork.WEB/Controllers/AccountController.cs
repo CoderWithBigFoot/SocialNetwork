@@ -170,7 +170,7 @@ namespace SocialNetwork.WEB.Controllers
                     
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                   
-                    return RedirectToAction("MainPage", "Home");
+                    return RedirectToAction("MainPage", "Common");
                 }
                 AddErrors(result);
             }
@@ -399,7 +399,7 @@ namespace SocialNetwork.WEB.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("MainPage", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
