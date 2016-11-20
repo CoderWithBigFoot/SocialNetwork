@@ -8,9 +8,16 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <hr />
+ 
     @Html.ValidationSummary(true)
-    
+    <div class="container">
+        <div class="form-group">
+        <div class="col-md-3-offset col-md-6">
+        <h2>Registration</h2>
+            </div>
+            </div>
+        <hr/><br>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -67,7 +74,7 @@
             <input type="submit" class="btn btn-default" value="Register" />
         </div>
     </div>
-    
+    </div>
 }
 
 @section Scripts {
