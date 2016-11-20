@@ -61,7 +61,6 @@ namespace SocialNetwork.BLL.Services.Interaction
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
             return Mapper.Map<IEnumerable<PostDTO>>(publicator.PublishedPosts);
         }
-
         public IEnumerable<PostDTO> GetReposts(string identityName) {
             SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);
             if (reposter.RepostedPosts.Count == 0) { throw new RepostsNotFoundException("There are no reposted posts"); }
@@ -69,7 +68,6 @@ namespace SocialNetwork.BLL.Services.Interaction
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
             return Mapper.Map<IEnumerable<PostDTO>>(reposter.RepostedPosts);
         }
-
         public void RemoveRepost(int postId,string identityName) {
             SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);
             SocialNetwork.DAL.EF.Post removingPost = uow.Posts.Get(postId);

@@ -9,7 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SocialNetwork.WEB.Models;
-
+using SocialNetwork.BLL.Interfaces.ServicesProviders;
+using SocialNetwork.BLL.DTO;
+using SocialNetwork.BLL.Infrastructure.Exceptions;
 namespace SocialNetwork.WEB.Controllers
 {
     [Authorize]
@@ -17,9 +19,10 @@ namespace SocialNetwork.WEB.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        public AccountController()
+        private IRegistration registrator;
+        public AccountController(IRegistration registrator)
         {
+            this.registrator = registrator;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -155,14 +158,18 @@ namespace SocialNetwork.WEB.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    ProfileForRegistrationDTO registrationInfo = new ProfileForRegistrationDTO() {
+                      CustomInfo = model.CustomInfo,
+                      DateOfBirth = model.DateOfBirth,
+                      IdentityName = model.Email,
+                      Name = model.Name,
+                      Sername = model.Sername
+                    };
                     
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                        registrator.ProfileRegistrationService.UserRegistration(registrationInfo);
+                    
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                  
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

@@ -65,7 +65,28 @@ namespace SocialNetwork.WEB.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
+        [MinLength(2)]
+        [MaxLength(20)]
+        public string Name { set; get; }
+
+        [Required]
+        [MinLength(2)]
+        [MaxLength(20)]
+        public string Sername { set; get; }
+
+        [Required]
+        [MinLength(10)]
+        [MaxLength(144)]
+        [DataType(DataType.MultilineText)]
+        public string CustomInfo { set; get; }
+
+        [Required]
+        [Display(Name = "Date of birth")]
+        [DataType(DataType.Date)]
+        public System.DateTime DateOfBirth { set; get; }
+
+        [Required]
+        [EmailAddress(ErrorMessage ="Incorrect e-mail")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

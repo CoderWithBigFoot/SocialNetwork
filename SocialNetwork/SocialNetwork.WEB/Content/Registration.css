@@ -1,0 +1,15 @@
+﻿  .field-validation-error {
+    color: red;
+    font-weight:bold;
+    text-decoration:none;
+}
+ 
+.input-validation-error {
+    border: 1px solid red;
+}
+
+.input-field {
+    width:inherit;
+    border-radius:1px;
+}
+
