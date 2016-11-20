@@ -18,8 +18,6 @@ namespace SocialNetwork.BLL.Infrastructure.NinjectModules
             Bind<IInteraction>().To<InteractionProvider>();
             Bind<IRegistration>().To<RegistrationProvider>();
             Bind<IStatistics>().To<StatisticsProvider>();
-
-            Bind<IGetProfileStatistics>().To<GetProfileStatisticsService>();
         }
     }
 }

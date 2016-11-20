@@ -56,6 +56,7 @@
     <Compile Include="DTO\ProfileForRegistrationDTO.cs" />
     <Compile Include="Infrastructure\Exceptions\FollowerNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\PublishedPostsNotFoundException.cs" />
+    <Compile Include="Infrastructure\Exceptions\RepostsNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\SubscriptionNotFoundException.cs" />
     <Compile Include="Infrastructure\Exceptions\IncorrectProfileConfigurationException.cs" />
     <Compile Include="Infrastructure\Exceptions\InvalidSubscriptionException.cs" />

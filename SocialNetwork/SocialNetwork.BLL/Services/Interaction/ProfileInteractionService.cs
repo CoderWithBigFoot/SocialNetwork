@@ -7,6 +7,9 @@ using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.Interfaces;
 using SocialNetwork.BLL.Interfaces.Interaction;
 using SocialNetwork.BLL.Infrastructure.Exceptions;
+using SocialNetwork.BLL.DTO;
+using SocialNetwork.DAL.EF;
+using AutoMapper;
 namespace SocialNetwork.BLL.Services.Interaction
 {
    public class ProfileInteractionService : IProfileInteraction
@@ -50,6 +53,31 @@ namespace SocialNetwork.BLL.Services.Interaction
             caller.Followers.Remove(target);
             uow.Save();
         }
+
+        public IEnumerable<PostDTO> GetPublications(string identityName) {
+            SocialNetwork.DAL.EF.Profile publicator = this.GetProfile(identityName);
+            if (publicator.PublishedPosts.Count == 0) { throw new PublishedPostsNotFoundException("There are no published posts"); }
+
+            Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
+            return Mapper.Map<IEnumerable<PostDTO>>(publicator.PublishedPosts);
+        }
+
+        public IEnumerable<PostDTO> GetReposts(string identityName) {
+            SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);
+            if (reposter.RepostedPosts.Count == 0) { throw new RepostsNotFoundException("There are no reposted posts"); }
+
+            Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
+            return Mapper.Map<IEnumerable<PostDTO>>(reposter.RepostedPosts);
+        }
+
+        public void RemoveRepost(int postId,string identityName) {
+            SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);
+            SocialNetwork.DAL.EF.Post removingPost = uow.Posts.Get(postId);
+            if (reposter.RepostedPosts.Count == 0) { throw new PostNotFoundException("There is not such repost"); }
+            if (removingPost == null) { throw new PostNotFoundException("There is no such post"); }
+            reposter.RepostedPosts.Remove(removingPost);
+        }
+
 
         public void Dispose() {
             uow.Dispose();

@@ -41,7 +41,7 @@ namespace SocialNetwork.WEB.App_Start
         private static IKernel CreateKernel()
         {
             var modules = new INinjectModule[] {
-                //new ProfileStatisticsModule(),
+                new ProfileStatisticsModule(),
                 new ProvidersModule(),
                 new UnitOfWorkModule("SocialNetworkConnection")
             };
