@@ -1,0 +1,11 @@
+﻿#write-post-container {
+    text-align:center;
+}
+textarea {
+    max-width:none;
+    max-height:none;
+    border:none;
+    width:100%;
+    resize:none;
+    
+}

@@ -7,6 +7,10 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/Common.css" rel="stylesheet" />
+    <link href="~/Content/Homepage.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.autoSizeTextArea.min.js"></script>
     @{ Layout = null;}
 </head>
 
@@ -20,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SocialNetwork", "MainPage", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SocialNetwork", "HomePage", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -54,37 +58,49 @@
                 else{
                         <div class="common-info-block common-info-block-text">
                             <div class="row">
-                                <div class="col-md-3">Name: </div>
-                                <div class="col-md-9">@Model.Name</div>
+                                <div class="col-md-3 col-md-offset-3">Name: </div>
+                                <div class="col-md-6">@Model.Name</div>
                                     
-                                <div class="col-md-3">Sername: </div>
-                                <div class="col-md-9">@Model.Sername</div>
+                                <div class="col-md-3 col-md-offset-3">Sername: </div>
+                                <div class="col-md-6">@Model.Sername</div>
                                      
-                                <div class="col-md-3">Identity name: </div>
-                                <div class="col-md-9">@Model.IdentityName</div>
+                                <div class="col-md-3 col-md-offset-3">Identity name: </div>
+                                <div class="col-md-6">@Model.IdentityName</div>
 
-                                <div class="col-md-3">Profile id: </div>
-                                <div class="col-md-9">@Model.Id</div>
+                                <div class="col-md-3 col-md-offset-3">Profile id: </div>
+                                <div class="col-md-6">@Model.Id</div>
 
-                                <div class="col-md-3">Date of birth: </div>
-                                <div class="col-md-9">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
+                                <div class="col-md-3 col-md-offset-3">Date of birth: </div>
+                                <div class="col-md-6">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
                        
-                                <div class="col-md-3">Status: </div>
-                                <div class="col-md-9">@Model.CustomInfo</div>
-                        
-                        </div>
+                                <div class="col-md-3 col-md-offset-3">Status: </div>
+                                <div class="col-md-6">@Model.CustomInfo</div>
+                                </div>
+                                <hr/>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
+                                    <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
+                                </div>
                       </div>
 
 
                         <br>
 
-                        <div class="common-info-block">
-                            <a href=""></a>
+                        <div class="common-info-block common-info-block-text" id="write-post-container">
+                            Create a new post
                         </div>
-                       
-                }
-                </div>
-            
+
+                        
+                        <div id="publicationingPost" style="visibility:hidden;">
+                        <div class="common-info-block common-info-block-text" style="visibility:hidden;">
+                            <textarea id="newPostContent" rows="10" placeholder="Type here"></textarea>
+                            </div>
+                        </div>
+
+                    }
+               </div>
+
 
 
 
@@ -96,7 +112,6 @@
 
 
 
-
     <div class="container">
         <hr />
         <footer>
@@ -104,7 +119,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    
+
 </body>
 </html>

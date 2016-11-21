@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using SocialNetwork.BLL.DTO;
 namespace SocialNetwork.WEB.Models.ProfileViewModels { 
     public class ProfileViewModel
     {
@@ -12,5 +12,9 @@ namespace SocialNetwork.WEB.Models.ProfileViewModels {
         public string IdentityName { get; set; }
         public string CustomInfo { get; set; }
         public System.DateTime DateOfBirth { get; set; }
+
+        public IEnumerable<ProfileDTO> Followers { set; get; }
+        public IEnumerable<ProfileDTO> Subscriptions { set; get; }
+
     }
 }

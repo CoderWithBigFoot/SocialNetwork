@@ -12,11 +12,12 @@
     font-family:'Lucida';
     color:gray;
 }
+
 a.nav-bar-link {
 text-decoration:none;
 }
 .nav-bar-link {
-    font-size:medium;
+    font-size:15px;
     text-decoration:none;
     margin-top:20px;
 }

@@ -51,7 +51,7 @@ namespace SocialNetwork.WEB.Controllers
         }
 
         //
-        // GET: /Manage/MainPage
+        // GET: /Manage/HomePage
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -142,7 +142,7 @@ namespace SocialNetwork.WEB.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("MainPage", "Manage");
+            return RedirectToAction("HomePage", "Manage");
         }
 
         //
@@ -157,7 +157,7 @@ namespace SocialNetwork.WEB.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("MainPage", "Manage");
+            return RedirectToAction("HomePage", "Manage");
         }
 
         //
@@ -187,7 +187,7 @@ namespace SocialNetwork.WEB.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("MainPage", new { Message = ManageMessageId.AddPhoneSuccess });
+                return RedirectToAction("HomePage", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
@@ -203,14 +203,14 @@ namespace SocialNetwork.WEB.Controllers
             var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
             {
-                return RedirectToAction("MainPage", new { Message = ManageMessageId.Error });
+                return RedirectToAction("HomePage", new { Message = ManageMessageId.Error });
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("MainPage", new { Message = ManageMessageId.RemovePhoneSuccess });
+            return RedirectToAction("HomePage", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
         //
@@ -238,7 +238,7 @@ namespace SocialNetwork.WEB.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("MainPage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("HomePage", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);
@@ -267,7 +267,7 @@ namespace SocialNetwork.WEB.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
-                    return RedirectToAction("MainPage", new { Message = ManageMessageId.SetPasswordSuccess });
+                    return RedirectToAction("HomePage", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
                 AddErrors(result);
             }
