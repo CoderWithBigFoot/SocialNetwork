@@ -8,7 +8,6 @@ namespace SocialNetwork.WEB.Models
     public class PostForPublicateViewModel
     {
         public string Content { set; get; }
-        public System.DateTime PublishDate { get; set; }
-        public string PublisherIdentityName { set; get; }
+        public IEnumerable<HashtagViewModel> Hashtags { set; get; }
     }
 }

@@ -56,10 +56,10 @@ namespace SocialNetwork.WEB.Controllers
                 return PartialView(ex.Message);
             }
         }
-        
-        
-        /*public IEnumerable<PostDTO> GetPublications() {
-            
-        }*/
+
+
+        ~CommonController() {
+            basicInfo.Dispose();
+        }
     }
 }

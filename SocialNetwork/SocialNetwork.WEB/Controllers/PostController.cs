@@ -22,14 +22,18 @@ namespace SocialNetwork.WEB.Controllers
             this.interaction = interaction;
         }
 
-        public void PublicateNewPost(PostForPublicateViewModel post,IEnumerable<HashtagViewModel> hashtags) {
+        [HttpPost]
+        public void PublicateNewPost(PostForPublicateViewModel post) {
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<PostForPublicateViewModel,PostForPublicateDTO>();
                 cfg.CreateMap<HashtagViewModel, HashtagDTO>();
             });
             PostForPublicateDTO postDto = Mapper.Map<PostForPublicateDTO>(post);
-            IEnumerable<HashtagDTO> hashtagsDto = Mapper.Map<IEnumerable<HashtagDTO>>(hashtags);
-                interaction.PostInteractionService.PublishPost(postDto, hashtagsDto);
+            postDto.PublisherIdentityName = HttpContext.User.Identity.Name;
+            postDto.PublishDate = DateTime.Now;
+            IEnumerable<HashtagDTO> hashtagsDto = Mapper.Map<IEnumerable<HashtagDTO>>(post.Hashtags);
+
+            interaction.PostInteractionService.PublishPost(postDto, hashtagsDto);
         }
 
       

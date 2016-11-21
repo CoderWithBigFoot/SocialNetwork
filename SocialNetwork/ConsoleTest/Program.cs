@@ -187,13 +187,9 @@ namespace ConsoleTest
                     };
                     post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
                     uow.Posts.Create(post1);*/
-                string str;
-                str = null;
-                try
-                { 
-                    ShowString(str);
-                }
-                catch (ArgumentNullException) { Console.WriteLine("Null exception"); }
+                Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
+                SecondTestClass result = Mapper.Map<SecondTestClass>(null);
+                if (result == null) { Console.WriteLine("null"); }
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);

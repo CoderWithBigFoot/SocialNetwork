@@ -21,3 +21,13 @@ text-decoration:none;
     text-decoration:none;
     margin-top:20px;
 }
+
+input[type="submit"] {
+    background-color:lightgray;
+    border-radius:3px;
+    border:none;
+    text-align:center;
+    font-family:'Lucida';
+     font-size:medium;
+    font-style:normal;
+}

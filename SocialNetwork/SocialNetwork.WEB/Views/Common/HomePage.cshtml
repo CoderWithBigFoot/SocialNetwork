@@ -83,34 +83,49 @@
                                     <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
                                 </div>
                       </div>
-
-
                         <br>
 
-                        <div class="common-info-block common-info-block-text" id="write-post-container">
+                        <div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
                             Create a new post
                         </div>
 
-                        
-                        <div id="publicationingPost" style="visibility:hidden;">
-                        <div class="common-info-block common-info-block-text" style="visibility:hidden;">
-                            <textarea id="newPostContent" rows="10" placeholder="Type here"></textarea>
+                        <div class="common-info-block common-info-block-text" id="publicationingPost" style="visibility:hidden;">
+                            @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
+                            {
+                                HttpMethod = "post",
+                                OnComplete = ""
+                            }))
+                            {
+                                <div class="row">
+                                    <div class="col-md-offset-11 col-md-1"><a onclick="closePostForm()"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    </div>
+                                <span>Hashtags</span> <span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span>
+                                <input type="text" name="hashtags" style="visibility:hidden;">
+                                <hr/>
+                                <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
+                                <hr/>
+                               
+                                <input type="submit" value="Publicate" />
+                            }
                             </div>
-                        </div>
+                        
 
                     }
                </div>
-
-
-
-
-
-
-
         </div>
     </div>
 
-
+    <script>
+        //Homepage script
+        function closePostForm() {
+            $('#publicationingPost').attr("visibility", "hidden");
+            $('#write-post-container').attr("visibility", "visible");
+        }
+        function createNewPost() {
+            $('#write-post-container').css("visibility", "hidden");
+            $('#publicationingPost').css("visibility", "visible");
+                    }
+        </script>
 
     <div class="container">
         <hr />
