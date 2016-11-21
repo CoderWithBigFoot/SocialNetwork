@@ -93,18 +93,22 @@
                             @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
                             {
                                 HttpMethod = "post",
-                                OnComplete = ""
+                                OnComplete = "closePostForm"
+                                
                             }))
                             {
                                 <div class="row">
-                                    <div class="col-md-offset-11 col-md-1"><a onclick="closePostForm()"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    <div class="col-md-offset-11 col-md-1">
+                                    <a><span class="glyphicon glyphicon-remove"  onclick="closePostForm()"></span>
+                                        </a>
                                     </div>
-                                <span>Hashtags</span> <span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span>
-                                <input type="text" name="hashtags" style="visibility:hidden;">
+                                    </div>
+
+                                <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
+                                <!--<input type="text" name="hashtags" style="visibility:hidden;">-->
                                 <hr/>
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
                                 <hr/>
-
                                 <input type="submit" value="Publicate" />
                             }
                             </div>
@@ -116,13 +120,15 @@
     <script>
         //Homepage script
         function closePostForm() {
-            $('#publicationingPost').attr("visibility", "hidden");
-            $('#write-post-container').attr("visibility", "visible");
+            $('#write-post-container').css("visibility", "visible");
+            $('#publicationingPost').css("visibility", "hidden");
+          
         }
         function createNewPost() {
             $('#write-post-container').css("visibility", "hidden");
             $('#publicationingPost').css("visibility", "visible");
-                    }
+        }
+        function addHashtag() { alert("added");}
         </script>
 
     <div class="container">

@@ -68,13 +68,15 @@ namespace SocialNetwork.BLL.Services.Interaction
         //if there is no such hashtag - add it
         private ICollection<SocialNetwork.DAL.EF.Hashtag> GetExistingAndNewHashtags(IEnumerable<HashtagDTO> hashtags)
         {
-            //if (hashtags == null) { throw new ArgumentNullException("Hashtags must consist of at least one hashtag"); }
             if (hashtags == null || hashtags.Count() == 0) { return null; }
+
+
             ICollection<SocialNetwork.DAL.EF.Hashtag> existingAndNewHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
             SocialNetwork.DAL.EF.Hashtag hashtag;
             SocialNetwork.DAL.EF.Hashtag newHashtag;
             foreach (var currentHashtag in hashtags)
             {
+                if (currentHashtag == null) { continue; }
                 hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
                 if (hashtag != null)
                 {

@@ -9,5 +9,6 @@ namespace SocialNetwork.WEB.Models
     {
         public string Content { set; get; }
         public IEnumerable<HashtagViewModel> Hashtags { set; get; }
+
     }
 }
