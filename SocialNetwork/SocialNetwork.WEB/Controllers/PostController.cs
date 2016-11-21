@@ -23,7 +23,7 @@ namespace SocialNetwork.WEB.Controllers
         }
 
         [HttpPost]
-        public string PublicateNewPost(PostForPublicateViewModel post) {
+        public void PublicateNewPost(PostForPublicateViewModel post) {
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<PostForPublicateViewModel,PostForPublicateDTO>();
                 cfg.CreateMap<HashtagViewModel, HashtagDTO>();
@@ -33,9 +33,7 @@ namespace SocialNetwork.WEB.Controllers
             postDto.PublishDate = DateTime.Now;
             
             IEnumerable<HashtagDTO> hashtagsDto = Mapper.Map<IEnumerable<HashtagDTO>>(post.Hashtags);
-
             interaction.PostInteractionService.PublishPost(postDto, hashtagsDto);
-            return "Post is created";
         }
 
       

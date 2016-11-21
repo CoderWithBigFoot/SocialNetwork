@@ -14,12 +14,10 @@
 }
 
 a.nav-bar-link {
-text-decoration:none;
-}
-.nav-bar-link {
+    margin-top:10px;
     font-size:15px;
     text-decoration:none;
-    margin-top:20px;
+    margin-top:50px;
 }
 
 input[type="submit"] {
