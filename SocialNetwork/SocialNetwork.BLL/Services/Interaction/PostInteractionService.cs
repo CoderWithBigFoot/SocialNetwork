@@ -68,7 +68,8 @@ namespace SocialNetwork.BLL.Services.Interaction
         //if there is no such hashtag - add it
         private ICollection<SocialNetwork.DAL.EF.Hashtag> GetExistingAndNewHashtags(IEnumerable<HashtagDTO> hashtags)
         {
-            if (hashtags == null) { throw new ArgumentNullException("Hashtags must consist of at least one hashtag"); }
+            //if (hashtags == null) { throw new ArgumentNullException("Hashtags must consist of at least one hashtag"); }
+            if (hashtags == null || hashtags.Count() == 0) { return null; }
             ICollection<SocialNetwork.DAL.EF.Hashtag> existingAndNewHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
             SocialNetwork.DAL.EF.Hashtag hashtag;
             SocialNetwork.DAL.EF.Hashtag newHashtag;
@@ -102,8 +103,10 @@ namespace SocialNetwork.BLL.Services.Interaction
 
             publishedPost = Mapper.Map<SocialNetwork.DAL.EF.Post>(newPost);
             publishedPost.Publisher = publisher;
-            publishedPost.Hashtags = existingAndNewHashtags;
-
+            if (existingAndNewHashtags != null)
+            {
+                publishedPost.Hashtags = existingAndNewHashtags;
+            }
             uow.Posts.Create(publishedPost);
             uow.Save();
         }
