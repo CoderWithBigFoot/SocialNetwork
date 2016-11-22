@@ -110,6 +110,7 @@
                                 </div>
                                 
                                 <hr/>
+
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
                                 <hr/>
                                 <input type="submit" value="Publicate" />
@@ -128,12 +129,14 @@
             $('#publicationingPost').css("visibility", "hidden");
             $('#newPostContenet').val("");
 
-          
+            $('#hashtagsContainer').empty();
         }
         function createNewPost() {
             $('#write-post-container').css("visibility", "hidden");
             $('#publicationingPost').css("visibility", "visible");
             $('#newPostContent').val("");
+
+            $('#hashtagsContainer').empty();
         }
 
         function addHashtag() {
@@ -141,11 +144,12 @@
             var hashtagsSetsCount = hashtagsContainer.children.length;
             var newId;
             if (hashtagsSetsCount != 0) { newId ="hashtagsSet"+hashtagsContainer.children[length - 1];}
-             hashtagsContainer.append('<div id=newId><input type="text" name="hashtags"><a><span class="glyphicon glyphicon-remove" onclick="removeHashtag(newId)"></span></a></div>');
+             hashtagsContainer.append('<div id='+newId+'><input type="text" name="hashtags"><a><span class="glyphicon glyphicon-remove" onclick="removeHashtag('+newId+')"></span></a></div>');
 
            // alert("added");
         }
         function removeHashtag(id) {
+
             $('#' + id).remove();
             //alert("removed");
         }
