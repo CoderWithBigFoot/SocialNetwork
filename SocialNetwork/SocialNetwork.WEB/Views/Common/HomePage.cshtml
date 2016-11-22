@@ -87,7 +87,6 @@
                         <div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
                             Create a new post
                         </div>
-
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="visibility:hidden;">
                             @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
                             {
@@ -105,8 +104,7 @@
 
 
                                 <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
-
-                                <div class="hashtags-container" id="hashtagsContainer">    
+                                <div class="hashtags-container" id="hashtagsContainer">   
                                 </div>
                                 
                                 <hr/>
@@ -142,17 +140,19 @@
         function addHashtag() {
             var hashtagsContainer = $('#hashtagsContainer');
             var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
+            var newDeleteElementId = 'removeSpan'+totalHashtagsCountInHashtagsContainer;
             totalHashtagsCountInHashtagsContainer++;
 
-             hashtagsContainer.append('<div id='+newId+'><input type="text" name="hashtags"><a><span class="glyphicon glyphicon-remove" onclick="removeHashtag()"></span></a></div>');
-         
+            hashtagsContainer.append('<div id=' + newId + '><input type="text" name="hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
+
+             $('#' + newDeleteElementId).click(function () {
+                 var removingDivId = $('#' + newDeleteElementId).parent().attr('id');
+                 $('#'+removingDivId).remove();
+                 
+             });
+
         }
-        function removeHashtag() {
-            //$("#" + id).remove();//removing 
-            /*var removingId = $("#").parent().attr('id');
-            $(removingId).remove();*/
-            alert(removingId);
-        }
+        
         </script>
                             
                 </div>
