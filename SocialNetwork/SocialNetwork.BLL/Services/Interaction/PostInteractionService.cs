@@ -77,6 +77,9 @@ namespace SocialNetwork.BLL.Services.Interaction
             foreach (var currentHashtag in hashtags)
             {
                 if (currentHashtag == null) { continue; }
+                if (currentHashtag != null) {
+                    if (currentHashtag.Name.Length == 0) { continue; }
+                }
                 hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
                 if (hashtag != null)
                 {

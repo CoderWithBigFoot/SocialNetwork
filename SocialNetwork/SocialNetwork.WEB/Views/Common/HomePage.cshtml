@@ -48,7 +48,7 @@
             </div>
 
             <div class="col-md-9" id="partialsPlace">
-                <!--@{Html.RenderPartial("../Partials/HomepagePartial",Model);}-->
+                <!--here is partial rendering-->
 
                 @if (Model == null)
                 {
@@ -123,7 +123,7 @@
 
     <script>
         //Homepage script
-
+        var totalHashtagsCountInHashtagsContainer=0;
         function closePostForm() {
             $('#write-post-container').css("visibility", "visible");
             $('#publicationingPost').css("visibility", "hidden");
@@ -141,23 +141,21 @@
 
         function addHashtag() {
             var hashtagsContainer = $('#hashtagsContainer');
-            var hashtagsSetsCount = hashtagsContainer.children.length;
-            var newId;
-            if (hashtagsSetsCount != 0) { newId ="hashtagsSet"+hashtagsContainer.children[length - 1];}
-             hashtagsContainer.append('<div id='+newId+'><input type="text" name="hashtags"><a><span class="glyphicon glyphicon-remove" onclick="removeHashtag('+newId+')"></span></a></div>');
+            var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
+            totalHashtagsCountInHashtagsContainer++;
 
-           // alert("added");
+             hashtagsContainer.append('<div id='+newId+'><input type="text" name="hashtags"><a><span class="glyphicon glyphicon-remove" onclick="removeHashtag()"></span></a></div>');
+         
         }
-        function removeHashtag(id) {
-
-            $('#' + id).remove();
-            //alert("removed");
+        function removeHashtag() {
+            //$("#" + id).remove();//removing 
+            /*var removingId = $("#").parent().attr('id');
+            $(removingId).remove();*/
+            alert(removingId);
         }
         </script>
                             
                 </div>
-
-                
                 </div>
     <div class="container">
         <hr />
