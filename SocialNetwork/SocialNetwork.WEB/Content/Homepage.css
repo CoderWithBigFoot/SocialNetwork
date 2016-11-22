@@ -8,3 +8,17 @@ textarea {
     width:100%;
     resize:none;  
 }
+
+.hashtags-container {
+    width:100%;
+    height:auto;
+}
+
+input[name="hashtags"] {
+    border-radius:3px;
+    border:1px solid gray;
+    background-color:whitesmoke;
+    width:150px;
+    height:20px;
+    margin:2px;
+}

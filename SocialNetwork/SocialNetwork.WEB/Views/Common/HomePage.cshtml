@@ -54,7 +54,8 @@
                 {
                     <div>Cannot show the information</div>
                 }
-                else{
+                else
+                {
                         <div class="common-info-block common-info-block-text">
                             <div class="row">
                                 <div class="col-md-3 col-md-offset-3">Name: </div>
@@ -76,7 +77,6 @@
                                 <div class="col-md-6">@Model.CustomInfo</div>
                                 </div>
                                 <hr/>
-
                                 <div class="row">
                                     <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
                                     <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
@@ -93,7 +93,7 @@
                             {
                                 HttpMethod = "post",
                                 OnComplete = "closePostForm"
-                                
+
                             }))
                             {
                                 <div class="row">
@@ -103,33 +103,58 @@
                                     </div>
                                     </div>
 
+
                                 <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
-                                <!--<input type="text" name="hashtags" style="visibility:hidden;">-->
+
+                                <div class="hashtags-container" id="hashtagsContainer">    
+                                </div>
+                                
                                 <hr/>
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
                                 <hr/>
                                 <input type="submit" value="Publicate" />
                             }
-                            </div>
-                    }
                </div>
+                }
         </div>
-    </div>
+
+
 
     <script>
         //Homepage script
+
         function closePostForm() {
             $('#write-post-container').css("visibility", "visible");
             $('#publicationingPost').css("visibility", "hidden");
+            $('#newPostContenet').val("");
+
           
         }
         function createNewPost() {
             $('#write-post-container').css("visibility", "hidden");
             $('#publicationingPost').css("visibility", "visible");
+            $('#newPostContent').val("");
         }
-        function addHashtag() { alert("added");}
-        </script>
 
+        function addHashtag() {
+            var hashtagsContainer = $('#hashtagsContainer');
+            var hashtagsSetsCount = hashtagsContainer.children.length;
+            var newId;
+            if (hashtagsSetsCount != 0) { newId ="hashtagsSet"+hashtagsContainer.children[length - 1];}
+             hashtagsContainer.append('<div id=newId><input type="text" name="hashtags"><a><span class="glyphicon glyphicon-remove" onclick="removeHashtag(newId)"></span></a></div>');
+
+           // alert("added");
+        }
+        function removeHashtag(id) {
+            $('#' + id).remove();
+            //alert("removed");
+        }
+        </script>
+                            
+                </div>
+
+                
+                </div>
     <div class="container">
         <hr />
         <footer>
