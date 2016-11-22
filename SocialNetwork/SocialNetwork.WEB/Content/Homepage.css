@@ -21,4 +21,6 @@ input[name="hashtags"] {
     width:150px;
     height:20px;
     margin:2px;
+    padding:2px;
+    padding-left:3px;
 }
