@@ -92,8 +92,8 @@
                             {
                                 HttpMethod = "post",
                                 OnComplete = "closePostForm"
-                                
-                            }))
+
+                            },new { onsubmit = "checkPostForm"}))
                             {
                                 <div class="row">
                                     <div class="col-md-offset-11 col-md-1">
@@ -117,20 +117,8 @@
                </div>
 
                         <br>
-                    <div style="width:inherit;">
-                       <div class="row">
-                           <div class="col-md-5 ">
-                               <div class="common-info-block-text show-posts-button">
-                               some content
-                                   </div>
-                           </div>
-                           <div class="col-md-offset-2 col-md-5 ">
-                               <div class="common-info-block-text show-posts-button">
-                               some content
-                                   </div>
-                           </div>
-                      </div>
-                    </div>
+                                <div class="common-info-block common-info-block-text show-posts-button" style="text-align:center;">Show reposts</div>
+                                <div class="common-info-block common-info-block-text show-posts-button" style="text-align:center;">Show publications</div>
                 }
         </div>
 
@@ -172,7 +160,7 @@
 
         }
 
-        function checkHashtags() {
+        function checkPostForm() {
             $("name=Hashtags").each(function (index, value) {
                 value.each(function (index, nestedValue) {
                     if (value == nestedValue) {
@@ -182,7 +170,11 @@
 
                 });
             });
+            var postContent = $('#newPostContent').val();
+            if (postContent == "" || postContent == null || postContent.split(" ") == "") { return false;}
             $('#incorrectHashtagsError').hide();
+            closePostForm();
+
             return true;
         }
         </script>
