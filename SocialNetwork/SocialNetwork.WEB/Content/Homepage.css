@@ -14,7 +14,7 @@ textarea {
     height:auto;
 }
 
-input[name="hashtags"] {
+input[name="Hashtags"] {
     border-radius:3px;
     border:1px solid gray;
     background-color:whitesmoke;
@@ -23,4 +23,12 @@ input[name="hashtags"] {
     margin:2px;
     padding:2px;
     padding-left:3px;
+}
+
+.error-message {
+    color:darkred;
+    padding:5px;
+    font-size:medium;
+    font-style:normal;
+    font-family:'Lucida';
 }

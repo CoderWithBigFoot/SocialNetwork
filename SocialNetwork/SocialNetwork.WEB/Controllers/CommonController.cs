@@ -21,7 +21,7 @@ namespace SocialNetwork.WEB.Controllers
         }
 
         [HttpGet]
-        public ActionResult HomePage()
+        public ActionResult Homepage()
         {
             try
             {

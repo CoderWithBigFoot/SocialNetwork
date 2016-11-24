@@ -29,3 +29,8 @@ input[type="submit"] {
      font-size:medium;
     font-style:normal;
 }
+
+.show-posts-button {
+    width:100%;
+    text-align:center;
+}

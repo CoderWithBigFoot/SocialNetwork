@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.EF;
-using AutoMapper;
+
 namespace ConsoleTest
 {
     class TestClass {
@@ -170,27 +170,29 @@ namespace ConsoleTest
 
                  Console.WriteLine(context.SaveChanges());*/
                 #endregion
-                /*
-                Profile prof2 = new Profile()
+
+                using (UnitOfWork uow = new UnitOfWork())
                 {
-                    Name = "ser",
-                    Sername = "kononovich",
-                    IdentityName = "prof2",
-                    CustomInfo = "some info",
-                    DateOfBirth = DateTime.Now
-                };
-                  Post post1 = new Post()
+                    /*Profile prof2 = new Profile()
                     {
-                        Content = "post1",
-                        PublishDate = DateTime.Now,
-                        Publisher = prof1
+                        Name = "ser",
+                        Sername = "kononovich",
+                        IdentityName = "prof2",
+                        CustomInfo = "some info",
+                        DateOfBirth = DateTime.Now
                     };
-                    post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
-                    uow.Posts.Create(post1);*/
-                Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>().ForMember("Name",opt=>opt.MapFrom(x=>x.Sername)));
-                TestClass test = new TestClass() { Name = "agfas",Sername = "sername"};
-                SecondTestClass second = Mapper.Map<SecondTestClass>(test);
-                Console.WriteLine(second.Name);
+                    uow.Profiles.Add(prof2);*/
+                    Profile prof2 = uow.Profiles.FindByIdentityName("prof2");
+                     Post post1 = new Post()
+                     {
+                         Content = "post1",
+                         PublishDate = DateTime.Now,
+                         Publisher = prof2
+                     };
+                    post1.Hashtags = new List<Hashtag>() { new Hashtag() { Name = "First" }, new Hashtag() { Name = "First" } };
+                    uow.Posts.Create(post1);
+                    Console.WriteLine(uow.Save());
+                }
               
             }
             catch (Exception ex) {

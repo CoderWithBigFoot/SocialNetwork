@@ -72,30 +72,13 @@ namespace SocialNetwork.BLL.Services.Interaction
 
 
             ICollection<SocialNetwork.DAL.EF.Hashtag> existingAndNewHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
-            SocialNetwork.DAL.EF.Hashtag hashtag;
-            SocialNetwork.DAL.EF.Hashtag newHashtag;
-            foreach (var currentHashtag in hashtags)
-            {
-                if (currentHashtag == null) { continue; }
-                if (currentHashtag != null) {
-                    if (currentHashtag.Name.Length == 0) { continue; }
-                }
-                hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
-                if (hashtag != null)
-                {
-                    existingAndNewHashtags.Add(hashtag);
-                }
-                if (hashtag == null) {
-                    newHashtag = new DAL.EF.Hashtag()
-                    {
-                        Name = hashtag.Name
-                    };
-                    uow.Hashtags.Create(newHashtag);
-                    existingAndNewHashtags.Add(hashtag);
-                }
-            }
-            uow.Save();
-            return existingAndNewHashtags;
+            Mapper.Initialize(cfg => cfg.CreateMap<HashtagDTO,SocialNetwork.DAL.EF.Hashtag>());
+            existingAndNewHashtags = Mapper.Map<ICollection<SocialNetwork.DAL.EF.Hashtag>>(hashtags);
+
+            //проверку сделать на повторения хэштегов
+
+
+            return existingAndNewHashtags; 
         }
 
         public void PublishPost(PostForPublicateDTO newPost, IEnumerable<HashtagDTO> hashtags) {

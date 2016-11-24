@@ -8,7 +8,7 @@ namespace SocialNetwork.WEB.Models
     public class PostForPublicateViewModel
     {
         public string Content { set; get; }
-        public IEnumerable<HashtagViewModel> Hashtags { set; get; }
+        public IEnumerable<string> Hashtags { set; get; }
 
     }
 }

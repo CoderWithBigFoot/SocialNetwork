@@ -82,8 +82,7 @@ namespace SocialNetwork.WEB.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                    //return RedirectToAction("HomePage","Common");
+                    return RedirectToAction("Homepage", "Common");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -171,7 +170,7 @@ namespace SocialNetwork.WEB.Controllers
                     
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                   
-                    return RedirectToAction("HomePage", "Common");
+                    return RedirectToAction("Homepage", "Common");
                 }
                 AddErrors(result);
             }
@@ -364,7 +363,7 @@ namespace SocialNetwork.WEB.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("HomePage", "Manage");
+                return RedirectToAction("Homepage", "Manage");
             }
 
             if (ModelState.IsValid)
@@ -457,7 +456,7 @@ namespace SocialNetwork.WEB.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("HomePage", "Home");
+            return RedirectToAction("Homepage", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

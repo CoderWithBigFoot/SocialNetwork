@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SocialNetwork", "HomePage", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SocialNetwork", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -87,12 +87,12 @@
                         <div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
                             Create a new post
                         </div>
-                        <div class="common-info-block common-info-block-text" id="publicationingPost" style="visibility:hidden;">
+                        <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
                             @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
                             {
                                 HttpMethod = "post",
                                 OnComplete = "closePostForm"
-
+                                
                             }))
                             {
                                 <div class="row">
@@ -104,16 +104,33 @@
 
 
                                 <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
-                                <div class="hashtags-container" id="hashtagsContainer">   
+                                <div class="hashtags-container" id="hashtagsContainer">
+                                    <div style="display:none;" class="error-message" id="incorrectHashtagsError">Hashtags may not be the same</div>   
                                 </div>
                                 
                                 <hr/>
 
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
                                 <hr/>
-                                <input type="submit" value="Publicate" />
+                                <input type="submit" value="Publicate"/>
                             }
                </div>
+
+                        <br>
+                    <div style="width:inherit;">
+                       <div class="row">
+                           <div class="col-md-5 ">
+                               <div class="common-info-block-text show-posts-button">
+                               some content
+                                   </div>
+                           </div>
+                           <div class="col-md-offset-2 col-md-5 ">
+                               <div class="common-info-block-text show-posts-button">
+                               some content
+                                   </div>
+                           </div>
+                      </div>
+                    </div>
                 }
         </div>
 
@@ -123,17 +140,16 @@
         //Homepage script
         var totalHashtagsCountInHashtagsContainer=0;
         function closePostForm() {
-            $('#write-post-container').css("visibility", "visible");
-            $('#publicationingPost').css("visibility", "hidden");
-            $('#newPostContenet').val("");
-
+            $('#write-post-container').show();
+            $('#publicationingPost').hide();
+            $('#newPostContent').val("");
+            $('#incorrectHashtagsError').hide();
             $('#hashtagsContainer').empty();
         }
         function createNewPost() {
-            $('#write-post-container').css("visibility", "hidden");
-            $('#publicationingPost').css("visibility", "visible");
+            $('#write-post-container').hide();
+            $('#publicationingPost').show();
             $('#newPostContent').val("");
-
             $('#hashtagsContainer').empty();
         }
 
@@ -143,7 +159,7 @@
             var newDeleteElementId = 'removeSpan'+totalHashtagsCountInHashtagsContainer;
             totalHashtagsCountInHashtagsContainer++;
 
-            hashtagsContainer.append('<div id=' + newId + '><input type="text" name="hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
+            hashtagsContainer.append('<div id=' + newId + '><input type="text" name="Hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
 
              $('#' + newDeleteElementId).click(function () {
                  var removingDivId = $('#' + newDeleteElementId).parent().attr('id');
@@ -154,6 +170,20 @@
         }
         function getPublications() {
 
+        }
+
+        function checkHashtags() {
+            $("name=Hashtags").each(function (index, value) {
+                value.each(function (index, nestedValue) {
+                    if (value == nestedValue) {
+                        $('#incorrectHashtagsError').show();
+                        return false;
+                    }
+
+                });
+            });
+            $('#incorrectHashtagsError').hide();
+            return true;
         }
         </script>
                             

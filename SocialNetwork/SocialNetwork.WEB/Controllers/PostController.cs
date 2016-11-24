@@ -29,13 +29,19 @@ namespace SocialNetwork.WEB.Controllers
         public void PublicateNewPost(PostForPublicateViewModel post) {
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<PostForPublicateViewModel,PostForPublicateDTO>();
-                cfg.CreateMap<HashtagViewModel, HashtagDTO>();
+                //cfg.CreateMap<HashtagViewModel, HashtagDTO>();
             });
             PostForPublicateDTO postDto = Mapper.Map<PostForPublicateDTO>(post);
             postDto.PublisherIdentityName = HttpContext.User.Identity.Name;
             postDto.PublishDate = DateTime.Now;
-            
-            IEnumerable<HashtagDTO> hashtagsDto = Mapper.Map<IEnumerable<HashtagDTO>>(post.Hashtags);
+            ICollection<HashtagDTO> hashtagsDto = new List<HashtagDTO>();
+
+            if (post.Hashtags != null) {
+                foreach (var hashtag in post.Hashtags) {
+                    hashtagsDto.Add(new HashtagDTO() { Name = hashtag });
+                }
+            }
+
             interaction.PostInteractionService.PublishPost(postDto, hashtagsDto);
         }
 
