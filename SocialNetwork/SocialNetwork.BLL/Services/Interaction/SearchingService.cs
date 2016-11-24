@@ -50,7 +50,7 @@ namespace SocialNetwork.BLL.Services.Interaction
 
                 foreach (var currentHashtag in Mapper.Map<ICollection<HashtagDTO>>(existingHashtags)) {
                     foreach (var currentProfile in allProfiles) {
-                        foreach (var pair in profileStatistics.MostPopularHashtags(currentProfile.IdentityName, hashtagsCount)) {
+                        foreach (var pair in profileStatistics.MostPopularHashtags(currentProfile.IdentityName, hashtagsCount)) {//hashtags count must be replaced on existingHashtags.Count;
                             if (pair.Key == currentHashtag) {
                                 if (!result.Contains(currentProfile)) {
                                     result.Add(currentProfile);

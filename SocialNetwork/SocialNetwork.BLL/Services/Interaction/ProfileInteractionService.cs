@@ -54,14 +54,14 @@ namespace SocialNetwork.BLL.Services.Interaction
             uow.Save();
         }
 
-        public IEnumerable<PostDTO> GetPublications(string identityName,int offset,int count) {
+        public IEnumerable<PostDTO> GetPublications(string identityName,int offset,int count=10) {
             SocialNetwork.DAL.EF.Profile publicator = this.GetProfile(identityName);
             if (publicator.PublishedPosts.Count == 0) { throw new PublishedPostsNotFoundException("There are no published posts"); }
 
             Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Post, PostDTO>());
             return Mapper.Map<IEnumerable<PostDTO>>(publicator.PublishedPosts.Skip(offset).Take(count));
         }
-        public IEnumerable<PostDTO> GetReposts(string identityName,int offset,int count) {
+        public IEnumerable<PostDTO> GetReposts(string identityName,int offset,int count=10) {
             SocialNetwork.DAL.EF.Profile reposter = this.GetProfile(identityName);
             if (reposter.RepostedPosts.Count == 0) { throw new RepostsNotFoundException("There are no reposted posts"); }
 

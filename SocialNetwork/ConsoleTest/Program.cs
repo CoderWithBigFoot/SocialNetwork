@@ -187,14 +187,11 @@ namespace ConsoleTest
                     };
                     post1.Hashtags.Add(uow.Hashtags.Find(x => x.Name == "cat").FirstOrDefault());
                     uow.Posts.Create(post1);*/
-                Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
-                List<TestClass> listTest = new List<TestClass>() {
-                    new TestClass() { Name = "name",Sername = "asda"}
-                };
-
-                List<SecondTestClass> stcl = Mapper.Map<List<SecondTestClass>>(null);
-                if (stcl == null) { Console.WriteLine("null"); }
-                if (stcl != null) { Console.WriteLine(stcl.Count); }
+                Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>().ForMember("Name",opt=>opt.MapFrom(x=>x.Sername)));
+                TestClass test = new TestClass() { Name = "agfas",Sername = "sername"};
+                SecondTestClass second = Mapper.Map<SecondTestClass>(test);
+                Console.WriteLine(second.Name);
+              
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
