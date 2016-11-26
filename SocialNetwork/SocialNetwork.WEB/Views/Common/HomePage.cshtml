@@ -92,10 +92,11 @@
                         <br />
 
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
-                            @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
+                            @using (Ajax.BeginForm("PublicateNewPost","Post", new AjaxOptions
                             {
                                 HttpMethod = "post",
-                                OnComplete = "closePostForm"
+                                OnComplete = "closePostForm",
+                                OnSuccess = "removeNoPublicationsErrorMessage"
 
                             }, new { onsubmit = "checkPostForm" }))
                             {
@@ -105,7 +106,6 @@
                                         </a>
                                     </div>
                                     </div>
-
 
                                 <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
                                 <div class="hashtags-container" id="hashtagsContainer">
@@ -117,29 +117,11 @@
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
                                 <hr/>
                                 <input type="submit" value="Publicate"/>
-                                
+
                             }
                             
                </div>
            <br>
-
-          <div id="publicationsContainer">
-             <div class="post-container common-info-block-text">
-                    <div>Zheka Korsakas (identity name)</div>
-                    <div> Publication's date</div>
-                     <div class="hashtags-container">
-                         <div class="hashtag">hashtaghashtaghashtaghashtaghashtag</div>
-                         <div class="hashtag">hashtag</div>
-                     </div>
-                    <hr/>
-                    <div>Content</div>
-                    <hr />
-                    <div>Reposts Likes</div>
-                    
-            </div>
-           </div>
-
-
 
                 }
         </div>
@@ -147,6 +129,9 @@
 
 
     <script>
+        function removeNoPublicationsErrorMessage() {
+            $('#noPublicationsErrorMessage').remove();
+        }
         //Homepage script
         var totalHashtagsCountInHashtagsContainer=0;
         function closePostForm() {
@@ -156,71 +141,68 @@
             $('#incorrectHashtagsError').hide();
             $('#hashtagsContainer').empty();
         }
-        function createNewPost() {
-            $('#write-post-container').hide();
-            $('#publicationingPost').show();
-            $('#newPostContent').val("");
-            $('#hashtagsContainer').empty();
-        }
+            function createNewPost() {
+                $('#write-post-container').hide();
+                $('#publicationingPost').show();
+                $('#newPostContent').val("");
+                $('#hashtagsContainer').empty();
+            }
 
-        function addHashtag() {
-            var hashtagsContainer = $('#hashtagsContainer');
-            var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
-            var newDeleteElementId = 'removeSpan'+totalHashtagsCountInHashtagsContainer;
-            totalHashtagsCountInHashtagsContainer++;
+            function addHashtag() {
+                var hashtagsContainer = $('#hashtagsContainer');
+                var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
+                var newDeleteElementId = 'removeSpan'+totalHashtagsCountInHashtagsContainer;
+                totalHashtagsCountInHashtagsContainer++;
 
-            hashtagsContainer.append('<div id=' + newId + '><input type="text" name="Hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
+                hashtagsContainer.append('<div id=' + newId + '><input type="text" name="Hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
 
-             $('#' + newDeleteElementId).click(function () {
-                 var removingDivId = $('#' + newDeleteElementId).parent().attr('id');
-                 $('#'+removingDivId).remove();
+                $('#' + newDeleteElementId).click(function () {
+                    var removingDivId = $('#' + newDeleteElementId).parent().attr('id');
+                    $('#'+removingDivId).remove();
                  
-             });
-
-        }
-        function getPublications() {
-
-        }
-
-        function checkPostForm() {
-            $("name=Hashtags").each(function (index, value) {
-                value.each(function (index, nestedValue) {
-                    if (value == nestedValue) {
-                        $('#incorrectHashtagsError').show();
-                        return false;
-                    }
-
                 });
-            });
-            var postContent = $('#newPostContent').val();
-            if (postContent == "" || postContent == null || postContent.split(" ") == "") { return false;}
-            $('#incorrectHashtagsError').hide();
-            closePostForm();
 
-            return true;
-        }
+            }
+         
+            function checkPostForm() {
+                $("name=Hashtags").each(function (index, value) {
+                    value.each(function (index, nestedValue) {
+                        if (value == nestedValue) {
+                            $('#incorrectHashtagsError').show();
+                            return false;
+                        }
+
+                    });
+                });
+                var postContent = $('#newPostContent').val();
+                if (postContent == "" || postContent == null || postContent.split(" ") == "") { return false;}
+                $('#incorrectHashtagsError').hide();
+                closePostForm();
+
+                return true;
+            }
         </script>
      <script>
          $(document).ready(function () {
-             var publishedPostOnWallCount = $('#publicationsContainer').children().length;
+             //var publishedPostOnWallCount = $('#publicationsContainer').children().length();
              var identityName = '@Context.User.Identity.Name';
              var publicationsContainer = $('#publicationsContainer');
 
              $.ajax({
                  type: 'post',
                  url:'../Post/Publications',
-                 data: {"identityName":identityName,"count":10,"offset":publishedPostOnWallCount},
+                 data: { "offset": 0,  "identityName": identityName ,"count": 10},
                  
                  success:function(jsonResult){
                     // var publicationsContainer = $('#publicationsContainer');
                      var result = JSON.parse(jsonResult);
                      if (result["errorMessage"]) {
-                         //$('#publicationsContainer').empty();
-                         //$('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;">' + result["errorMessage"] + '</div>');
+                         $('#publicationsContainer').empty();
+                         $('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;" class="common-info-block-text">' + result["errorMessage"] + '</div>');
                          return;
                      }
                      else {
-                        
+                         alert(jsonResult);
                      }
 
                  }    

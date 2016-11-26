@@ -24,7 +24,25 @@ namespace SocialNetwork.WEB.Controllers
             this.basicInfo = basicInfo;
             this.interaction = interaction;
         }
-       
+
+        /*
+         <div id="publicationsContainer">
+             <div class="post-container common-info-block-text">
+                    <div>Zheka Korsakas (identity name)</div>
+                    <div> Publication's date</div>
+                     <div class="hashtags-container">
+                         <div class="hashtag">hashtaghashtaghashtaghashtaghashtag</div>
+                         <div class="hashtag">hashtag</div>
+                     </div>
+                    <hr/>
+                    <div>Content</div>
+                    <hr />
+                    <div>Reposts Likes</div>
+                    
+            </div>
+           </div>
+             */
+
         [HttpPost]
         public void PublicateNewPost(PostForPublicateViewModel post) {
             Mapper.Initialize(cfg => {
