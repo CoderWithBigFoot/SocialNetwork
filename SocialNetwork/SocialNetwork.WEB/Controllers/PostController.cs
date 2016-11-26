@@ -46,7 +46,7 @@ namespace SocialNetwork.WEB.Controllers
         }
 
         [HttpPost]
-        public object GetPublications(int offset,string identityName,int count=10) {
+        public object Publications(int offset,string identityName,int count=10) {
             try
             {
                 IEnumerable<PostDTO> publishedPosts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);

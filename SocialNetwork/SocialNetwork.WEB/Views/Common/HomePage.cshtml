@@ -83,17 +83,26 @@
                                 </div>
                       </div>
                         <br>
+                        <br>
+
+                         <div class="postTypeContainer" id="myPublications">My publications</div>
+                         <div class="postTypeContainer" id="myReposts" style="display:none;">My reposts</div>
 
                         <div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
                             Create a new post
                         </div>
+                        <br>
+                        <div id="publicationsContainer">
+
+                        </div>
+
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
                             @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
                             {
                                 HttpMethod = "post",
                                 OnComplete = "closePostForm"
 
-                            },new { onsubmit = "checkPostForm"}))
+                            }, new { onsubmit = "checkPostForm" }))
                             {
                                 <div class="row">
                                     <div class="col-md-offset-11 col-md-1">
@@ -107,7 +116,7 @@
                                 <div class="hashtags-container" id="hashtagsContainer">
                                     <div style="display:none;" class="error-message" id="incorrectHashtagsError">Hashtags may not be the same</div>   
                                 </div>
-                                
+
                                 <hr/>
 
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
@@ -115,10 +124,9 @@
                                 <input type="submit" value="Publicate"/>
                             }
                </div>
-
                         <br>
-                                <div class="common-info-block common-info-block-text show-posts-button" style="text-align:center;">Show reposts</div>
-                                <div class="common-info-block common-info-block-text show-posts-button" style="text-align:center;">Show publications</div>
+
+                        
                 }
         </div>
 
@@ -178,7 +186,26 @@
             return true;
         }
         </script>
-                            
+     <script>
+         $(document).ready(function () {
+
+             $.ajax({
+                 type: 'post',
+                 url:'../Post/Publications',
+                 data: {"identityName":"korsakaspr@gmail.com","count":10,"offset":4},
+                 
+                 success:function(jsonResult){
+                    // var publicationsContainer = $('#publicationsContainer');
+                     var result = JSON.parse(jsonResult);
+                     if(result["errorMessage"]){
+                         $('#publicationsContainer').empty();
+                         $('#publicationsContainer').append('<div class="post common-info-block-text" style="text-align:center; id="noPublicationsErrorMessage" ">'+result["errorMessage"]+'</div>');
+                     }
+                 }    
+             });
+
+         });
+         </script>                       
                 </div>
                 </div>
     <div class="container">

@@ -1,6 +1,9 @@
 ﻿#write-post-container {
     text-align:center;
 }
+    #write-post-container:hover {
+        cursor:pointer;
+    }
 textarea {
     max-width:none;
     max-height:none;

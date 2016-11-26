@@ -5,6 +5,25 @@
     height:auto;
 }
 
+.postTypeContainer {
+    font-family:'Lucida';
+    font-size:larger;
+    text-align:center;
+    padding:5px;
+     color:gray;
+    width:inherit;
+    height:auto;
+}
+.postTypeContainer:hover {
+        cursor:pointer;
+    }
+
+.post {
+    background-color:white;
+    border-radius:3px;
+}
+
+
 .common-info-block-text {
     padding:5px;
     font-size:medium;
@@ -30,3 +49,11 @@ input[type="submit"] {
     font-style:normal;
 }
 
+#repostsContainer {
+    width:inherit;
+    height:auto;
+}
+#publicationsContainer {
+    width:inherit;
+    height:auto;
+}

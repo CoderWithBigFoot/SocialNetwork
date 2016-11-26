@@ -182,7 +182,7 @@ namespace ConsoleTest
                         DateOfBirth = DateTime.Now
                     };
                     uow.Profiles.Add(prof2);*/
-                    Profile prof2 = uow.Profiles.FindByIdentityName("prof2");
+                   /* Profile prof2 = uow.Profiles.FindByIdentityName("prof2");
                      Post post1 = new Post()
                      {
                          Content = "post1",
@@ -191,7 +191,7 @@ namespace ConsoleTest
                      };
                     post1.Hashtags = new List<Hashtag>() { new Hashtag() { Name = "First" }, new Hashtag() { Name = "First" } };
                     uow.Posts.Create(post1);
-                    Console.WriteLine(uow.Save());
+                    Console.WriteLine(uow.Save());*/
                 }
               
             }
