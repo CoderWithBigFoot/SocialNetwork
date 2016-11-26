@@ -57,7 +57,7 @@ namespace SocialNetwork.WEB.Controllers
             }
         }
 
-
+       
         ~CommonController() {
             basicInfo.Dispose();
         }

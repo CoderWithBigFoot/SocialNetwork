@@ -14,7 +14,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 namespace SocialNetwork.WEB.Controllers
 {
-
     public class PostController : Controller
     {
         private IBasicInfo basicInfo;
@@ -105,5 +104,10 @@ namespace SocialNetwork.WEB.Controllers
 
         }
 
+        [HttpPost]
+        public string GetString(string str) {
+            return "test string" +  str;
+        }
+     
     }
 }

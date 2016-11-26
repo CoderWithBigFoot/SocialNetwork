@@ -94,9 +94,8 @@
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
                             @using (Ajax.BeginForm("PublicateNewPost","Post", new AjaxOptions
                             {
-                                HttpMethod = "post",
-                                OnComplete = "closePostForm",
-                                OnSuccess = "removeNoPublicationsErrorMessage"
+                                HttpMethod = "Post",
+                                OnComplete = "closePostForm"
 
                             }, new { onsubmit = "checkPostForm" }))
                             {
@@ -119,7 +118,7 @@
                                 <input type="submit" value="Publicate"/>
 
                             }
-                            
+                            <div id="publicationsContainer"></div>
                </div>
            <br>
 
@@ -188,13 +187,13 @@
              var identityName = '@Context.User.Identity.Name';
              var publicationsContainer = $('#publicationsContainer');
 
-             $.ajax({
-                 type: 'post',
-                 url:'../Post/Publications',
-                 data: { "offset": 0,  "identityName": identityName ,"count": 10},
+             /*$.ajax({
+                 type: 'POST',
+                 url: '/Post/Publications',
+                 data: { "offset": 0, "identityName": identityName, "count": 10 },
                  
                  success:function(jsonResult){
-                    // var publicationsContainer = $('#publicationsContainer');
+                     var publicationsContainer = $('#publicationsContainer');
                      var result = JSON.parse(jsonResult);
                      if (result["errorMessage"]) {
                          $('#publicationsContainer').empty();
@@ -205,9 +204,19 @@
                          alert(jsonResult);
                      }
 
-                 }    
-             });
+                 },
+                 failure:function(){alert("fail");}
+             });*/
+             $.ajax({
+                 type: "POST",
+                 url: "/Post/GetString",
+                 data:{"str":"some string"},
+                 success: function (result) { alert(result); }
 
+
+             });
+             
+            
          });
          </script>                       
                 </div>
