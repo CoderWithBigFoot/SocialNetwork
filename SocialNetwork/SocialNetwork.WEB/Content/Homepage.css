@@ -12,11 +12,6 @@ textarea {
     resize:none;  
 }
 
-.hashtags-container {
-    width:100%;
-    height:auto;
-}
-
 input[name="Hashtags"] {
     border-radius:3px;
     border:1px solid gray;

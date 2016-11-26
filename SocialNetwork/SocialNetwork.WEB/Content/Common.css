@@ -5,6 +5,10 @@
     height:auto;
 }
 
+.post-container {
+    background-color:white;
+    border-radius:3px;
+}
 .postTypeContainer {
     font-family:'Lucida';
     font-size:larger;
@@ -17,11 +21,6 @@
 .postTypeContainer:hover {
         cursor:pointer;
     }
-
-.post {
-    background-color:white;
-    border-radius:3px;
-}
 
 
 .common-info-block-text {
@@ -48,12 +47,28 @@ input[type="submit"] {
      font-size:medium;
     font-style:normal;
 }
-
-#repostsContainer {
-    width:inherit;
+.hashtag {
+    background-color:whitesmoke;
+    border-radius:3px;
+    border:none;
+    text-align:center;
+    padding:2px;
+    padding-left:5px;
+    padding-right:5px;
+    font-family:'Lucida';
+     font-size:medium;
+    font-style:normal;
+    width:auto;
+    height:auto;
+    display:inline-block;
+}
+.hashtags-container {
+    width:100%;
     height:auto;
 }
 #publicationsContainer {
-    width:inherit;
-    height:auto;
+      width:inherit;
+      height:auto;
+      position:relative;
 }
+

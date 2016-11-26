@@ -82,19 +82,14 @@
                                     <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
                                 </div>
                       </div>
-                        <br>
-                        <br>
-
+                        
                          <div class="postTypeContainer" id="myPublications">My publications</div>
                          <div class="postTypeContainer" id="myReposts" style="display:none;">My reposts</div>
 
                         <div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
                             Create a new post
                         </div>
-                        <br>
-                        <div id="publicationsContainer">
-
-                        </div>
+                        <br />
 
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
                             @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
@@ -122,11 +117,30 @@
                                 <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
                                 <hr/>
                                 <input type="submit" value="Publicate"/>
+                                
                             }
+                            
                </div>
-                        <br>
+           <br>
 
-                        
+          <div id="publicationsContainer">
+             <div class="post-container common-info-block-text">
+                    <div>Zheka Korsakas (identity name)</div>
+                    <div> Publication's date</div>
+                     <div class="hashtags-container">
+                         <div class="hashtag">hashtaghashtaghashtaghashtaghashtag</div>
+                         <div class="hashtag">hashtag</div>
+                     </div>
+                    <hr/>
+                    <div>Content</div>
+                    <hr />
+                    <div>Reposts Likes</div>
+                    
+            </div>
+           </div>
+
+
+
                 }
         </div>
 
@@ -188,19 +202,27 @@
         </script>
      <script>
          $(document).ready(function () {
+             var publishedPostOnWallCount = $('#publicationsContainer').children().length;
+             var identityName = '@Context.User.Identity.Name';
+             var publicationsContainer = $('#publicationsContainer');
 
              $.ajax({
                  type: 'post',
                  url:'../Post/Publications',
-                 data: {"identityName":"korsakaspr@gmail.com","count":10,"offset":4},
+                 data: {"identityName":identityName,"count":10,"offset":publishedPostOnWallCount},
                  
                  success:function(jsonResult){
                     // var publicationsContainer = $('#publicationsContainer');
                      var result = JSON.parse(jsonResult);
-                     if(result["errorMessage"]){
-                         $('#publicationsContainer').empty();
-                         $('#publicationsContainer').append('<div class="post common-info-block-text" style="text-align:center; id="noPublicationsErrorMessage" ">'+result["errorMessage"]+'</div>');
+                     if (result["errorMessage"]) {
+                         //$('#publicationsContainer').empty();
+                         //$('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;">' + result["errorMessage"] + '</div>');
+                         return;
                      }
+                     else {
+                        
+                     }
+
                  }    
              });
 
