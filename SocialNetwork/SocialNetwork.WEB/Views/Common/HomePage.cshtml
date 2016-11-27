@@ -120,7 +120,7 @@
                             }
                             
                </div>
-
+               <br>
                <div id="publicationsContainer"></div>
            <br>
 
@@ -193,33 +193,53 @@
                  type: 'POST',
                  url: '/Post/Publications',
                  data: { "offset": 0, "identityName": identityName, "count": 10 },
-                 
-                 success:function(jsonResult){
+
+                 success: function (jsonResult) {
                      var publicationsContainer = $('#publicationsContainer');
                      var result = JSON.parse(jsonResult);
 
                      if (result["errorMessage"]) {
                          $('#publicationsContainer').empty();
-                         $('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;" class="common-info-block-text">' + result["errorMessage"] + '</div>');
+                         $('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;"class="common-info-block-text">' + result["errorMessage"] + '</div>');
                          return;
                      }
                      else {
                          alert(jsonResult);
+                         /*post = "";
+                         for (var i = 0; i < result.length; i++) {
+
+                             post += '<div class="post-container common-info-block-text">';
+                             post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
+                             post += '<div>' + result[i]["PublishDate"] + '</div>';
+                             post += '<div class="hashtags-container">';
+
+                             for (var j = 0; j < result[i]["Hashtags"].length; j++) {
+                                 post += ' <div class="hashtag">' + result[i]["Hashtags"]["Name"] + '</div>';
+                             }
+                             post += '</div><hr/>';
+                             post += '<div>' + result[i]["Content"] + '</div><hr/>';
+                             post += '<div>Reposts ' + result[i]["Reposts"] + ' Likes ' + result[i]["Likes"] + '</div></div>';
+
+                             publicationsContainer.append(post);
+                             post = "";
+                         }*/
                      }
 
+                     /*post = '<div class="post-container common-info-block-text">' +
+          +'<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>' +
+          +'<div>' + result[i]["PublishDate"] + '</div>' +
+           +'<div class="hashtags-container">' +
+              +' <div class="hashtag">' + result[i]["Hashtags"]["Name"] + '</div>' +
+           +'</div>' +
+          +'<hr/>' +
+          +'<div>' + result[i]["Content"] + '</div>' +
+          +'<hr />' +
+          +'<div>Reposts ' + result[i]["Reposts"] + ' Likes' + result[i]["Likes"] + '</div>' +
+  +'</div>';*/
                  }
              });
-            /* $.ajax({
-                 type: "POST",
-                 url: "/Post/GetString",
-                 data:{"str":"some string"},
-                 success: function (result) { alert(result); }
-
-
-             });*/
-             
-            
-         });
+             });
+        
          </script>                       
                 </div>
                 </div>

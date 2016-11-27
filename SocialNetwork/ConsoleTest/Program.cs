@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using SocialNetwork.DAL.Repositories;
 using SocialNetwork.DAL.EF;
-
+using AutoMapper;
 namespace ConsoleTest
 {
     class TestClass {
@@ -182,16 +182,22 @@ namespace ConsoleTest
                         DateOfBirth = DateTime.Now
                     };
                     uow.Profiles.Add(prof2);*/
-                   /* Profile prof2 = uow.Profiles.FindByIdentityName("prof2");
-                     Post post1 = new Post()
-                     {
-                         Content = "post1",
-                         PublishDate = DateTime.Now,
-                         Publisher = prof2
-                     };
-                    post1.Hashtags = new List<Hashtag>() { new Hashtag() { Name = "First" }, new Hashtag() { Name = "First" } };
-                    uow.Posts.Create(post1);
-                    Console.WriteLine(uow.Save());*/
+                    /* Profile prof2 = uow.Profiles.FindByIdentityName("prof2");
+                      Post post1 = new Post()
+                      {
+                          Content = "post1",
+                          PublishDate = DateTime.Now,
+                          Publisher = prof2
+                      };
+                     post1.Hashtags = new List<Hashtag>() { new Hashtag() { Name = "First" }, new Hashtag() { Name = "First" } };
+                     uow.Posts.Create(post1);
+                     Console.WriteLine(uow.Save());*/
+
+                    Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
+                   // Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass, TestClass>());
+
+                    SecondTestClass test = Mapper.Map<SecondTestClass>(new TestClass() { Name = "For testclass", Sername = "for test sername" });
+                    Console.WriteLine(test.Name);
                 }
               
             }

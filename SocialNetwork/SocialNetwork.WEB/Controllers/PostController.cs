@@ -12,6 +12,7 @@ using AutoMapper;
 using Newtonsoft;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 namespace SocialNetwork.WEB.Controllers
 {
     public class PostController : Controller
@@ -22,6 +23,11 @@ namespace SocialNetwork.WEB.Controllers
         public PostController(IBasicInfo basicInfo, IInteraction interaction) {
             this.basicInfo = basicInfo;
             this.interaction = interaction;
+
+            Mapper.Initialize(cfg => {
+                cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
+                cfg.CreateMap<HashtagDTO, HashtagViewModel>();
+            });
         }
 
         /*
@@ -68,11 +74,11 @@ namespace SocialNetwork.WEB.Controllers
             {
                 IEnumerable<PostDTO> publishedPosts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);
 
-                Mapper.Initialize(cfg => {
+                /*Mapper.Initialize(cfg => {
                     cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
                     cfg.CreateMap<HashtagDTO, HashtagViewModel>();
                     });
-                
+                */
                 IEnumerable<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(publishedPosts);
               
                 ProfileDTO publisher;
