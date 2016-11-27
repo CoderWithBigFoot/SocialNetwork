@@ -16,7 +16,7 @@
 
 <body style="background-color:whitesmoke;">
     @model SocialNetwork.WEB.Models.ProfileViewModels.ProfileViewModel
-    <div class="navbar navbar-inverse navbar-fixed-top ">
+    <div class="navbar navbar-inverse navbar-fixed-top " style="background-color:lightgray;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,11 +27,7 @@
                 @Html.ActionLink("SocialNetwork", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>Link</li>
-                    <li>Link</li>
-                    <li>Link</li>
-                </ul>
+                
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -152,6 +148,9 @@
                 $('#hashtagsContainer').empty();
             }
 
+            function refreshPublications() { // after refreshing new post will be added
+
+            }
             function addHashtag() {
                 var hashtagsContainer = $('#hashtagsContainer');
                 var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
@@ -187,7 +186,7 @@
             }
 
             function Like(postId,publishedPostLikeId) {
-                $.ajax({
+                /*$.ajax({
                     type: 'POST',
                     url: '/Post/Like',
                     data: { "postId": postId },
@@ -196,15 +195,16 @@
                         $('#' + publishedPostLikeId).html(result["newLikesCount"]);
 
                     }
-                });
+                });*/
+                alert("Liked");
             }
         </script>
      <script>
 
-         $(document).ready(function () {
+         $(document).ready(function () {// for HomepagePartial
              //var publishedPostOnWallCount = $('#publicationsContainer').children().length();
              var publishedPostsLikes = 0;
-             var publishedPostsLikesId = publishedPostsLikes + "LikeContainer";
+             var publishedPostsLikesId;
              var identityName = '@Context.User.Identity.Name';
              var publicationsContainer = $('#publicationsContainer');
 
@@ -225,9 +225,8 @@
                          //alert(jsonResult);
                          post = "";
                          for (var i = 0; i < result.length; i++) {
-
+                             publishedPostsLikesId = publishedPostsLikes + "LikeContainer";
                              post += '<div class="post-container common-info-block-text">';
-                             //post+='<div style="display:none;"></div>' postId maybe here
                              post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
                              post += '<div>' + result[i]["PublishDate"].replace("T"," at ") + '</div>';
                              post += '<div class="hashtags-container">';
@@ -237,10 +236,11 @@
                              }
                              post += '</div><hr/>';
                              post += '<div>' + result[i]["Content"] + '</div><hr/>';
-                             post += '<div><a onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + (publishedPostsLikesId) + '>' + result[i]["Likes"]+'</span>';
+                             post += '<div><a><span onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')" class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + (publishedPostsLikesId) + '>' + result[i]["Likes"] + '</span>';
                              post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
                              post += '</div><br>';
 
+                             publishedPostsLikes++;
                              publicationsContainer.append(post);
                              post = "";
                          }
