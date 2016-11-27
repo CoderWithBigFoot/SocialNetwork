@@ -24,10 +24,7 @@ namespace SocialNetwork.WEB.Controllers
             this.basicInfo = basicInfo;
             this.interaction = interaction;
 
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
-                cfg.CreateMap<HashtagDTO, HashtagViewModel>();
-            });
+          
         }
 
         /*
@@ -70,16 +67,17 @@ namespace SocialNetwork.WEB.Controllers
         
         [HttpPost]
         public object Publications(int offset,string identityName,int count=10) {
+            //return JArray.FromObject(new List<string>() { "first", "second", "third" });
             try
             {
                 IEnumerable<PostDTO> publishedPosts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);
 
-                /*Mapper.Initialize(cfg => {
+                Mapper.Initialize(cfg => {
                     cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
                     cfg.CreateMap<HashtagDTO, HashtagViewModel>();
                     });
-                */
-                IEnumerable<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(publishedPosts);
+                
+                List<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(publishedPosts).ToList();
               
                 ProfileDTO publisher;
                 IEnumerable<HashtagDTO> hashtags;
@@ -92,7 +90,11 @@ namespace SocialNetwork.WEB.Controllers
                     Reposts = basicInfo.PostInfoService.GetRepostsCount(currentPost.Id);
                     Likes = basicInfo.PostInfoService.GetLikesCount(currentPost.Id);
 
-                    currentPost.Hashtags = Mapper.Map<IEnumerable<HashtagViewModel>>(hashtags);
+                    if (hashtags != null) {
+                        foreach (var currentHashtag in hashtags) {
+                            currentPost.Hashtags.Add(currentHashtag.Name);
+                        }
+                    }                 
                     currentPost.Reposts = Reposts;
                     currentPost.Likes = Likes;
                     currentPost.PublisherIdentityName = publisher.IdentityName;
@@ -100,7 +102,7 @@ namespace SocialNetwork.WEB.Controllers
                     currentPost.PublisherSername = publisher.Sername;
                   
                 }
-
+                
                return JArray.FromObject(result);
             }
             catch (ProfileNotFoundException ex)
@@ -110,26 +112,19 @@ namespace SocialNetwork.WEB.Controllers
             catch (PublishedPostsNotFoundException ex) {           
                 return JObject.FromObject(new { errorMessage = ex.Message });
             }
-
+            
 
         }
-        
-        /* [HttpPost]
-         public string GetString(string str) {
-             return "test string" +  str;
-         }*/
-         /*
+
+
+
+
         [HttpPost]
-        public object Publications(int offset, string identityName, int count = 10) {
-            return JArray.FromObject(new List<PostViewModel>() {
-              
-                new PostViewModel() {
-                    Content = "new content",
-                    Hashtags = new List<HashtagViewModel>() { new HashtagViewModel() { Name = "first"},new HashtagViewModel() { Name = "Second"} }
-                }
-
-            });
+        public JObject Like(int postId,string identityName) {
+            interaction.PostInteractionService.Like(postId, identityName);
+            int newCount = basicInfo.PostInfoService.GetLikesCount(postId);
+            return JObject.FromObject(new{ newLikesCount = newCount});
         }
-        */
+
     }
 }

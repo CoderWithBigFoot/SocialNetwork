@@ -16,9 +16,13 @@ namespace SocialNetwork.WEB.Models
         public string PublisherSername { set; get; }
         public string PublisherIdentityName { set; get; }
 
-        public IEnumerable<HashtagViewModel> Hashtags { set; get; }
+        public ICollection<string> Hashtags { set; get; }
         public int Reposts { set; get; }
         public int Likes { set; get; }
+
+        public PostViewModel() {
+            Hashtags = new List<string>();
+        }
 
     }
 }

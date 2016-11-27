@@ -51,7 +51,7 @@ input[type="submit"] {
     padding-right:4px;
 }
 .hashtag {
-    background-color:whitesmoke;
+    background-color:lightblue;
     border-radius:3px;
     border:1px solid gray;
     text-align:center;
@@ -59,7 +59,7 @@ input[type="submit"] {
     padding-left:5px;
     padding-right:5px;
     font-family:'Lucida';
-     font-size:medium;
+    font-size:medium;
     font-style:normal;
     width:auto;
     height:auto;
