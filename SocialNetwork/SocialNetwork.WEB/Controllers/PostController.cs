@@ -61,17 +61,20 @@ namespace SocialNetwork.WEB.Controllers
 
             interaction.PostInteractionService.PublishPost(postDto, hashtagsDto);
         }
-
+        
         [HttpPost]
         public object Publications(int offset,string identityName,int count=10) {
             try
             {
                 IEnumerable<PostDTO> publishedPosts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);
 
-                Mapper.Initialize(cfg => cfg.CreateMap<PostDTO,PostViewModel>().ForMember("PublisherId",opt=>opt.MapFrom(x=>x.ProfileId)));
-                Mapper.Initialize(cfg => cfg.CreateMap<HashtagDTO, HashtagViewModel>());
+                Mapper.Initialize(cfg => {
+                    cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
+                    cfg.CreateMap<HashtagDTO, HashtagViewModel>();
+                    });
+                
                 IEnumerable<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(publishedPosts);
-
+              
                 ProfileDTO publisher;
                 IEnumerable<HashtagDTO> hashtags;
                 int Reposts = 0;
@@ -89,25 +92,38 @@ namespace SocialNetwork.WEB.Controllers
                     currentPost.PublisherIdentityName = publisher.IdentityName;
                     currentPost.PublisherName = publisher.Name;
                     currentPost.PublisherSername = publisher.Sername;
+                  
                 }
 
-                return JArray.FromObject(result);
+               return JArray.FromObject(result);
             }
             catch (ProfileNotFoundException ex)
-            {
+            {               
                 return JObject.FromObject(new { errorMessage = ex.Message });
             }
-            catch (PublishedPostsNotFoundException ex) {
+            catch (PublishedPostsNotFoundException ex) {           
                 return JObject.FromObject(new { errorMessage = ex.Message });
             }
 
 
         }
-
+        
+        /* [HttpPost]
+         public string GetString(string str) {
+             return "test string" +  str;
+         }*/
+         /*
         [HttpPost]
-        public string GetString(string str) {
-            return "test string" +  str;
+        public object Publications(int offset, string identityName, int count = 10) {
+            return JArray.FromObject(new List<PostViewModel>() {
+              
+                new PostViewModel() {
+                    Content = "new content",
+                    Hashtags = new List<HashtagViewModel>() { new HashtagViewModel() { Name = "first"},new HashtagViewModel() { Name = "Second"} }
+                }
+
+            });
         }
-     
+        */
     }
 }

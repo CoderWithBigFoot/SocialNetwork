@@ -82,7 +82,7 @@
                                     <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
                                 </div>
                       </div>
-                        
+
                          <div class="postTypeContainer" id="myPublications">My publications</div>
                          <div class="postTypeContainer" id="myReposts" style="display:none;">My reposts</div>
 
@@ -92,12 +92,12 @@
                         <br />
 
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
-                            @using (Ajax.BeginForm("PublicateNewPost","Post", new AjaxOptions
+                            
+                            @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
                             {
                                 HttpMethod = "Post",
                                 OnComplete = "closePostForm"
-
-                            }, new { onsubmit = "checkPostForm" }))
+                            }))
                             {
                                 <div class="row">
                                     <div class="col-md-offset-11 col-md-1">
@@ -118,8 +118,10 @@
                                 <input type="submit" value="Publicate"/>
 
                             }
-                            <div id="publicationsContainer"></div>
+                            
                </div>
+
+               <div id="publicationsContainer"></div>
            <br>
 
                 }
@@ -187,7 +189,7 @@
              var identityName = '@Context.User.Identity.Name';
              var publicationsContainer = $('#publicationsContainer');
 
-             /*$.ajax({
+             $.ajax({
                  type: 'POST',
                  url: '/Post/Publications',
                  data: { "offset": 0, "identityName": identityName, "count": 10 },
@@ -195,6 +197,7 @@
                  success:function(jsonResult){
                      var publicationsContainer = $('#publicationsContainer');
                      var result = JSON.parse(jsonResult);
+
                      if (result["errorMessage"]) {
                          $('#publicationsContainer').empty();
                          $('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;" class="common-info-block-text">' + result["errorMessage"] + '</div>');
@@ -204,17 +207,16 @@
                          alert(jsonResult);
                      }
 
-                 },
-                 failure:function(){alert("fail");}
-             });*/
-             $.ajax({
+                 }
+             });
+            /* $.ajax({
                  type: "POST",
                  url: "/Post/GetString",
                  data:{"str":"some string"},
                  success: function (result) { alert(result); }
 
 
-             });
+             });*/
              
             
          });
