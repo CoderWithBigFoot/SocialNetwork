@@ -51,7 +51,7 @@ input[type="submit"] {
     padding-right:4px;
 }
 .hashtag {
-    background-color:lightblue;
+    background-color:dimgray;
     border-radius:3px;
     border:1px solid gray;
     text-align:center;
@@ -64,6 +64,7 @@ input[type="submit"] {
     width:auto;
     height:auto;
     display:inline-block;
+    color:whitesmoke;
     
 }
 .hashtags-container {
