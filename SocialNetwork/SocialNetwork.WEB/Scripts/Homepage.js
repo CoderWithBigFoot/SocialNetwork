@@ -84,14 +84,13 @@
     }
 
     $(document).ready(function () {
-        var publishedPostsLikes = 0;
-        var publishedPostsLikesId;
-
-        var repostsLikes = 0;
-        var repostsLikesId;
+        var allPostsLikes = 0;
+        var allPostsLikesId;
 
         var identityName = "authorizedProfile";
         var publicationsContainer = $('#publicationsContainer');
+
+        
 
         $.ajax({
             type: 'POST',
@@ -109,7 +108,7 @@
                 }
                 else {
                     //alert(jsonResult);
-                    post = "";
+                    /*post = "";
                     for (var i = 0; i < result.length; i++) {
                         publishedPostsLikesId = publishedPostsLikes + "LikeContainer";
                         post += '<div class="post-container common-info-block-text">';
@@ -121,20 +120,19 @@
                             post += ' <div class="hashtag">' + result[i]["Hashtags"][j] + '</div>';
                         }
                         post += '</div><hr/>';
-                        post += '<div>' + result[i]["Content"] + '</div><hr/>';//onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')"
+                        post += '<div>' + result[i]["Content"] + '</div><hr/>';
                         post += '<div><a onclick="common.setLike(' + result[i]["Id"] + ',' + "'" + publishedPostsLikesId + "'" + ')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + publishedPostsLikesId + '>' + result[i]["Likes"] + '</span>';
                         post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
                         post += '</div><br>';
 
-                        publishedPostsLikes++;
-                        publicationsContainer.append(post);
-                        post = "";
+                        publishedPostsLikes++;*/
+                    for (var i = 0; i < result.length; i++) {
+                        publicationsContainer.append(common.createPostContainer(result[i]));
+                    }
+                        //post = "";
                     }
                 }
-
-
-            }
-        });
+            });
 
         $.ajax({
             type: 'post',
@@ -150,7 +148,7 @@
                     return;
                 }
                 else {
-                    post = "";
+                    /*post = "";
                     for (var i = 0; i < result.length; i++) {
                         repostsLikesId = repostsLikes + "repostLikeContainer";
                         post += '<div class="post-container common-info-block-text">';
@@ -167,17 +165,19 @@
                         post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
                         post += '</div><br>';
 
-                        repostsLikes++;
-                        publicationsContainer.append(post);
-                        post = "";
+                        repostsLikes++;*/
+                    for (var i = 0; i < result.length; i++) {
+                        publicationsContainer.append(common.createPostContainer(result[i]));
+                    }
+                        //post = "";
                     }
                 }
 
-            }
+            })
 
         });
 
-    });
+   
 
     return result;
 }();
