@@ -18,32 +18,34 @@
     @model SocialNetwork.WEB.Models.ProfileViewModels.ProfileViewModel
     <div class="navbar navbar-inverse navbar-fixed-top " style="background-color:dimgray;">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("SocialNetwork", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
+            
+                
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                        <div class="navbar-collapse collapse"  style="margin-left:15%;">
+                            <ul class="nav navbar-nav">
+                                <li><a href="@Url.Action("Homepage","Common")"><span class="glyphicon glyphicon-home"></span>  My profile</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-search"></span>  Find</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-tasks"></span>  News</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>  Settings</a></li>
+                            </ul>
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    
+               
 
-                @Html.Partial("_LoginPartial")
             </div>
-        </div>
     </div>
     <br>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-2 col-md-offset-1">
-                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-home"></span>  My profile</a><br>
-                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-search"></span>  Find</a><br>
-                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-tasks"></span>  News</a><br>
-                <a href="#" class="nav-bar-link"><span class="glyphicon glyphicon-cog"></span>  Settings</a><br>
-            </div>
-
-            <div class="col-md-9" id="partialsPlace">
+            <div class="col-md-10 col-md-offset-2" id="partialsPlace">
                 <!--here is partial rendering-->
 
                 @if (Model == null)
@@ -77,8 +79,16 @@
                             <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
                             <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
                         </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3" style="text-align:center;">
+                                <h4>My statistics</h4>
+                                </div>
+                        </div>
                     </div>
 
+
+                    <br>
                     <div class="postTypeContainer" id="myPublications" onclick="changeTheDisplayedPosts()">My publications</div>
                         <div class="postTypeContainer" id="myReposts" style="display:none;" onclick="changeTheDisplayedPosts()">My reposts</div>
 
@@ -130,6 +140,7 @@
 
 
             <script>
+                // for homepage only
                 function changeTheDisplayedPosts() {
                     var myPublications = $('#myPublications');
                     var myReposts = $('#myReposts');
@@ -216,6 +227,7 @@
                     return true;
                 }
 
+                //common
                 function setLike(postId, publishedPostLikeId) {
                     var identityName = '@Context.User.Identity.Name';
                     $.ajax({
@@ -228,15 +240,18 @@
 
                         }
                     });
-                    //alert("Liked");
                 }
-                function testOutput() { alert("from test output");}
+               
             </script>
             <script>
-                $(document).ready(function () {// for HomepagePartial
+                $(document).ready(function () {// for Homepage
                     //var publishedPostOnWallCount = $('#publicationsContainer').children().length();
                     var publishedPostsLikes = 0;
                     var publishedPostsLikesId;
+                    
+                    var repostsLikes = 0;
+                    var repostsLikesId;
+
                     var identityName = '@Context.User.Identity.Name';
                     var publicationsContainer = $('#publicationsContainer');
 
@@ -282,9 +297,53 @@
 
                         }
                     });
+
+                    $.ajax({
+                        type: 'post',
+                        url: '/Post/Publications',
+                        data: { "offset": 0, "identityName": identityName, "count": 10, "postType": "reposts" },
+                        success: function (jsonResult) {
+                            var repostsContainer = $('#repostsContainer');
+                            var result = JSON.parse(jsonResult);
+
+                            if (result["errorMessage"]) {
+                                repostsContainer.empty();
+                                repostsContainer.append('<div id="noRepostsErrorMessage" style="text-align:center;"class="common-info-block-text">' + result["errorMessage"] + '</div>');
+                                return;
+                            }
+                            else {
+                                post = "";
+                                for (var i = 0; i < result.length; i++) {
+                                    repostsLikesId = repostsLikes + "repostLikeContainer";
+                                    post += '<div class="post-container common-info-block-text">';
+                                    post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
+                                    post += '<div>' + result[i]["PublishDate"].replace("T", " at ") + '</div>';
+                                    post += '<div class="hashtags-container">';
+
+                                    for (var j = 0; j < result[i]["Hashtags"].length; j++) {
+                                        post += ' <div class="hashtag">' + result[i]["Hashtags"][j] + '</div>';
+                                    }
+                                    post += '</div><hr/>';
+                                    post += '<div>' + result[i]["Content"] + '</div><hr/>';//onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')"
+                                    post += '<div><a onclick="setLike(' + result[i]["Id"] + ',' + "'" + repostsLikesId + "'" + ')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + repostsLikesId + '>' + result[i]["Likes"] + '</span>';
+                                    post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
+                                    post += '</div><br>';
+
+                                    repostsLikes++;
+                                    publicationsContainer.append(post);
+                                    post = "";
+                                }
+                            }
+
+                        }
+                        
+                    });
+
                 });
 
             </script>
+
+
         </div>
     </div>
     <div class="container">

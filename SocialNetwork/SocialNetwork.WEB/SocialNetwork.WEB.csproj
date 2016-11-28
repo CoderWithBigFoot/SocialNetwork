@@ -304,6 +304,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\ProfileViewModels\" />
+    <Folder Include="Scripts\Custom\" />
     <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
