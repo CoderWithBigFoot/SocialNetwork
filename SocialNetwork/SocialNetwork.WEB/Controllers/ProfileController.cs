@@ -14,10 +14,12 @@ namespace SocialNetwork.WEB.Controllers
     {
         private IBasicInfo basicInfo;
         private IInteraction interaction;
-        
-        public ProfileController(IBasicInfo basicInfo, IInteraction interaction) {
+        private IStatistics statistics;
+
+        public ProfileController(IBasicInfo basicInfo, IInteraction interaction,IStatistics statistics) {
             this.basicInfo = basicInfo;
             this.interaction = interaction;
+            this.statistics = statistics;
         }
 
        

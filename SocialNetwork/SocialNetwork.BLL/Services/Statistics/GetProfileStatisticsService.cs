@@ -29,7 +29,7 @@ namespace SocialNetwork.BLL.Services.Statistics
         public int PublishedPostsCount(string identityName)
         {
             SocialNetwork.DAL.EF.Profile profile = uow.Profiles.FindByIdentityName(identityName);
-            if (profile == null) { throw new ProfileNotFoundException("Profile was not found");}
+            //if (profile == null) { throw new ProfileNotFoundException("Profile was not found");}
             return profile.PublishedPosts.Count; 
         }
         public IEnumerable<HashtagDTO> AllHashtags(string identityName)
