@@ -9,8 +9,8 @@ namespace SocialNetwork.BLL.Interfaces.Interaction
    public interface IPostInteraction : IDisposable
     {
         //comments maybe here
-        bool Like(int postId,string identityName);
-        bool Repost(int postId, string identityName);
+        void Like(int postId,string identityName);
+        void Repost(int postId, string identityName);
         void PublishPost(PostForPublicateDTO newPost,IEnumerable<HashtagDTO> hashtags);
     }
 }

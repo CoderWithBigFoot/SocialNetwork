@@ -66,57 +66,71 @@ namespace SocialNetwork.WEB.Controllers
         }
         
         [HttpPost]
-        public object Publications(int offset,string identityName,int count=10) {
+        public object Publications(int offset,string identityName,string postType,int count=10) {
             //return JArray.FromObject(new List<string>() { "first", "second", "third" });
             try
             {
-                IEnumerable<PostDTO> publishedPosts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);
+                IEnumerable<PostDTO> posts = null;
+                switch (postType)
+                {
+                    case "publications": posts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count); break;
+                    case "reposts": posts = interaction.ProfileInteractionService.GetReposts(identityName, offset, count); break;
+                    default:return JObject.FromObject(new { errorMessage = "Incorrect parameters" });
+                }
+                // posts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);
 
-                Mapper.Initialize(cfg => {
+                Mapper.Initialize(cfg =>
+                {
                     cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
                     cfg.CreateMap<HashtagDTO, HashtagViewModel>();
-                    });
-                
-                List<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(publishedPosts).ToList();
-              
+                });
+
+                List<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(posts).ToList();
+
                 ProfileDTO publisher;
                 IEnumerable<HashtagDTO> hashtags;
                 int Reposts = 0;
                 int Likes = 0;
 
-                foreach (var currentPost in result) {
+                foreach (var currentPost in result)
+                {
                     publisher = basicInfo.ProfileInfoService.GetProfile(currentPost.PublisherId);
                     hashtags = basicInfo.PostInfoService.GetHashtagCollection(currentPost.Id);
                     Reposts = basicInfo.PostInfoService.GetRepostsCount(currentPost.Id);
                     Likes = basicInfo.PostInfoService.GetLikesCount(currentPost.Id);
 
-                    if (hashtags != null) {
-                        foreach (var currentHashtag in hashtags) {
+                    if (hashtags != null)
+                    {
+                        foreach (var currentHashtag in hashtags)
+                        {
                             currentPost.Hashtags.Add(currentHashtag.Name);
                         }
-                    }                 
+                    }
                     currentPost.Reposts = Reposts;
                     currentPost.Likes = Likes;
                     currentPost.PublisherIdentityName = publisher.IdentityName;
                     currentPost.PublisherName = publisher.Name;
                     currentPost.PublisherSername = publisher.Sername;
-                  
+
                 }
-                
-               return JArray.FromObject(result);
+                //result.OrderByDescending(x => x.PublishDate);
+                return JArray.FromObject(result);
             }
             catch (ProfileNotFoundException ex)
-            {               
+            {
                 return JObject.FromObject(new { errorMessage = ex.Message });
             }
-            catch (PublishedPostsNotFoundException ex) {           
+            catch (PublishedPostsNotFoundException ex)
+            {
                 return JObject.FromObject(new { errorMessage = ex.Message });
             }
-            
+            catch (RepostsNotFoundException ex) {
+                return JObject.FromObject(new { errorMessage = ex.Message });
+            }
 
         }
 
-
+        
 
 
         [HttpPost]

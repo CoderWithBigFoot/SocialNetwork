@@ -28,42 +28,36 @@ namespace SocialNetwork.BLL.Services.Interaction
             if (profile == null) { throw new ProfileNotFoundException("Profile was not found"); }
             return profile;
         }
-        public bool Like(int postId, string identityName) {
+        public void Like(int postId, string identityName) {
 
             SocialNetwork.DAL.EF.Post post = this.GetPost(postId);
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName) ;
-            bool result = false;
-
- 
+            
             if (post.LikeVoices.Contains(profile)) {
                 post.LikeVoices.Remove(profile);
-                result = false;
+                uow.Save();
             }
-            if (!post.LikeVoices.Contains(profile)) {
+            else/*(!post.LikeVoices.Contains(profile))*/ {
                 post.LikeVoices.Add(profile);
-                result = true;
+                uow.Save();
             }
 
-            uow.Save();
-            return result;
         }
-        public bool Repost(int postId, string identityName) {
+        public void Repost(int postId, string identityName) {
             SocialNetwork.DAL.EF.Post post = this.GetPost(postId);
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
-            bool result = false;
+            //bool result = false;
 
             if (profile.RepostedPosts.Contains(post)) {
                 //we can delete the post from reposts only from the home page
-                result = false;
+                profile.RepostedPosts.Remove(post);
+                uow.Save();
             }
 
             if (!profile.RepostedPosts.Contains(post)) {
                 profile.RepostedPosts.Add(post);
-                result = true;
+                uow.Save();
             }
-        
-            uow.Save();
-            return result;
         }
         //if there is no such hashtag - add it
         private ICollection<SocialNetwork.DAL.EF.Hashtag> GetExistingAndNewHashtags(IEnumerable<HashtagDTO> hashtags)

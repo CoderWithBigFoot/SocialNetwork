@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@{ Layout = null;}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,12 +12,11 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
-    @{ Layout = null;}
 </head>
 
 <body style="background-color:whitesmoke;">
     @model SocialNetwork.WEB.Models.ProfileViewModels.ProfileViewModel
-    <div class="navbar navbar-inverse navbar-fixed-top " style="background-color:lightgray;">
+    <div class="navbar navbar-inverse navbar-fixed-top " style="background-color:dimgray;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,13 +27,13 @@
                 @Html.ActionLink("SocialNetwork", "Homepage", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <br>
-    
+
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-md-offset-1">
@@ -52,35 +52,35 @@
                 }
                 else
                 {
-                        <div class="common-info-block common-info-block-text">
-                            <div class="row">
-                                <div class="col-md-3 col-md-offset-3">Name: </div>
-                                <div class="col-md-6">@Model.Name</div>
-                                    
-                                <div class="col-md-3 col-md-offset-3">Sername: </div>
-                                <div class="col-md-6">@Model.Sername</div>
-                                     
-                                <div class="col-md-3 col-md-offset-3">Identity name: </div>
-                                <div class="col-md-6">@Model.IdentityName</div>
+                    <div class="common-info-block common-info-block-text">
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-3">Name: </div>
+                            <div class="col-md-6">@Model.Name</div>
 
-                                <div class="col-md-3 col-md-offset-3">Profile id: </div>
-                                <div class="col-md-6">@Model.Id</div>
+                            <div class="col-md-3 col-md-offset-3">Sername: </div>
+                            <div class="col-md-6">@Model.Sername</div>
 
-                                <div class="col-md-3 col-md-offset-3">Date of birth: </div>
-                                <div class="col-md-6">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
-                       
-                                <div class="col-md-3 col-md-offset-3">Status: </div>
-                                <div class="col-md-6">@Model.CustomInfo</div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
-                                    <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
-                                </div>
-                      </div>
+                            <div class="col-md-3 col-md-offset-3">Identity name: </div>
+                            <div class="col-md-6">@Model.IdentityName</div>
 
-                         <div class="postTypeContainer" id="myPublications">My publications</div>
-                         <div class="postTypeContainer" id="myReposts" style="display:none;">My reposts</div>
+                            <div class="col-md-3 col-md-offset-3">Profile id: </div>
+                            <div class="col-md-6">@Model.Id</div>
+
+                            <div class="col-md-3 col-md-offset-3">Date of birth: </div>
+                            <div class="col-md-6">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
+
+                            <div class="col-md-3 col-md-offset-3">Status: </div>
+                            <div class="col-md-6">@Model.CustomInfo</div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
+                            <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
+                        </div>
+                    </div>
+
+                    <div class="postTypeContainer" id="myPublications" onclick="changeTheDisplayedPosts()">My publications</div>
+                        <div class="postTypeContainer" id="myReposts" style="display:none;" onclick="changeTheDisplayedPosts()">My reposts</div>
 
                         <div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
                             Create a new post
@@ -88,190 +88,211 @@
                         <br />
 
                         <div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
-                            
+
                             @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
                             {
                                 HttpMethod = "Post",
                                 OnComplete = "closePostForm"
                             }))
                             {
-                                <div class="row">
-                                    <div class="col-md-offset-11 col-md-1">
-                                    <a><span class="glyphicon glyphicon-remove"  onclick="closePostForm()"></span>
-                                        </a>
-                                    </div>
-                                    </div>
-
-                                <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
-                                <div class="hashtags-container" id="hashtagsContainer">
-                                    <div style="display:none;" class="error-message" id="incorrectHashtagsError">Hashtags may not be the same</div>   
+                            <div class="row">
+                                <div class="col-md-offset-11 col-md-1">
+                                    <a>
+                                        <span class="glyphicon glyphicon-remove" onclick="closePostForm()"></span>
+                                    </a>
                                 </div>
+                            </div>
 
-                                <hr/>
+                            <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
+                            <div class="hashtags-container" id="hashtagsContainer">
+                                <div style="display:none;" class="error-message" id="incorrectHashtagsError">Hashtags may not be the same</div>
+                            </div>
 
-                                <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
-                                <hr/>
-                                <input type="submit" value="Publicate"/>
+                            <hr />
+
+                            <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
+                            <hr />
+                            <input type="submit" value="Publicate" />
 
                             }
-                            
-               </div>
-               <br>
-               <div id="publicationsContainer"></div>
 
-            
+                        </div>
+                        <br>
+                        <div id="publicationsContainer"></div>
+                        <div id="repostsContainer" style="display:none;"></div>
 
-           <br>
+
+                        <br>
 
                 }
-        </div>
+            </div>
 
 
 
-    <script>
-        function removeNoPublicationsErrorMessage() {
-            $('#noPublicationsErrorMessage').remove();
-        }
-        //Homepage script
-        var totalHashtagsCountInHashtagsContainer=0;
-        function closePostForm() {
-            $('#write-post-container').show();
-            $('#publicationingPost').hide();
-            $('#newPostContent').val("");
-            $('#incorrectHashtagsError').hide();
-            $('#hashtagsContainer').empty();
-        }
-            function createNewPost() {
-                $('#write-post-container').hide();
-                $('#publicationingPost').show();
-                $('#newPostContent').val("");
-                $('#hashtagsContainer').empty();
-            }
+            <script>
+                function changeTheDisplayedPosts() {
+                    var myPublications = $('#myPublications');
+                    var myReposts = $('#myReposts');
 
-            function refreshPublications() { // after refreshing new post will be added
+                    var writePostContainer = $('#write-post-container');
+                    var publicationingPost = $('#publicationingPost');
+                    var publicationsContainer = $('#publicationsContainer');
+                    var repostsContainer = $('#repostsContainer');
 
-            }
-            function addHashtag() {
-                var hashtagsContainer = $('#hashtagsContainer');
-                var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
-                var newDeleteElementId = 'removeSpan'+totalHashtagsCountInHashtagsContainer;
-                totalHashtagsCountInHashtagsContainer++;
+                    if (myReposts.css("display") == "none") {
+                        myPublications.hide();
+                        writePostContainer.hide();
+                        publicationsContainer.hide();
+                        publicationingPost.hide();
 
-                hashtagsContainer.append('<div id=' + newId + '><input type="text" name="Hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
+                        myReposts.show();
+                        repostsContainer.show();
+                    }
+                    else {
+                        myPublications.show();
+                        writePostContainer.show();
+                        publicationsContainer.show();
 
-                $('#' + newDeleteElementId).click(function () {
-                    var removingDivId = $('#' + newDeleteElementId).parent().attr('id');
-                    $('#'+removingDivId).remove();
-                 
-                });
+                        repostsContainer.hide();
+                        myReposts.hide();
+                    }
+                    
 
-            }
-         
-            function checkPostForm() {
-                $("name=Hashtags").each(function (index, value) {
-                    value.each(function (index, nestedValue) {
-                        if (value == nestedValue) {
-                            $('#incorrectHashtagsError').show();
-                            return false;
-                        }
+                }
+
+                function removeNoPublicationsErrorMessage() {
+                    $('#noPublicationsErrorMessage').remove();
+                }
+                //Homepage script
+                var totalHashtagsCountInHashtagsContainer = 0;
+                function closePostForm() {
+                    $('#write-post-container').show();
+                    $('#publicationingPost').hide();
+                    $('#newPostContent').val("");
+                    $('#incorrectHashtagsError').hide();
+                    $('#hashtagsContainer').empty();
+                }
+                function createNewPost() {
+                    $('#write-post-container').hide();
+                    $('#publicationingPost').show();
+                    $('#newPostContent').val("");
+                    $('#hashtagsContainer').empty();
+                }
+
+                function refreshPublications() { // after refreshing new post will be added
+
+                }
+                function addHashtag() {
+                    var hashtagsContainer = $('#hashtagsContainer');
+                    var newId = 'hashtagSet' + totalHashtagsCountInHashtagsContainer;
+                    var newDeleteElementId = 'removeSpan' + totalHashtagsCountInHashtagsContainer;
+                    totalHashtagsCountInHashtagsContainer++;
+
+                    hashtagsContainer.append('<div id=' + newId + '><input type="text" name="Hashtags"><a  id=' + newDeleteElementId + '><span class="glyphicon glyphicon-remove"></span></a></div>');
+
+                    $('#' + newDeleteElementId).click(function () {
+                        var removingDivId = $('#' + newDeleteElementId).parent().attr('id');
+                        $('#' + removingDivId).remove();
 
                     });
+
+                }
+
+                function checkPostForm() {
+                    $("name=Hashtags").each(function (index, value) {
+                        value.each(function (index, nestedValue) {
+                            if (value == nestedValue) {
+                                $('#incorrectHashtagsError').show();
+                                return false;
+                            }
+
+                        });
+                    });
+                    var postContent = $('#newPostContent').val();
+                    if (postContent == "" || postContent == null || postContent.split(" ") == "") { return false; }
+                    $('#incorrectHashtagsError').hide();
+                    closePostForm();
+
+                    return true;
+                }
+
+                function setLike(postId, publishedPostLikeId) {
+                    var identityName = '@Context.User.Identity.Name';
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Post/Like',
+                        data: { "postId": postId,"identityName":identityName},
+                        success: function (jsonResult) {
+                            var result = JSON.parse(jsonResult);
+                            $('#' + publishedPostLikeId).html(result["newLikesCount"]);
+
+                        }
+                    });
+                    //alert("Liked");
+                }
+                function testOutput() { alert("from test output");}
+            </script>
+            <script>
+                $(document).ready(function () {// for HomepagePartial
+                    //var publishedPostOnWallCount = $('#publicationsContainer').children().length();
+                    var publishedPostsLikes = 0;
+                    var publishedPostsLikesId;
+                    var identityName = '@Context.User.Identity.Name';
+                    var publicationsContainer = $('#publicationsContainer');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Post/Publications',
+                        data: { "offset": 0, "identityName": identityName, "count": 10,"postType":"publications" },
+
+                        success: function (jsonResult) {
+                            var publicationsContainer = $('#publicationsContainer');
+                            var result = JSON.parse(jsonResult);
+
+                            if (result["errorMessage"]) {
+                                $('#publicationsContainer').empty();
+                                $('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;"class="common-info-block-text">' + result["errorMessage"] + '</div>');
+                                return;
+                            }
+                            else {
+                                //alert(jsonResult);
+                                post = "";
+                                for (var i = 0; i < result.length; i++) {
+                                    publishedPostsLikesId = publishedPostsLikes + "LikeContainer";
+                                    post += '<div class="post-container common-info-block-text">';
+                                    // post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
+                                    post += '<div>' + result[i]["PublishDate"].replace("T", " at ") + '</div>';
+                                    post += '<div class="hashtags-container">';
+
+                                    for (var j = 0; j < result[i]["Hashtags"].length; j++) {
+                                        post += ' <div class="hashtag">' + result[i]["Hashtags"][j] + '</div>';
+                                    }
+                                    post += '</div><hr/>';
+                                    post += '<div>' + result[i]["Content"] + '</div><hr/>';//onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')"
+                                    post += '<div><a onclick="setLike('+result[i]["Id"]+','+"'"+publishedPostsLikesId+"'"+')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + publishedPostsLikesId + '>' + result[i]["Likes"] + '</span>';
+                                    post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
+                                    post += '</div><br>';
+
+                                    publishedPostsLikes++;
+                                    publicationsContainer.append(post);
+                                    post = "";
+                                }
+                            }
+
+
+                        }
+                    });
                 });
-                var postContent = $('#newPostContent').val();
-                if (postContent == "" || postContent == null || postContent.split(" ") == "") { return false;}
-                $('#incorrectHashtagsError').hide();
-                closePostForm();
 
-                return true;
-            }
-
-            function Like(postId,publishedPostLikeId) {
-                /*$.ajax({
-                    type: 'POST',
-                    url: '/Post/Like',
-                    data: { "postId": postId },
-                    success: function (jsonResult) {
-                        var result = JSON.parse(jsonResult);
-                        $('#' + publishedPostLikeId).html(result["newLikesCount"]);
-
-                    }
-                });*/
-                alert("Liked");
-            }
-        </script>
-     <script>
-
-         $(document).ready(function () {// for HomepagePartial
-             //var publishedPostOnWallCount = $('#publicationsContainer').children().length();
-             var publishedPostsLikes = 0;
-             var publishedPostsLikesId;
-             var identityName = '@Context.User.Identity.Name';
-             var publicationsContainer = $('#publicationsContainer');
-
-             $.ajax({
-                 type: 'POST',
-                 url: '/Post/Publications',
-                 data: { "offset": 0, "identityName": identityName, "count": 10 },
-                 success: function (jsonResult) {
-                     var publicationsContainer = $('#publicationsContainer');
-                     var result = JSON.parse(jsonResult);
-
-                     if (result["errorMessage"]) {
-                         $('#publicationsContainer').empty();
-                         $('#publicationsContainer').append('<div id="noPublicationsErrorMessage" style="text-align:center;"class="common-info-block-text">' + result["errorMessage"] + '</div>');
-                         return;
-                     }
-                     else {
-                         //alert(jsonResult);
-                         post = "";
-                         for (var i = 0; i < result.length; i++) {
-                             publishedPostsLikesId = publishedPostsLikes + "LikeContainer";
-                             post += '<div class="post-container common-info-block-text">';
-                             post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
-                             post += '<div>' + result[i]["PublishDate"].replace("T"," at ") + '</div>';
-                             post += '<div class="hashtags-container">';
-
-                             for (var j = 0; j < result[i]["Hashtags"].length; j++) {
-                                 post += ' <div class="hashtag">' + result[i]["Hashtags"][j] + '</div>';
-                             }
-                             post += '</div><hr/>';
-                             post += '<div>' + result[i]["Content"] + '</div><hr/>';
-                             post += '<div><a><span onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')" class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + (publishedPostsLikesId) + '>' + result[i]["Likes"] + '</span>';
-                             post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
-                             post += '</div><br>';
-
-                             publishedPostsLikes++;
-                             publicationsContainer.append(post);
-                             post = "";
-                         }
-                     }
-
-                     /*post = '<div class="post-container common-info-block-text">' +
-          +'<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>' +
-          +'<div>' + result[i]["PublishDate"] + '</div>' +
-           +'<div class="hashtags-container">' +
-              +' <div class="hashtag">' + result[i]["Hashtags"]["Name"] + '</div>' +
-           +'</div>' +
-          +'<hr/>' +
-          +'<div>' + result[i]["Content"] + '</div>' +
-          +'<hr />' +
-          +'<div>Reposts ' + result[i]["Reposts"] + ' Likes' + result[i]["Likes"] + '</div>' +
-  +'</div>';*/
-                 }
-             });
-             });
-        
-         </script>                       
-                </div>
-                </div>
+            </script>
+        </div>
+    </div>
     <div class="container">
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - SocialNetwork</p>
         </footer>
     </div>
-
-    
 
 </body>
 </html>
