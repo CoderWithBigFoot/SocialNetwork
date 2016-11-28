@@ -66,10 +66,31 @@ namespace SocialNetwork.BLL.Services.Interaction
 
 
             ICollection<SocialNetwork.DAL.EF.Hashtag> existingAndNewHashtags = new List<SocialNetwork.DAL.EF.Hashtag>();
-            Mapper.Initialize(cfg => cfg.CreateMap<HashtagDTO,SocialNetwork.DAL.EF.Hashtag>());
-            existingAndNewHashtags = Mapper.Map<ICollection<SocialNetwork.DAL.EF.Hashtag>>(hashtags);
 
-            //проверку сделать на повторения хэштегов
+            Mapper.Initialize(cfg => {
+                cfg.CreateMap<HashtagDTO, SocialNetwork.DAL.EF.Hashtag>();
+                cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, string>().ConvertUsing(x => x.Name);
+            });
+            
+            SocialNetwork.DAL.EF.Hashtag existingHashtag = null;
+            foreach (var currentHashtag in hashtags) {
+                existingHashtag = uow.Hashtags.FindByName(currentHashtag.Name);
+                if (existingHashtag != null) {
+                    existingAndNewHashtags.Add(existingHashtag);
+                }
+            }
+
+            ICollection<string> alreadyAddedHashtags = Mapper.Map<ICollection<string>>(existingAndNewHashtags);
+
+            foreach (var currentHashtag in hashtags) {
+                if (!alreadyAddedHashtags.Contains(currentHashtag.Name)) {
+                    existingAndNewHashtags.Add(new DAL.EF.Hashtag() {Name = currentHashtag.Name});
+                }
+            }
+            
+            
+
+            //here must be check for repeated hashtags
 
 
             return existingAndNewHashtags; 

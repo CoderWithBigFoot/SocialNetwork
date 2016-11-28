@@ -37,7 +37,21 @@ namespace SocialNetwork.WEB.Controllers
                 return View(ex.Message);
             }
         }
-        
+
+        [HttpGet]
+        public PartialViewResult HomepagePartial() {
+            ProfileDTO profileInfo = basicInfo.ProfileInfoService.GetProfile(HttpContext.User.Identity.Name);
+            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
+            ProfileViewModel result = Mapper.Map<ProfileViewModel>(profileInfo);
+
+            result.Followers = basicInfo.ProfileInfoService.GetFollowers(HttpContext.User.Identity.Name);
+            result.Subscriptions = basicInfo.ProfileInfoService.GetSubscriptions(HttpContext.User.Identity.Name);
+
+            return PartialView("../Partials/Home",result);
+        }
+
+
+        /*
         [HttpGet]
         public ActionResult ProfilePage(string identityName) {
             try
@@ -56,7 +70,7 @@ namespace SocialNetwork.WEB.Controllers
                 return PartialView(ex.Message);
             }
         }
-
+        */
        
         ~CommonController() {
             basicInfo.Dispose();

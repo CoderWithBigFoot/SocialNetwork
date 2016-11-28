@@ -90,7 +90,7 @@
         var repostsLikes = 0;
         var repostsLikesId;
 
-        var identityName = "authorizedProfile";//
+        var identityName = "authorizedProfile";
         var publicationsContainer = $('#publicationsContainer');
 
         $.ajax({

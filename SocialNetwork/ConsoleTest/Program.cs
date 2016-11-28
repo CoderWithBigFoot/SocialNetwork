@@ -193,11 +193,16 @@ namespace ConsoleTest
                      uow.Posts.Create(post1);
                      Console.WriteLine(uow.Save());*/
 
-                    Mapper.Initialize(cfg => cfg.CreateMap<TestClass, SecondTestClass>());
-                   // Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass, TestClass>());
+                    Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass, string>().ConvertUsing(x=>x.Name));
 
-                    SecondTestClass test = Mapper.Map<SecondTestClass>(new TestClass() { Name = "For testclass", Sername = "for test sername" });
-                    Console.WriteLine(test.Name);
+                    List<SecondTestClass> testCollection = new List<SecondTestClass>() {
+                        new SecondTestClass() { Name = "first"},
+                        new SecondTestClass() { Name = "second"}
+                    };
+                    List<string> newStringList = Mapper.Map<List<string>>(testCollection);
+                    foreach (var current in newStringList) {
+                        Console.WriteLine(current);
+                    }
                 }
               
             }

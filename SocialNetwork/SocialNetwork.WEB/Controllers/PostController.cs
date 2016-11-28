@@ -58,6 +58,7 @@ namespace SocialNetwork.WEB.Controllers
 
             if (post.Hashtags != null) {
                 foreach (var hashtag in post.Hashtags) {
+                    
                     hashtagsDto.Add(new HashtagDTO() { Name = hashtag });
                 }
             }
