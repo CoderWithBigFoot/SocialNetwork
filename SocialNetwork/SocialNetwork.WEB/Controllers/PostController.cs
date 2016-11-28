@@ -71,12 +71,17 @@ namespace SocialNetwork.WEB.Controllers
             try
             {
                 IEnumerable<PostDTO> posts = null;
+                switch (identityName)
+                {
+                    case "authorizedProfile":identityName = ControllerContext.HttpContext.User.Identity.Name;break;
+                }
                 switch (postType)
                 {
                     case "publications": posts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count); break;
                     case "reposts": posts = interaction.ProfileInteractionService.GetReposts(identityName, offset, count); break;
                     default:return JObject.FromObject(new { errorMessage = "Incorrect parameters" });
                 }
+                
                 // posts = interaction.ProfileInteractionService.GetPublications(identityName, offset, count);
 
                 Mapper.Initialize(cfg =>
@@ -135,6 +140,10 @@ namespace SocialNetwork.WEB.Controllers
 
         [HttpPost]
         public JObject Like(int postId,string identityName) {
+            switch (identityName) {
+                case "authorizedProfile": identityName = ControllerContext.HttpContext.User.Identity.Name;break;
+            }
+
             interaction.PostInteractionService.Like(postId, identityName);
             int newCount = basicInfo.PostInfoService.GetLikesCount(postId);
             return JObject.FromObject(new{ newLikesCount = newCount});

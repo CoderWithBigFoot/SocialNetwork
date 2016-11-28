@@ -1,4 +1,6 @@
 ﻿@model SocialNetwork.WEB.Models.ProfileViewModels.ProfileViewModel
+<script src="~/Scripts/Common.js"></script>
+<script src="~/Scripts/Homepage.js"></script>
 <div class="common-info-block common-info-block-text">
     <div class="row">
         <div class="col-md-3 col-md-offset-3">Name: </div>
@@ -28,10 +30,10 @@
 </div>
 
 <br>
-<div class="postTypeContainer" id="myPublications" onclick="changeTheDisplayedPosts()">My publications</div>
-<div class="postTypeContainer" id="myReposts" style="display:none;" onclick="changeTheDisplayedPosts()">My reposts</div>
+<div class="postTypeContainer" id="myPublications" onclick="homepage.changeTheDisplayedPosts()">My publications</div>
+<div class="postTypeContainer" id="myReposts" style="display:none;" onclick="homepage.changeTheDisplayedPosts()">My reposts</div>
 
-<div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
+<div class="common-info-block common-info-block-text" id="write-post-container" onclick="homepage.createNewPost()">
     Create a new post
 </div>
 <br>
@@ -41,18 +43,18 @@
     @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
     {
         HttpMethod = "Post",
-        OnComplete = "closePostForm"
+        OnComplete = "homepage.closePostForm"
     }))
     {
         <div class="row">
             <div class="col-md-offset-11 col-md-1">
                 <a>
-                    <span class="glyphicon glyphicon-remove" onclick="closePostForm()"></span>
+                    <span class="glyphicon glyphicon-remove" onclick="homepage.closePostForm()"></span>
                 </a>
             </div>
         </div>
 
-                            <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
+                            <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="homepage.addHashtag()"></span></a>
                             <div class="hashtags-container" id="hashtagsContainer">
                                 <div style="display:none;" class="error-message" id="incorrectHashtagsError">Hashtags may not be the same</div>
                             </div>
