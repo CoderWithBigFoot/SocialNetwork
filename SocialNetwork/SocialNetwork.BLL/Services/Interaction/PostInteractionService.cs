@@ -88,11 +88,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                 }
             }
             
-            
-
             //here must be check for repeated hashtags
-
-
             return existingAndNewHashtags; 
         }
 
