@@ -1,0 +1,72 @@
+﻿@model SocialNetwork.WEB.Models.ProfileViewModels.ProfileViewModel
+<div class="common-info-block common-info-block-text">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3">Name: </div>
+        <div class="col-md-6">@Model.Name</div>
+
+        <div class="col-md-3 col-md-offset-3">Sername: </div>
+        <div class="col-md-6">@Model.Sername</div>
+
+        <div class="col-md-3 col-md-offset-3">Identity name: </div>
+        <div class="col-md-6">@Model.IdentityName</div>
+
+        <div class="col-md-3 col-md-offset-3">Profile id: </div>
+        <div class="col-md-6">@Model.Id</div>
+
+        <div class="col-md-3 col-md-offset-3">Date of birth: </div>
+        <div class="col-md-6">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
+
+        <div class="col-md-3 col-md-offset-3">Status: </div>
+        <div class="col-md-6">@Model.CustomInfo</div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
+        <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
+    </div>
+</div>
+
+<br>
+<div class="postTypeContainer" id="myPublications" onclick="changeTheDisplayedPosts()">My publications</div>
+<div class="postTypeContainer" id="myReposts" style="display:none;" onclick="changeTheDisplayedPosts()">My reposts</div>
+
+<div class="common-info-block common-info-block-text" id="write-post-container" onclick="createNewPost()">
+    Create a new post
+</div>
+<br>
+
+<div class="common-info-block common-info-block-text" id="publicationingPost" style="display:none;">
+
+    @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnComplete = "closePostForm"
+    }))
+    {
+        <div class="row">
+            <div class="col-md-offset-11 col-md-1">
+                <a>
+                    <span class="glyphicon glyphicon-remove" onclick="closePostForm()"></span>
+                </a>
+            </div>
+        </div>
+
+                            <span>Hashtags</span> <a><span class="glyphicon glyphicon-plus" onclick="addHashtag()"></span></a>
+                            <div class="hashtags-container" id="hashtagsContainer">
+                                <div style="display:none;" class="error-message" id="incorrectHashtagsError">Hashtags may not be the same</div>
+                            </div>
+
+                            <hr />
+
+                            <textarea id="newPostContent" rows="10" placeholder="Type here" name="Content"></textarea>
+                            <hr />
+                            <input type="submit" value="Publicate" />
+
+    }
+
+</div>
+<br>
+<div id="publicationsContainer"></div>
+<div id="repostsContainer" style="display:none;"></div>
+<br>
