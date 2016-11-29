@@ -30,21 +30,20 @@ namespace SocialNetwork.WEB.Controllers
                 case "authorizedProfile": identityName = HttpContext.User.Identity.Name; break;
             }
 
-            /*Mapper.Initialize(cfg => {
+            Mapper.Initialize(cfg => {
                 cfg.CreateMap<HashtagDTO, string>().ConvertUsing(x => x.Name);
-                cfg.CreateMap<Dictionary<HashtagDTO,int>,Dictionary<string,int>> ().());
+                cfg.CreateMap<KeyValuePair<HashtagDTO, int>, KeyValuePair<string, int>>().ConvertUsing(x => new KeyValuePair<string, int>(x.Key.Name, x.Value));
             });
-            */
+            
             int publishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
-            Dictionary<string, int> EachHashtagCount = Mapper.Map<Dictionary<string,int>>(statistics.GetProfileStatisticsService.EachHashtagCount(identityName));
-            Dictionary<string, int> PostsCountByMostPopularHashtags = Mapper.Map<Dictionary<string, int>>(statistics.GetProfileStatisticsService.MostPopularHashtags(identityName));
+            ICollection<KeyValuePair<string, int>> EachHashtagCount = Mapper.Map<ICollection<KeyValuePair<string,int>>>(statistics.GetProfileStatisticsService.EachHashtagCount(identityName));
+            ICollection<KeyValuePair<string, int>> PostsCountByMostPopularHashtags = Mapper.Map<ICollection<KeyValuePair<string, int>>>(statistics.GetProfileStatisticsService.MostPopularHashtags(identityName));
             
             StatisticsViewModel model = new StatisticsViewModel();
-            /*model.PublishedPostsCount = publishedPostsCount;
-            //PublishedPostsNotFoundException
+            model.PublishedPostsCount = publishedPostsCount;
             model.EachHashtagCount = EachHashtagCount;
             model.PostsCountByMostPopularHasthags = PostsCountByMostPopularHashtags;
-            //*/
+            //
 
 
             return PartialView("../Partials/Statistics",model);

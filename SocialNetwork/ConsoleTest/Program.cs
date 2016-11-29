@@ -193,21 +193,25 @@ namespace ConsoleTest
                      uow.Posts.Create(post1);
                      Console.WriteLine(uow.Save());*/
 
-                    Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass, string>().ConstructUsing(x=>x.Name));
+                    //Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass, string>().ConstructUsing(x=>x.Name));
 
-                    Mapper.Initialize(cfg => cfg.CreateMap<Dictionary<SecondTestClass, int>, Dictionary<string, int>>());
+                    Mapper.Initialize(cfg => cfg.CreateMap<KeyValuePair<SecondTestClass, int>, KeyValuePair<string, int>>().ConvertUsing(x=>new KeyValuePair<string, int>(x.Key.Name,x.Value)));
 
-                    SecondTestClass first = new SecondTestClass() { Name = "first" };
-                    SecondTestClass second = new SecondTestClass() { Name = "first" };
+                    
 
                     Dictionary<SecondTestClass, int> input = new Dictionary<SecondTestClass, int>();
                     input.Add(new SecondTestClass() { Name = "Some name" }, 1);
                     input.Add(new SecondTestClass() { Name = "Some another name" }, 2);
 
-
-
-                    Dictionary<string, int> result = Mapper.Map<Dictionary<string, int>>(input);
+                    KeyValuePair<SecondTestClass, int> inp = new KeyValuePair<SecondTestClass, int>(new SecondTestClass() { Name = "test name" },1);
+                    KeyValuePair<string, int> res = Mapper.Map<KeyValuePair<string, int>>(inp);
+                    //Console.WriteLine(res.Key);
                     
+
+                    ICollection<KeyValuePair<string, int>> result = Mapper.Map<ICollection<KeyValuePair<string, int>>>(input);
+                    foreach (var current in result) {
+                        Console.WriteLine(current.Key + " " + current.Value);
+                    }
                 }
               
             }

@@ -11,9 +11,9 @@
         <h4>All hashtags</h4>
         <div class="row">
             <div class="col-md-offset-2 col-md-8" >
-                here are hashtags
-                First second thirdFirst second third
-                First second thirdFirst second t
+                @foreach (var currentHashtag in Model.EachHashtagCount) {
+                    <div class="hashtag">@currentHashtag.Key</div>
+                }
             </div>
         </div>
         <hr/>
