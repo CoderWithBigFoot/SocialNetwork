@@ -18,7 +18,6 @@
 
             }
         });
-        alert(postId);
     }
     result.createPostContainer = function (postData) {
         var post = "";

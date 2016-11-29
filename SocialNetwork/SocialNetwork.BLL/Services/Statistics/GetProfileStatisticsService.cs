@@ -72,12 +72,12 @@ namespace SocialNetwork.BLL.Services.Statistics
                 return Mapper.Map<Dictionary<HashtagDTO, int>>(result);
             
         }
-        public IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName, int count)
+        public IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName, int count=3)
         {
                 Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
                 return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);    
         }      
-        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count,TimeInterval interval=TimeInterval.Week)
+        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count=3,TimeInterval interval=TimeInterval.Week)
         {
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
                 int period = 0;

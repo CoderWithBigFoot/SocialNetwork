@@ -1,18 +1,108 @@
 ﻿@model SocialNetwork.WEB.Models.StatisticsViewModel
+<script src="~/Scripts/Chart.js"></script>
 
 <div class="common-info-block" id="statisticsPlace">
-    <div id="countPlace"></div>
+
+    <div class="statistics-element common-info-block-text">
+        <h4>Total publications count</h4> 
+        <h4>@Model.PublishedPostsCount</h4>
+        <hr />
+
+        <h4>All hashtags</h4>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8" >
+                here are hashtags
+                First second thirdFirst second third
+                First second thirdFirst second t
+            </div>
+        </div>
+        <hr/>
+
+        <h4>Most popular hashtags</h4>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <canvas id="pieChart"></canvas>
+            </div>
+            </div>
+        <hr/>
+
+        <h4>Most popular hashtags frequency</h4>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+  
 </div>
 
 
 <script>
     var totalStatisticsContainersCount = 0;
 
+    var colorsForCharts = {};
+    colorsForCharts.lightgreen = 'lightgreen';
+    colorsForCharts.lightblue = 'lightblue';
+
+
+
     $(document).ready(function () {
-        setPublicationsCount(@Model.PublishedPostsCount);
+        var pieData = [
+{
+    value: 25,
+    label: 'Java',
+    color: 'lightgreen'
+},
+{
+    value: 10,
+    label: 'Scala',
+    color: 'lightblue'
+},
+{
+    value: 30,
+    label: 'PHP',
+    color: 'lightsalmon'
+}
+        ];
+       //at the left side need to insert div with legend(by myself)
+        var pieContext = document.getElementById('pieChart').getContext('2d');
+        var newPieChart = new Chart(pieContext).Pie(pieData);
+
+        
+        var barData = {
+            labels: ['Italy', 'UK','Belarus','a','b'],
+            datasets: [
+                {
+                    fillColor: 'lightgreen',
+                    data: [30, 40 , 50,123,423]
+                },
+                {
+                    fillColor: 'lightblue',
+                    data: [35, 50,60,123,455]
+                }
+            ]
+        };
+        var barContext = document.getElementById('barChart').getContext('2d');
+        var newBarChart = new Chart(barContext).Bar(barData);
     });
 
-    function setPublicationsCount(publicationsCount) {
-        $('#countPlace').html(publicationsCount);
-    }
+
+
     </script>
+
+<style>
+    .statistics-element {
+        padding:10px;
+        width:auto;
+        height:auto;
+        text-align:center;
+    }
+    h4 {
+        text-align:center;
+    }
+    canvas {
+        width:100%;
+        height:auto;
+    }
+    </style>

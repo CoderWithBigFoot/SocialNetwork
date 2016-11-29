@@ -29,9 +29,23 @@ namespace SocialNetwork.WEB.Controllers
             {
                 case "authorizedProfile": identityName = HttpContext.User.Identity.Name; break;
             }
+
+            /*Mapper.Initialize(cfg => {
+                cfg.CreateMap<HashtagDTO, string>().ConvertUsing(x => x.Name);
+                cfg.CreateMap<Dictionary<HashtagDTO,int>,Dictionary<string,int>> ().());
+            });
+            */
             int publishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
+            Dictionary<string, int> EachHashtagCount = Mapper.Map<Dictionary<string,int>>(statistics.GetProfileStatisticsService.EachHashtagCount(identityName));
+            Dictionary<string, int> PostsCountByMostPopularHashtags = Mapper.Map<Dictionary<string, int>>(statistics.GetProfileStatisticsService.MostPopularHashtags(identityName));
+            
             StatisticsViewModel model = new StatisticsViewModel();
-            model.PublishedPostsCount = publishedPostsCount;
+            /*model.PublishedPostsCount = publishedPostsCount;
+            //PublishedPostsNotFoundException
+            model.EachHashtagCount = EachHashtagCount;
+            model.PostsCountByMostPopularHasthags = PostsCountByMostPopularHashtags;
+            //*/
+
 
             return PartialView("../Partials/Statistics",model);
         }
