@@ -1,19 +1,20 @@
-﻿@model SocialNetwork.WEB.Models.StatisticsViewModel
+﻿
 <script src="~/Scripts/Chart.js"></script>
-
 <div class="common-info-block" id="statisticsPlace">
 
     <div class="statistics-element common-info-block-text">
         <h4>Total publications count</h4> 
-        <h4>@Model.PublishedPostsCount</h4>
+        <h4>65</h4>
         <hr />
 
         <h4>All hashtags</h4>
         <div class="row">
             <div class="col-md-offset-2 col-md-8" >
-                @foreach (var currentHashtag in Model.EachHashtagCount) {
-                    <div class="hashtag">@currentHashtag.Key</div>
-                }
+                <div class="hashtag">Dog</div>
+                <div class="hashtag">Cat</div>
+                <div class="hashtag">Kitchen</div>
+                <div class="hashtag">Car</div>
+                <div class="hashtag">Present</div>
             </div>
         </div>
         <hr/>
@@ -41,9 +42,8 @@
 <script>
     var totalStatisticsContainersCount = 0;
 
-    var colorsForCharts = {};
-    colorsForCharts.lightgreen = 'lightgreen';
-    colorsForCharts.lightblue = 'lightblue';
+    var colorsForCharts = ['lightgreen','lightblue'];
+    
 
 
 
@@ -51,18 +51,23 @@
         var pieData = [
 {
     value: 25,
-    label: 'Java',
+    label: 'Dog',
     color: 'lightgreen'
 },
 {
     value: 10,
-    label: 'Scala',
+    label: 'Cat',
     color: 'lightblue'
 },
 {
     value: 30,
-    label: 'PHP',
+    label: 'Kitchen',
     color: 'lightsalmon'
+},
+{
+    value: 50,
+    label: 'others',
+    color:'orange'
 }
         ];
        //at the left side need to insert div with legend(by myself)
@@ -71,15 +76,15 @@
 
         
         var barData = {
-            labels: ['Italy', 'UK','Belarus','a','b'],
+            labels: ['Dog', 'Cat','Kitchen'],
             datasets: [
                 {
                     fillColor: 'lightgreen',
-                    data: [30, 40 , 50,123,423]
+                    data: [30, 40 , 50]
                 },
                 {
                     fillColor: 'lightblue',
-                    data: [35, 50,60,123,455]
+                    data: [35, 50,60]
                 }
             ]
         };

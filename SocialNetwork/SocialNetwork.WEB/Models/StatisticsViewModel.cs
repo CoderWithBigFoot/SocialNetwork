@@ -8,8 +8,8 @@ namespace SocialNetwork.WEB.Models
     public class StatisticsViewModel
     {
         public int PublishedPostsCount { set; get; }
-        public ICollection<KeyValuePair<string, int>> EachHashtagCount { set; get; } = new Dictionary<string, int>();
-        public ICollection<KeyValuePair<string, int>> PostsCountByMostPopularHasthags { set; get; } = new Dictionary<string, int>();
+        public ICollection<KeyValuePair<string, int>> EachHashtagCount { set; get; } = new List<KeyValuePair<string, int>>();
+        public ICollection<KeyValuePair<string, int>> PostsCountByMostPopularHasthags { set; get; } = new List<KeyValuePair<string, int>>();
 
     }
 }
