@@ -1,0 +1,18 @@
+﻿@model SocialNetwork.WEB.Models.StatisticsViewModel
+
+<div class="common-info-block" id="statisticsPlace">
+    <div id="countPlace"></div>
+</div>
+
+
+<script>
+    var totalStatisticsContainersCount = 0;
+
+    $(document).ready(function () {
+        setPublicationsCount(@Model.PublishedPostsCount);
+    });
+
+    function setPublicationsCount(publicationsCount) {
+        $('#countPlace').html(publicationsCount);
+    }
+    </script>

@@ -107,33 +107,12 @@
                     return;
                 }
                 else {
-                    //alert(jsonResult);
-                    /*post = "";
-                    for (var i = 0; i < result.length; i++) {
-                        publishedPostsLikesId = publishedPostsLikes + "LikeContainer";
-                        post += '<div class="post-container common-info-block-text">';
-                        // post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
-                        post += '<div>' + result[i]["PublishDate"].replace("T", " at ") + '</div>';
-                        post += '<div class="hashtags-container">';
-
-                        for (var j = 0; j < result[i]["Hashtags"].length; j++) {
-                            post += ' <div class="hashtag">' + result[i]["Hashtags"][j] + '</div>';
-                        }
-                        post += '</div><hr/>';
-                        post += '<div>' + result[i]["Content"] + '</div><hr/>';
-                        post += '<div><a onclick="common.setLike(' + result[i]["Id"] + ',' + "'" + publishedPostsLikesId + "'" + ')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + publishedPostsLikesId + '>' + result[i]["Likes"] + '</span>';
-                        post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
-                        post += '</div><br>';
-
-                        publishedPostsLikes++;*/
                     for (var i = 0; i < result.length; i++) {
                         publicationsContainer.append(common.createPostContainer(result[i]));
                     }
-                        //post = "";
-                    }
+                   }
                 }
             });
-
         $.ajax({
             type: 'post',
             url: '/Post/Publications',
@@ -148,32 +127,13 @@
                     return;
                 }
                 else {
-                    /*post = "";
-                    for (var i = 0; i < result.length; i++) {
-                        repostsLikesId = repostsLikes + "repostLikeContainer";
-                        post += '<div class="post-container common-info-block-text">';
-                        post += '<div>' + result[i]["PublisherName"] + " " + result[i]["PublisherSername"] + " (" + result[i]["PublisherIdentityName"] + ')</div>';
-                        post += '<div>' + result[i]["PublishDate"].replace("T", " at ") + '</div>';
-                        post += '<div class="hashtags-container">';
-
-                        for (var j = 0; j < result[i]["Hashtags"].length; j++) {
-                            post += ' <div class="hashtag">' + result[i]["Hashtags"][j] + '</div>';
-                        }
-                        post += '</div><hr/>';
-                        post += '<div>' + result[i]["Content"] + '</div><hr/>';//onclick="Like(' + result[i]["Id"] + ',' + publishedPostsLikesId + ')"
-                        post += '<div><a onclick="setLike(' + result[i]["Id"] + ',' + "'" + repostsLikesId + "'" + ')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + repostsLikesId + '>' + result[i]["Likes"] + '</span>';
-                        post += '&nbsp&nbspReposts ' + result[i]["Reposts"] + '</div>';
-                        post += '</div><br>';
-
-                        repostsLikes++;*/
                     for (var i = 0; i < result.length; i++) {
                         publicationsContainer.append(common.createPostContainer(result[i]));
                     }
-                        //post = "";
-                    }
                 }
+            }
 
-            })
+        });
 
         });
 

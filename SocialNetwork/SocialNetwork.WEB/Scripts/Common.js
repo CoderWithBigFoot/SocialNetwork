@@ -23,6 +23,8 @@
     result.createPostContainer = function (postData) {
         var post = "";
         
+        if (postData["errorMessage"] != null) { return;}
+
             allPostsLikesId = allPostsLikes + "LikeContainer";
 
             post += '<div class="post-container common-info-block-text">';
@@ -44,6 +46,25 @@
         
     }
 
+    result.homepage = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Common/HomepagePartial",
+            success: function (partialViewResult) {
+                $('#partialsPlace').html(partialViewResult);
+            }
+        });
+    };
+    result.statistics = function (identityName) {
+        $.ajax({
+            type: "POST",
+            url: "/Statistics/StatisticsPartial",
+            data:{"identityName":identityName},
+            success: function (partialViewResult) {
+                $('#partialsPlace').html(partialViewResult);
+            }
+        });
+    };
 
     return result;
 }();
