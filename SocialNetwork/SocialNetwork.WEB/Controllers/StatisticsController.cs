@@ -25,22 +25,26 @@ namespace SocialNetwork.WEB.Controllers
         [HttpPost]
         public PartialViewResult StatisticsPartial(string identityName)
         {
-            StatisticsViewModel model = new StatisticsViewModel();
-
-            //Mapper.Initialize(cfg => cfg.CreateMap<KeyValuePair<HashtagDTO, int>, KeyValuePair<string, int>>().ConvertUsing(opt=>new KeyValuePair<string, int>(opt.Key.Name,opt.Value)));
             switch (identityName)
             {
                 case "authorizedProfile": identityName = HttpContext.User.Identity.Name; break;
-            }
-            //here is try PublicationsNotFound
-            model.PublishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
-
-            foreach (var current in statistics.GetProfileStatisticsService.EachHashtagCount(identityName)) {
-                model.EachHashtagCount.Add(new KeyValuePair<string,int>(current.Key.Name,current.Value));
-            }
-                
-            return PartialView("../Partials/Statistics",model);
+            }     
+            return PartialView("../Partials/Statistics",identityName);
         }
+
+        [HttpPost]
+        public JObject ProfileStatisticsData(string identityName) {
+            StatisticsViewModel model = new StatisticsViewModel();
+
+            model.PublishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
+            foreach (var current in statistics.GetProfileStatisticsService.EachHashtagCount(identityName))
+            {
+                model.EachHashtagCount.Add(new KeyValuePair<string, int>(current.Key.Name, current.Value));
+            }
+            
+            return JObject.FromObject(model);
+        }
+
 
     }
 }

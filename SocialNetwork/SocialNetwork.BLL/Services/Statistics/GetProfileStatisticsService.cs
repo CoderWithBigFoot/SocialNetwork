@@ -62,6 +62,7 @@ namespace SocialNetwork.BLL.Services.Statistics
                     foreach (var currentHashtag in currentPost.Hashtags) {
                         if (!result.ContainsKey(currentHashtag)) {//////////////////////////////////
                             result.Add(currentHashtag, 1);
+                        continue;
                         }
                         if (result.ContainsKey(currentHashtag)) {
                             result[currentHashtag]++;
