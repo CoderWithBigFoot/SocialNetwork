@@ -42,7 +42,7 @@ namespace SocialNetwork.WEB.Controllers
                 model.EachHashtagCount.Add(new KeyValuePair<string, int>(current.Key.Name, current.Value));
             }
             foreach (var current in statistics.GetProfileStatisticsService.MostPopularHashtags(identityName)) {
-                model.MostPopularHasthags.Add(new KeyValuePair<string, int>(current.Key.Name, current.Value));
+                model.MostPopularHashtags.Add(new KeyValuePair<string, int>(current.Key.Name, current.Value));
             }
             
 

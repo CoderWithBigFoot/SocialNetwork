@@ -15,31 +15,12 @@
         </div>
         <hr/>
 
-        <style>
-            .legend-block {
-    border-radius:3px;
-    border:1px solid gray;
-    text-align:center;
-    padding:2px;
-    padding-left:5px;
-    padding-right:5px;
-    font-family:'Lucida';
-    font-size:medium;
-    font-style:normal;
-    width:auto;
-    height:auto;
-    display:inline-block;
-    color:black;
-    margin-left:3px;
-}
-            </style>
-
+    <div class="common-info-block" id="hashtagStatisticsContainer">
         <h4>Most popular marks</h4>
         <div class="row">
             <div class="col-md-offset-2 col-md-8" id="popularHashtagsLegend">
-                <div class="legend-block" style="background-color:lightblue;">SOme hashtags</div>
-                <div class="legend-block" style="background-color:lightgreen;">SOme hashtags</div>
             </div>
+            <br><br>
             <div class="col-md-offset-2 col-md-8">
                 <canvas id="mostPopularHashtags"></canvas>
             </div>
@@ -54,7 +35,8 @@
         </div>
 
     </div>
-  
+
+  </div>
 </div>
 
 
@@ -72,70 +54,46 @@
             url: '../Statistics/ProfileStatisticsData',
             data:{"identityName":'@Model'},
             success: function (jsonResult) {
-                /*
+                //alert(jsonResult);
                 var result = JSON.parse(jsonResult);
-                var mostPopularHashtagsData = [];
                 var allHashtags = $('#allHashtags');
 
                 $('#publicationsCount').html(result["PublishedPostsCount"]);
                 
                 if (result["EachHashtagCount"].length == 0) {
                     allHashtags.html("<h4>There are no marks</h4>");
-                    //close the all next parts of statistics
+                    alert("there are no marks");
                     return;
                 }
-                else {
+                               
                     for (var i = 0; i < result["EachHashtagCount"].length; i++) {
                         allHashtags.append('<div class="hashtag">' + result["EachHashtagCount"][i]["Key"] + '<div>');
                     }
+
+                    var mostPopularHashtagsData = [];
+                  
+                    for (var i = 0; i < result["MostPopularHashtags"].length; i++) {
+                        var obj = {};
+                        obj.value = result["MostPopularHashtags"][i]["Value"];
+                        obj.label = result["MostPopularHashtags"][i]["Key"];
+                        obj.color = colorsForCharts[i];
+                   
+                        mostPopularHashtagsData.push(obj);
                 }
 
-   
-               for (var i = 0; i < result["MostPopularHashtags"].length; i++) {
-                  //here fix colors 
-                   mostPopularHashtagsData.push = {
-                       value: result["MostPopularHashtags"][i]["Value"],
-                       label: result["MostPopularHashtags"][i]["Key"],
-                       color:colorsForCharts[i]
-                   };
-               }
+                //alert(mostPopularHashtagsData.length + " " + mostPopularHashtags[0].value );
 
                var legend = $('#popularHashtagsLegend');
-
+               for(var i = 0;i<mostPopularHashtagsData.length;i++){
+                   legend.append('<div class="legend-block" style="background-color:'+mostPopularHashtagsData[i].color+';">'+mostPopularHashtagsData[i].label+'</div>');
+               }
                var mostPopularHashtagsMarksContext = document.getElementById('mostPopularHashtags').getContext('2d');
                var mostPopularMarksChart = new Chart(mostPopularHashtagsMarksContext).Pie(mostPopularHashtagsData);
                 
-                alert(jsonResult);*/
+                
+               $('#hashtagStatisticsContainer').show();
             }
         });
-
-        
-
-        var pieData = [
-{
-            value: 25,
-    label: 'Dog',
-    color: 'lightgreen'
-},
-{
-            value: 10,
-    label: 'Cat',
-    color: 'lightblue'
-},
-{
-            value: 30,
-    label: 'Kitchen',
-    color: 'lightsalmon'
-},
-{
-            value: 50,
-    label: 'others',
-    color:'orange'
-}
-        ];
-       //at the left side need to insert div with legend(by myself)
-        var pieContext = document.getElementById('pieChart').getContext('2d');
-        var newPieChart = new Chart(pieContext).Pie(pieData);
 
 
         var barData = {
@@ -154,12 +112,29 @@
         var barContext = document.getElementById('barChart').getContext('2d');
         var newBarChart = new Chart(barContext).Bar(barData);
     });
-
+    
 
 
     </script>
 
 <style>
+    .legend-block {
+    border-radius:3px;
+    border:1px solid gray;
+    text-align:center;
+    padding:2px;
+    padding-left:5px;
+    padding-right:5px;
+    font-family:'Lucida';
+    font-size:medium;
+    font-style:normal;
+    width:auto;
+    height:auto;
+    display:inline-block;
+    color:black;
+    margin-left:3px;
+}
+
     .statistics-element {
         padding:10px;
         width:auto;
