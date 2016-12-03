@@ -12,7 +12,7 @@ namespace SocialNetwork.WEB.Models
         public int PublishedPostsCount { set; get; }
         public List<KeyValuePair<string, int>> EachHashtagCount { set; get; } = new List<KeyValuePair<string, int>>();
         public List<KeyValuePair<string, int>> MostPopularHashtags { set; get; } = new List<KeyValuePair<string, int>>();
-        
+        public List<KeyValuePair<string, double>> MostPopularHashtagsFrequencies { set; get; } = new List<KeyValuePair<string, double>>();
 
     }
 }

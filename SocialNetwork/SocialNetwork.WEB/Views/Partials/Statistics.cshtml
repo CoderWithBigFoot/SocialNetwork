@@ -27,10 +27,10 @@
             </div>
         <hr/>
 
-        <h4>Most popular marks frequency</h4>
+        <h4>Most popular marks frequency (per week average)</h4>
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-                <canvas id="barChart"></canvas>
+                <canvas id="mostPopularHashtagsFrequncies"></canvas>
             </div>
         </div>
 
@@ -43,7 +43,7 @@
 <script>
     var totalStatisticsContainersCount = 0;
 
-    var colorsForCharts = ['lightgreen', 'lightblue', 'lightsalmon', 'orange', 'lightskyblue','olive','tomato'];
+    var colorsForCharts = ['lightgreen', 'lightblue', 'lightsalmon', 'orange', 'lightskyblue', 'olive', 'tomato'];
     //others will be like gray
 
 
@@ -66,20 +66,23 @@
                     return;
                 }
                                
-                    for (var i = 0; i < result["EachHashtagCount"].length; i++) {
-                        allHashtags.append('<div class="hashtag">' + result["EachHashtagCount"][i]["Key"] + '<div>');
-                    }
-
-                    var mostPopularHashtagsData = [];
-                  
-                    for (var i = 0; i < result["MostPopularHashtags"].length; i++) {
-                        var obj = {};
-                        obj.value = result["MostPopularHashtags"][i]["Value"];
-                        obj.label = result["MostPopularHashtags"][i]["Key"];
-                        obj.color = colorsForCharts[i];
-                   
-                        mostPopularHashtagsData.push(obj);
+                for (var i = 0; i < result["EachHashtagCount"].length; i++) {
+                    allHashtags.append('<div class="hashtag">' + result["EachHashtagCount"][i]["Key"] + '<div>');
                 }
+
+                var mostPopularHashtagsData = [];
+                var anotherHashtagsCount = 0;
+
+                for (var i = 0; i < result["MostPopularHashtags"].length; i++) {
+                    var obj = {};
+                    obj.value = result["MostPopularHashtags"][i]["Value"];
+                    obj.label = result["MostPopularHashtags"][i]["Key"];
+                    obj.color = colorsForCharts[i];
+                   
+                    anotherHashtagsCount += obj.value;
+                    mostPopularHashtagsData.push(obj);
+                }
+               
 
                 //alert(mostPopularHashtagsData.length + " " + mostPopularHashtags[0].value );
 
@@ -87,11 +90,41 @@
                for(var i = 0;i<mostPopularHashtagsData.length;i++){
                    legend.append('<div class="legend-block" style="background-color:'+mostPopularHashtagsData[i].color+';">'+mostPopularHashtagsData[i].label+'</div>');
                }
+
+               var othersInfoObject = {};
+               othersInfoObject.value = result["PublishedPostsCount"]-anotherHashtagsCount;
+               othersInfoObject.label = 'Others';
+               othersInfoObject.color = 'gray';
+
+               mostPopularHashtagsData.push(othersInfoObject);
                var mostPopularHashtagsMarksContext = document.getElementById('mostPopularHashtags').getContext('2d');
                var mostPopularMarksChart = new Chart(mostPopularHashtagsMarksContext).Pie(mostPopularHashtagsData);
                 
-                
-               $('#hashtagStatisticsContainer').show();
+
+                ////freq barchart
+               var mostPopularHashtagsFrequenciesData = {
+                   labels: [],
+                   datasets: []
+               };
+               var obj = {
+                   fillColor: ['yellow'],
+                   data: []
+               };
+
+               for (var i = 0; i < result["MostPopularHashtagsFrequencies"].length; i++) {
+                   mostPopularHashtagsFrequenciesData.labels.push(result["MostPopularHashtagsFrequencies"][i]["Key"]);
+                   obj.data.push(result["MostPopularHashtagsFrequencies"][i]["Value"]);
+                   
+               }
+               mostPopularHashtagsFrequenciesData.datasets.push(obj);
+              
+               var mostPopularHashtagsFrequnciesContext = document.getElementById('mostPopularHashtagsFrequncies').getContext('2d');
+               var newmostPopularHashtagsFrequnciesChart = new Chart(mostPopularHashtagsFrequnciesContext).Bar(mostPopularHashtagsFrequenciesData);
+               mostPopularHashtagsFrequenciesData = {};
+
+
+
+               //$('#hashtagStatisticsContainer').slideToggle("slow");
             }
         });
 
@@ -109,8 +142,9 @@
                 }
             ]
         };
-        var barContext = document.getElementById('barChart').getContext('2d');
+        /*var barContext = document.getElementById('barChart').getContext('2d');
         var newBarChart = new Chart(barContext).Bar(barData);
+        */
     });
     
 
