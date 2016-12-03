@@ -1,3 +1,15 @@
-﻿@model string
+﻿@model SocialNetwork.WEB.Models.StatisticsViewModel
+<h1>Here is Statistics</h1>
+<br> 
+Published posts count is @Model.PublishedPostsCount
+<br>
+Each hashtag count is <br>
+<ul>
+    @foreach (var current in Model.EachHashtagCount)
+    {
 
-@Model
+        <li>@current.Key @current.Value</li>
+
+    }
+</ul>
+

@@ -52,7 +52,7 @@ namespace SocialNetwork.BLL.Services.Statistics
                 Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, HashtagDTO>());
                 return Mapper.Map<ICollection<HashtagDTO>>(allProfileHashtags);
         }
-        public Dictionary<HashtagDTO, int> EachHashtagCount(string identityName)
+        public ICollection<KeyValuePair<HashtagDTO, int>> EachHashtagCount(string identityName)
         {
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
             Dictionary<SocialNetwork.DAL.EF.Hashtag, int> result = new Dictionary<SocialNetwork.DAL.EF.Hashtag, int>();
@@ -68,13 +68,15 @@ namespace SocialNetwork.BLL.Services.Statistics
                         }
                     }                  
                 }
-                Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, HashtagDTO>());
-                return Mapper.Map<Dictionary<HashtagDTO, int>>(result);
+                Mapper.Initialize(cfg => cfg.CreateMap<KeyValuePair<SocialNetwork.DAL.EF.Hashtag,int>,KeyValuePair<HashtagDTO,int>>()
+                .ConvertUsing(x=>new KeyValuePair<HashtagDTO, int>(new HashtagDTO() { Name = x.Key.Name},x.Value)));
+
+                return Mapper.Map<ICollection<KeyValuePair<HashtagDTO, int>>>(result);
             
         }
         public IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName, int count=3)
         {
-                Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
+                ICollection<KeyValuePair<HashtagDTO, int>> eachHashtagCount = this.EachHashtagCount(identityName);
                 return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);    
         }      
         public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count=3,TimeInterval interval=TimeInterval.Week)
@@ -102,9 +104,9 @@ namespace SocialNetwork.BLL.Services.Statistics
                 return result;
           
         }     
-        public Dictionary<HashtagDTO, int> SelectedHashtagsCount(string identityName, IEnumerable<HashtagDTO> hashtags) {
+        /*public Dictionary<HashtagDTO, int> SelectedHashtagsCount(string identityName, IEnumerable<HashtagDTO> hashtags) {
            
-                Dictionary<HashtagDTO, int> eachHashtagCount = this.EachHashtagCount(identityName);
+                ICollection<KeyValuePair<HashtagDTO, int>> eachHashtagCount = this.EachHashtagCount(identityName);
                 Dictionary<HashtagDTO, int> result = new Dictionary<HashtagDTO, int>();
 
                 if (hashtags == null) { throw new ArgumentNullException("Hashtags must consist of at least one element"); }
@@ -116,7 +118,7 @@ namespace SocialNetwork.BLL.Services.Statistics
                     }
                 } 
                 return result;    
-        }
+        }*/
         public void Dispose() {
             uow.Dispose();
         }

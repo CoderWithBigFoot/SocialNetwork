@@ -1,20 +1,24 @@
-﻿
+﻿@model SocialNetwork.WEB.Models.StatisticsViewModel
+
 <script src="~/Scripts/Chart.js"></script>
 <div class="common-info-block" id="statisticsPlace">
 
     <div class="statistics-element common-info-block-text">
         <h4>Total publications count</h4> 
-        <h4>65</h4>
+        <h4>@Model.PublishedPostsCount</h4>
         <hr />
 
         <h4>All hashtags</h4>
         <div class="row">
             <div class="col-md-offset-2 col-md-8" >
-                <div class="hashtag">Dog</div>
-                <div class="hashtag">Cat</div>
-                <div class="hashtag">Kitchen</div>
-                <div class="hashtag">Car</div>
-                <div class="hashtag">Present</div>
+                @if (Model.EachHashtagCount.Count == 0) {
+                    <h4>There are no hashtags</h4>
+                }
+                else {
+                    foreach (var current in Model.EachHashtagCount) {
+                        <div class="hashtag">@current.Key</div>
+                    }
+                }
             </div>
         </div>
         <hr/>
@@ -45,27 +49,37 @@
     var colorsForCharts = ['lightgreen','lightblue'];
     
 
+    function createAllHashtagsObjects(keyValuePairsCollection) {
+        for (var i = 0; i < keyValuePairsCollection.length; i++) {
 
+        }
+    }
 
     $(document).ready(function () {
+
+        var testPieData = [];
+        @foreach (var currentPair in Model.EachHashtagCount) {
+           
+        }
+
         var pieData = [
 {
-    value: 25,
+            value: 25,
     label: 'Dog',
     color: 'lightgreen'
 },
 {
-    value: 10,
+            value: 10,
     label: 'Cat',
     color: 'lightblue'
 },
 {
-    value: 30,
+            value: 30,
     label: 'Kitchen',
     color: 'lightsalmon'
 },
 {
-    value: 50,
+            value: 50,
     label: 'others',
     color:'orange'
 }

@@ -25,33 +25,21 @@ namespace SocialNetwork.WEB.Controllers
         [HttpPost]
         public PartialViewResult StatisticsPartial(string identityName)
         {
+            StatisticsViewModel model = new StatisticsViewModel();
+
+            //Mapper.Initialize(cfg => cfg.CreateMap<KeyValuePair<HashtagDTO, int>, KeyValuePair<string, int>>().ConvertUsing(opt=>new KeyValuePair<string, int>(opt.Key.Name,opt.Value)));
             switch (identityName)
             {
                 case "authorizedProfile": identityName = HttpContext.User.Identity.Name; break;
             }
+            //here is try PublicationsNotFound
+            model.PublishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
 
-            /*Mapper.Initialize(cfg => {
-                cfg.CreateMap<KeyValuePair<HashtagDTO, int>, KeyValuePair<string, int>>().ConvertUsing(x => new KeyValuePair<string, int>(x.Key.Name, x.Value));
-            });
-            */
-            int publishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
-            ICollection<KeyValuePair<string, int>> EachHashtagCount = Mapper.Map<ICollection<KeyValuePair<string,int>>>(statistics.GetProfileStatisticsService.EachHashtagCount(identityName));
-            ICollection<KeyValuePair<string, int>> PostsCountByMostPopularHashtags = Mapper.Map<ICollection<KeyValuePair<string, int>>>(statistics.GetProfileStatisticsService.MostPopularHashtags(identityName));
-            
-            StatisticsViewModel model = new StatisticsViewModel();
-
-            model.PublishedPostsCount = publishedPostsCount;
-            model.EachHashtagCount = EachHashtagCount;
-            model.PostsCountByMostPopularHasthags = PostsCountByMostPopularHashtags;
-            
-
-
-            return PartialView("View","For partial string");
-        }
-
-        [HttpPost]
-        public PartialViewResult Test(string identityName) {
-            return PartialView("View", "string from the Test");
+            foreach (var current in statistics.GetProfileStatisticsService.EachHashtagCount(identityName)) {
+                model.EachHashtagCount.Add(new KeyValuePair<string,int>(current.Key.Name,current.Value));
+            }
+                
+            return PartialView("../Partials/Statistics",model);
         }
 
     }
