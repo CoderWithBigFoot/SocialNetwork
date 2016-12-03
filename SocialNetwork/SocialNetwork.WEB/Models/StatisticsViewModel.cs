@@ -11,7 +11,7 @@ namespace SocialNetwork.WEB.Models
     {
         public int PublishedPostsCount { set; get; }
         public List<KeyValuePair<string, int>> EachHashtagCount { set; get; } = new List<KeyValuePair<string, int>>();
-       // public List<KeyValuePair<string, int>> PostsCountByMostPopularHasthags { set; get; } = new List<KeyValuePair<string, int>>();
+        public List<KeyValuePair<string, int>> MostPopularHasthags { set; get; } = new List<KeyValuePair<string, int>>();
         
 
     }

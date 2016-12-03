@@ -5,26 +5,48 @@
 
     <div class="statistics-element common-info-block-text">
         <h4>Total publications count</h4> 
-        <h4>123</h4>
+        <h4 id="publicationsCount"></h4>
         <hr />
 
-        <h4>All hashtags</h4>
+        <h4>All marks</h4>
         <div class="row">
-            <div class="col-md-offset-2 col-md-8" >
-                
+            <div class="col-md-offset-2 col-md-8" id="allHashtags">
             </div>
         </div>
         <hr/>
 
-        <h4>Most popular hashtags</h4>
+        <style>
+            .legend-block {
+    border-radius:3px;
+    border:1px solid gray;
+    text-align:center;
+    padding:2px;
+    padding-left:5px;
+    padding-right:5px;
+    font-family:'Lucida';
+    font-size:medium;
+    font-style:normal;
+    width:auto;
+    height:auto;
+    display:inline-block;
+    color:black;
+    margin-left:3px;
+}
+            </style>
+
+        <h4>Most popular marks</h4>
         <div class="row">
+            <div class="col-md-offset-2 col-md-8" id="popularHashtagsLegend">
+                <div class="legend-block" style="background-color:lightblue;">SOme hashtags</div>
+                <div class="legend-block" style="background-color:lightgreen;">SOme hashtags</div>
+            </div>
             <div class="col-md-offset-2 col-md-8">
-                <canvas id="pieChart"></canvas>
+                <canvas id="mostPopularHashtags"></canvas>
             </div>
             </div>
         <hr/>
 
-        <h4>Most popular hashtags frequency</h4>
+        <h4>Most popular marks frequency</h4>
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <canvas id="barChart"></canvas>
@@ -39,7 +61,8 @@
 <script>
     var totalStatisticsContainersCount = 0;
 
-    var colorsForCharts = ['lightgreen','lightblue'];
+    var colorsForCharts = ['lightgreen', 'lightblue', 'lightsalmon', 'orange', 'lightskyblue','olive','tomato'];
+    //others will be like gray
 
 
     $(document).ready(function () {
@@ -49,9 +72,44 @@
             url: '../Statistics/ProfileStatisticsData',
             data:{"identityName":'@Model'},
             success: function (jsonResult) {
-                alert(jsonResult);
+                /*
+                var result = JSON.parse(jsonResult);
+                var mostPopularHashtagsData = [];
+                var allHashtags = $('#allHashtags');
+
+                $('#publicationsCount').html(result["PublishedPostsCount"]);
+                
+                if (result["EachHashtagCount"].length == 0) {
+                    allHashtags.html("<h4>There are no marks</h4>");
+                    //close the all next parts of statistics
+                    return;
+                }
+                else {
+                    for (var i = 0; i < result["EachHashtagCount"].length; i++) {
+                        allHashtags.append('<div class="hashtag">' + result["EachHashtagCount"][i]["Key"] + '<div>');
+                    }
+                }
+
+   
+               for (var i = 0; i < result["MostPopularHashtags"].length; i++) {
+                  //here fix colors 
+                   mostPopularHashtagsData.push = {
+                       value: result["MostPopularHashtags"][i]["Value"],
+                       label: result["MostPopularHashtags"][i]["Key"],
+                       color:colorsForCharts[i]
+                   };
+               }
+
+               var legend = $('#popularHashtagsLegend');
+
+               var mostPopularHashtagsMarksContext = document.getElementById('mostPopularHashtags').getContext('2d');
+               var mostPopularMarksChart = new Chart(mostPopularHashtagsMarksContext).Pie(mostPopularHashtagsData);
+                
+                alert(jsonResult);*/
             }
         });
+
+        
 
         var pieData = [
 {
@@ -114,5 +172,8 @@
     canvas {
         width:100%;
         height:auto;
+    }
+    li {
+        text-decoration-style:none;
     }
     </style>

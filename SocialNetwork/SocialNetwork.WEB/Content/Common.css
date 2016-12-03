@@ -65,8 +65,9 @@ input[type="submit"] {
     height:auto;
     display:inline-block;
     color:whitesmoke;
-    
+    margin-left:3px;
 }
+
 .hashtags-container {
     width:100%;
     height:auto;
