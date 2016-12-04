@@ -1,38 +1,130 @@
 ﻿
-<div class="common-info-block common-info-block-text">
-    <h4>Select the filter</h4>
-</div>
-<br>
-    <div class="common-info-block common-info-block-text" id="" >
+<div class="dataBlock">
 
-        @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
-        {
-            HttpMethod = "Post",
-            OnComplete = ""
-        }))
-        {
-            <h4>Posts</h4>
-            <hr />
-            <h4>Profiles</h4>
-        }
+<div class="row">
+    <div class="col-md-6">
+<select>
+    <option value="volvo">Volvo</option>
+    <option value="vasfas" selected>asdfa</option>
+    <option value="volvo">Volvo</option>
+</select>
+        </div>
 
+    <div class="col-md-5" id="marksContainer">
+        <h3>Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus"></span></a></h3>
+
+
+    </div>
     </div>
 
 
+ </div>
 
 
+<script>
+    var searching = function () {
+        var totalMarksCount = 0;
+
+        var result = {};
+        
+
+        result.addHashtag = function () {
+            var marksContainer = $('#marksContainer');
+            var newId = 'markContainer' + totalMarksCount;
+            var removeElement = 'removeSpan' + totalMarksCount;
+            var removingBr = 'br' + totalMarksCount;
+
+            var appendString = "";
+            appendString += '<input type="text" class="searchingHashtag" id=' + newId + '>';
+            appendString += '<a id=' + removeElement + '><span class="glyphicon glyphicon-remove"></span></a>';
+            
+
+            marksContainer.append(appendString);
+
+            $('#' + removeElement).click(function () {
+                var removingRowId = $('#' + newId);            
+                removingRowId.remove();
+                $('#' + removeElement).remove();
+            });
+            totalMarksCount++;
+        };
+
+        return result;
+    }();
+    </script>
 
 
 
 <style>
+
+
+
+    .searchingHashtag {
+    background-color:lightgreen;
+    border-radius:3px;
+    border:1px solid gray;
+    text-align:center;
+    padding-left:5px;
+    padding-right:5px;
+    font-family:'Lucida';
+    font-size:medium;
+    font-style:normal;
+    width:250px;
+    height:auto;
+    color:black;
+    margin-left:3px; 
+}
+
+    select {
+        width: 100%;
+        height: auto;
+        border: 1px solid gray;
+        background-color: white;
+        border-radius: 3px;
+        padding: 5px;
+        font-size:large;
+        font-style: normal;
+        font-family: 'Lucida';
+        color: black;
+        text-align:center;
+    }
+
+    .searchButton {
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        font-size: large;
+        padding: 3px;
+        border: 1px solid gray;
+        background-color: lightgray;
+    }
+
+    .dataBlock {
+        width: inherit;
+        height: auto;
+    }
+
     .some-class {
         padding: 10px;
         width: inherit;
         height: auto;
         text-align: center;
-        background-color:aqua;
+        background-color: aqua;
     }
-     h4 {
+
+    h4 {
+        text-align: center;
+    }
+    h3 {
+        margin-top:0px;
         text-align:center;
     }
-    </style>
+    hr {
+        margin: 2px;
+    }
+
+    .selectedElement {
+        background-color: lightgreen;
+    }
+</style>
