@@ -25,7 +25,7 @@ namespace SocialNetwork.WEB.Controllers
 
         [HttpPost]
         public PartialViewResult SearchPartial() {
-            return PartialView("/Partials/Searching");
+            return PartialView("../Partials/Searching");
         }
 
         [HttpPost]
