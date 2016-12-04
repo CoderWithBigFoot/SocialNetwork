@@ -1,24 +1,33 @@
 ﻿
 <div class="dataBlock">
-
 <div class="row">
+
     <div class="col-md-6">
-<select>
-    <option value="volvo">Volvo</option>
-    <option value="vasfas" selected>asdfa</option>
-    <option value="volvo">Volvo</option>
+<select id="filter">
+    <option value="volvo">Posts by marks</option>
+    <option value="volvo">Posts by my profile statistics</option>
+    <option value="volvo">Profiles by marks</option>
+    <option value="volvo">Profiles by my statistics</option>
 </select>
         </div>
-
     <div class="col-md-5" id="marksContainer">
         <h3>Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus"></span></a></h3>
-
-
     </div>
     </div>
+    <br>
+  <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-info searchButton">Search</button>
+            </div>
+        </div>
 
+    <br><hr><br>
 
- </div>
+    <div id="partialsPlace">
+       <h4>There are no info</h4>
+    </div>
+
+    </div>
 
 
 <script>
