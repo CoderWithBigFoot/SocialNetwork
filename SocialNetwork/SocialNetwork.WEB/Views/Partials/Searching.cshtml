@@ -4,20 +4,20 @@
 
     <div class="col-md-6">
 <select id="filter">
-    <option value="volvo">Posts by marks</option>
-    <option value="volvo">Posts by my profile statistics</option>
-    <option value="volvo">Profiles by marks</option>
-    <option value="volvo">Profiles by my statistics</option>
+    <option value="PostsByMarks">Posts by marks</option>
+    <option value="PostsByMyStatistics">Posts by my profile statistics</option>
+    <option value="ProfilesByMarks">Profiles by marks</option>
+    <option value="ProfilesByMyStatistics">Profiles by my statistics</option>
 </select>
         </div>
     <div class="col-md-5" id="marksContainer">
-        <h3>Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus"></span></a></h3>
+        <h3 style="text-align:left;">Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus"></span></a></h3>
     </div>
     </div>
     <br>
   <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-info searchButton">Search</button>
+            <button class="btn btn-success searchButton" onclick="searching.findPosts()">Search</button>
             </div>
         </div>
 
@@ -35,8 +35,6 @@
         var totalMarksCount = 0;
 
         var result = {};
-        
-
         result.addHashtag = function () {
             var marksContainer = $('#marksContainer');
             var newId = 'markContainer' + totalMarksCount;
@@ -44,7 +42,7 @@
             var removingBr = 'br' + totalMarksCount;
 
             var appendString = "";
-            appendString += '<input type="text" class="searchingHashtag" id=' + newId + '>';
+            appendString += '<input type="text" class="searchingHashtag" name="mark" id=' + newId + '>';
             appendString += '<a id=' + removeElement + '><span class="glyphicon glyphicon-remove"></span></a>';
             
 
@@ -58,8 +56,37 @@
             totalMarksCount++;
         };
 
+        result.showSelection = function () {
+            alert($('#filter option:selected').val());
+            
+            var arr = [];
+
+            $('input[name="mark"]').each(function () {
+                arr.push($(this).val());
+            });
+
+           
+        };
+
+        result.findPosts = function () {
+            var marksCollection = [];
+            $('input[name="mark"]').each(function () {
+                marksCollection.push($(this).val());
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "/Search/FindPosts",
+                data: { "hashtags": marksCollection },
+                success: function (result) {
+                    alert(result);
+                }
+            });
+        };
+
         return result;
     }();
+
     </script>
 
 

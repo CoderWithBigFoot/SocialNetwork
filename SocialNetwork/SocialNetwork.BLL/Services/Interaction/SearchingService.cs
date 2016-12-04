@@ -29,6 +29,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                 hashtag = uow.Hashtags.FindByName(currentHashtag.Name);
                 if (hashtag != null)
                 {
+                    if (existingHashtags.Contains(hashtag)) { continue; }
                     existingHashtags.Add(hashtag);
                 }
             }

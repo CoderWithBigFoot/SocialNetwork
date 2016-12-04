@@ -64,7 +64,15 @@
             }
         });
     };
-    
+    result.searching = function () {
+        $.ajax({
+            type: "POST",
+            url: "/Search/SearchPartial",
+            success: function (partialViewResult) {
+                $('#partialsPlace').html(partialViewResult);
+            }
+        });
+    };
    
 
 
