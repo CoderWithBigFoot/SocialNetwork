@@ -17,7 +17,7 @@
     <br>
   <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-success searchButton" onclick="searching.findPosts()">Search</button>
+            <button class="btn btn-success searchButton" onclick="searching.findContent()">Search</button>
             </div>
         </div>
 
@@ -68,20 +68,33 @@
            
         };
 
-        result.findPosts = function () {
+        result.findContent = function () {
             var marksCollection = [];
             $('input[name="mark"]').each(function () {
                 marksCollection.push($(this).val());
             });
+            var searchingType = "";
+            var selectedElement = $('#filter option:selected').val();
+            
+            switch(selectedElement){
+                case "PostsByMarks" : searchingType = "marks";break;
+                case "PostsByMyStatistics":searchingType = "default";break;
 
-            $.ajax({
-                type: 'POST',
-                url: "/Search/FindPosts",
-                data: { "hashtags": marksCollection },
-                success: function (result) {
-                    alert(result);
-                }
-            });
+            }
+
+            if(selectedElement == "PostsByMarks" || selectedElement == "PostsByMyStatistics"){
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/Search/FindPosts",
+                    data: { "hashtags": marksCollection,"searchingType": searchingType},
+                    success: function (result) {
+                        alert(result);
+                    }
+                });
+            }
+
+
         };
 
         return result;

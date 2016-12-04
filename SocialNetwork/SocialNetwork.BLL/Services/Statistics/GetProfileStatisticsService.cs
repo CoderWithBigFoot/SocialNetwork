@@ -95,9 +95,12 @@ namespace SocialNetwork.BLL.Services.Statistics
                 Dictionary<HashtagDTO, double> result = new Dictionary<HashtagDTO, double>();
                 double frequency = 0;
 
+                double totalDays = 0;
                 foreach (var popularHashtagCount in mostPopularHashtags) {
                     if (!result.ContainsKey(popularHashtagCount.Key)) {
-                         frequency = popularHashtagCount.Value/(((DateTime.Now-firstPublicationDate).TotalDays)/period); // maybe here Math.Round() is needed
+                    totalDays = Math.Round((DateTime.Now - firstPublicationDate).TotalDays);
+                    if (totalDays == 0) { totalDays = 1; }
+                         frequency = popularHashtagCount.Value/((totalDays)/period); 
                          result.Add(popularHashtagCount.Key, frequency);
                          frequency = 0; 
                     }

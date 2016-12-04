@@ -195,7 +195,7 @@ namespace ConsoleTest
 
                     //Mapper.Initialize(cfg => cfg.CreateMap<SecondTestClass, string>().ConstructUsing(x=>x.Name));
 
-                    Mapper.Initialize(cfg => cfg.CreateMap<KeyValuePair<SecondTestClass, int>, KeyValuePair<string, int>>().ConvertUsing(x=>new KeyValuePair<string, int>(x.Key.Name,x.Value)));
+                    /*Mapper.Initialize(cfg => cfg.CreateMap<KeyValuePair<SecondTestClass, int>, KeyValuePair<string, int>>().ConvertUsing(x=>new KeyValuePair<string, int>(x.Key.Name,x.Value)));
 
                     
 
@@ -211,7 +211,12 @@ namespace ConsoleTest
                     ICollection<KeyValuePair<string, int>> result = Mapper.Map<ICollection<KeyValuePair<string, int>>>(input);
                     foreach (var current in result) {
                         Console.WriteLine(current.Key + " " + current.Value);
-                    }
+                    }*/
+
+                    DateTime first = DateTime.Now;
+                    DateTime second = new DateTime(2016,12,4);
+
+                    Console.WriteLine(Math.Round(0.51));
                 }
               
             }
