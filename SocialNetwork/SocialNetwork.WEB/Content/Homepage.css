@@ -12,23 +12,6 @@ textarea {
     resize:none;  
 }
 
-input[name="Hashtags"] {
-    border-radius:3px;
-    border:1px solid gray;
-    background-color:dimgray;
-    color:whitesmoke;
-    width:auto;
-    height:20px;
-    margin:2px;
-    padding:2px;
-    padding-left:5px;
-    padding-right:5px;
-
-    font-family:'Lucida';
-     font-size:medium;
-    font-style:normal;
-    display:inline-block;
-}
 
 .error-message {
     color:darkred;

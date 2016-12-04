@@ -1,0 +1,38 @@
+﻿
+<div class="common-info-block common-info-block-text">
+    <h4>Select the filter</h4>
+</div>
+<br>
+    <div class="common-info-block common-info-block-text" id="" >
+
+        @using (Ajax.BeginForm("PublicateNewPost", "Post", new AjaxOptions
+        {
+            HttpMethod = "Post",
+            OnComplete = ""
+        }))
+        {
+            <h4>Posts</h4>
+            <hr />
+            <h4>Profiles</h4>
+        }
+
+    </div>
+
+
+
+
+
+
+
+<style>
+    .some-class {
+        padding: 10px;
+        width: inherit;
+        height: auto;
+        text-align: center;
+        background-color:aqua;
+    }
+     h4 {
+        text-align:center;
+    }
+    </style>

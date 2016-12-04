@@ -225,6 +225,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -311,6 +312,7 @@
     <Content Include="Views\Partials\Home.cshtml" />
     <Content Include="Views\Partials\Statistics.cshtml" />
     <Content Include="Views\Statistics\View.cshtml" />
+    <Content Include="Views\Partials\Searching.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

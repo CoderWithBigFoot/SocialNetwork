@@ -65,16 +65,7 @@
         });
     };
     
-    /*result.callTest = function (identityName) {
-        $.ajax({
-            type: "POST",
-            url: "/Statistics/Test", //here is error(incorrect partials path,becouse this function called from CommonController)
-            data: { "identityName": identityName },
-            success: function (partialViewResult) {
-                $('#partialsPlace').html(partialViewResult);
-            }
-        });
-    };*/
+   
 
 
     return result;
