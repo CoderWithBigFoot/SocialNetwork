@@ -36,11 +36,11 @@ namespace SocialNetwork.WEB.Controllers
                 IEnumerable<PostDTO> resultPosts = null;
 
                 switch (searchingType) {
-                    case "marks":
+                    case "PostsByMarks":
                         resultPosts = interaction.SearchingService.PostsByHashtags(
            Mapper.Map<IEnumerable<HashtagDTO>>(hashtags), 0, 100, ControllerContext.HttpContext.User.Identity.Name);break;
 
-                    case "default":resultPosts = interaction.SearchingService.DefaultPostsSearching(0, 100, 3, ControllerContext.HttpContext.User.Identity.Name);break;
+                    case "PostsByDefault": resultPosts = interaction.SearchingService.DefaultPostsSearching(0, 100, 3, ControllerContext.HttpContext.User.Identity.Name);break;
                 }
 
                 
@@ -81,8 +81,8 @@ namespace SocialNetwork.WEB.Controllers
 
                 return JArray.FromObject(result);
             }
-            catch (ArgumentNullException ex) {
-                return JObject.FromObject(new { errorMessage = ex.Message });
+            catch (ArgumentNullException) {
+                return JObject.FromObject(new { errorMessage = "Enter the one or more marks" });
             }
             //return JArray.FromObject(hashtags);
         }

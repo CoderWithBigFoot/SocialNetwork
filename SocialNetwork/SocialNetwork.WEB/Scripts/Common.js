@@ -9,11 +9,10 @@
     var allRepostsId;
 
     result.setLike = function(postId, publishedPostLikeId) {
-        var identityName = 'authorizedProfile';
         $.ajax({
             type: 'POST',
             url: '/Post/Like',
-            data: { "postId": postId, "identityName": identityName },
+            data: { "postId": postId},
             success: function (jsonResult) {
                 var result = JSON.parse(jsonResult);
                 $('#' + publishedPostLikeId).html(result["newLikesCount"]);
@@ -23,8 +22,16 @@
     }
 
     result.repost = function (postId,repostContainerId) {
-        var identityName = 'authorizedProfile';
-        //here ajax to the /Post/Repost
+       
+        $.ajax({
+            type: 'POST',
+            url: '/Post/Repost',
+            data: { "postId": postId },
+            success: function (jsonResult) {
+                var result = JSON.parse(jsonResult);
+                $('#' + repostContainerId).html(result["newRepostsCount"]);
+            }
+        });
     }
 
     result.createPostContainer = function (postData) {
@@ -33,6 +40,7 @@
         if (postData["errorMessage"] != null) { return;}
 
             allPostsLikesId = allPostsLikes + "LikeContainer";
+            allRepostsId = allReposts + "RepostContainer";    
 
             post += '<div class="post-container common-info-block-text">';
             post += '<div>' + postData["PublisherName"] + " " + postData["PublisherSername"] + " (" + postData["PublisherIdentityName"] + ')</div>';
@@ -45,10 +53,12 @@
             post += '</div><hr/>';
             post += '<div>' + postData["Content"] + '</div><hr/>';
             post += '<div><a onclick="common.setLike(' + postData["Id"] + ',' + "'" + allPostsLikesId + "'" + ')"><span class="glyphicon glyphicon-heart"></span></a> Likes <span id=' + allPostsLikesId + '>' + postData["Likes"] + '</span>';
-            post += '&nbsp&nbspReposts ' + postData["Reposts"] + '</div>';
+            post += '&nbsp&nbsp';
+            post += '<a onclick="common.repost(' + postData["Id"] + ',' + "'" + allRepostsId + "'" + ')"><span class="glyphicon glyphicon-bullhorn"></span></a> Reposts <span id='+allRepostsId+'>' + postData["Reposts"] +'</span>'+'</div>';
             post += '</div><br>';
 
             allPostsLikes++;
+            allReposts++;
             return post;
         
     }

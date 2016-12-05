@@ -46,10 +46,10 @@ namespace SocialNetwork.BLL.Services.Interaction
         public void Repost(int postId, string identityName) {
             SocialNetwork.DAL.EF.Post post = this.GetPost(postId);
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
-            //bool result = false;
+
+            if (post.Publisher.IdentityName == identityName) { return; }//here some error message must be added
 
             if (profile.RepostedPosts.Contains(post)) {
-                //we can delete the post from reposts only from the home page
                 profile.RepostedPosts.Remove(post);
                 uow.Save();
             }

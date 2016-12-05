@@ -140,14 +140,18 @@ namespace SocialNetwork.WEB.Controllers
 
 
         [HttpPost]
-        public JObject Like(int postId,string identityName) {
-            switch (identityName) {
-                case "authorizedProfile": identityName = ControllerContext.HttpContext.User.Identity.Name;break;
-            }
-
-            interaction.PostInteractionService.Like(postId, identityName);
+        public JObject Like(int postId) {
+         
+            interaction.PostInteractionService.Like(postId, ControllerContext.HttpContext.User.Identity.Name);
             int newCount = basicInfo.PostInfoService.GetLikesCount(postId);
             return JObject.FromObject(new{ newLikesCount = newCount});
+        }
+
+        [HttpPost]
+        public JObject Repost(int postId) {
+            interaction.PostInteractionService.Repost(postId, ControllerContext.HttpContext.User.Identity.Name);
+            int newCount = basicInfo.PostInfoService.GetRepostsCount(postId);
+            return JObject.FromObject(new { newRepostsCount = newCount });
         }
 
     }

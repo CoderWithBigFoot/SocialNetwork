@@ -1,31 +1,30 @@
 ﻿
 <div class="dataBlock">
-<div class="row">
+    <div class="row">
 
-    <div class="col-md-6">
-<select id="filter">
-    <option value="PostsByMarks">Posts by marks</option>
-    <option value="PostsByMyStatistics">Posts by my profile statistics</option>
-    <option value="ProfilesByMarks">Profiles by marks</option>
-    <option value="ProfilesByMyStatistics">Profiles by my statistics</option>
-</select>
+        <div class="col-md-6">
+            <select id="filter">
+                <option value="PostsByMarks">Posts by marks</option>
+                <option value="PostsByMyStatistics">Posts by my profile statistics</option>
+                <option value="ProfilesByMarks">Profiles by marks</option>
+                <option value="ProfilesByMyStatistics">Profiles by my statistics</option>
+            </select>
         </div>
-    <div class="col-md-5" id="marksContainer">
-        <h3 style="text-align:center;">Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus" style="color:limegreen;"></span></a></h3>
-    </div>
+        <div class="col-md-5" id="marksContainer">
+            <h3 style="text-align:center;">Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus" style="color:lightblue;"></span></a></h3>
+        </div>
     </div>
     <br>
-  <div class="row">
+    <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-success searchButton" onclick="searching.findContent()">Search</button>
-            </div>
+            <button class="btn btn-info searchButton" onclick="searching.findContent()">Search</button>
         </div>
-
-    <br><br>
-
-    <div id="dataPlace">
     </div>
 
+    <br><br>
+</div>
+
+    <div id="dataPlace">
     </div>
 
 
@@ -76,8 +75,8 @@
             var selectedElement = $('#filter option:selected').val();
             
             switch(selectedElement){
-                case "PostsByMarks" : searchingType = "postsByMarks";break;
-                case "PostsByMyStatistics":searchingType = "postsByDefault";break;
+                case "PostsByMarks" : searchingType = "PostsByMarks";break;
+                case "PostsByMyStatistics":searchingType = "PostsByDefault";break;
 
             }
 
@@ -88,17 +87,18 @@
             if (selectedElement == "PostsByMarks" || selectedElement == "PostsByMyStatistics") {
                 url = "/Search/FindPosts";
                 lengthZeroError = '<h4>There are no posts found</h4>';
+
             }
 
                 $.ajax({
                     type: 'POST',
                     url: url,
                     data: { "hashtags": marksCollection,"searchingType": searchingType},
-                    success: function (jsonResultresult) {
-                        result = JSON.parse(jsonResultresult);
-
+                    success: function (jsonResult) {
+                        result = JSON.parse(jsonResult);
+                        //alert(jsonResult);
                         if (result["errorMessage"]) {
-                            dataPlace.html('<h4>' + result["ErrorMessage"] + '</h4>');
+                            dataPlace.html('<h4>' + result["errorMessage"] + '</h4>');
                             return;
                         }
                         if (result.length == 0) {
@@ -127,6 +127,8 @@
 
 
 <style>
+    
+
     #dataPlace {
         width:inherit;
       height:auto;
@@ -134,7 +136,7 @@
     }
 
     .searchingHashtag {
-    background-color:lightgreen;
+    background-color:lightblue;
     border-radius:3px;
     border:1px solid gray;
     text-align:center;
@@ -161,6 +163,7 @@
         font-family: 'Lucida';
         color: black;
         text-align:center;
+        background-color:lightblue;
     }
 
     .searchButton {
