@@ -75,12 +75,12 @@ namespace SocialNetwork.BLL.Services.Statistics
                 return Mapper.Map<ICollection<KeyValuePair<HashtagDTO, int>>>(result);
             
         }
-        public IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName, int count=3)
+        public IEnumerable<KeyValuePair<HashtagDTO,int>> MostPopularHashtags(string identityName, int count=5)
         {
                 ICollection<KeyValuePair<HashtagDTO, int>> eachHashtagCount = this.EachHashtagCount(identityName);
                 return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);    
         }      
-        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count=3,TimeInterval interval=TimeInterval.Week)
+        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count=5,TimeInterval interval=TimeInterval.Week)
         {
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
                 int period = 0;
@@ -95,11 +95,12 @@ namespace SocialNetwork.BLL.Services.Statistics
                 Dictionary<HashtagDTO, double> result = new Dictionary<HashtagDTO, double>();
                 double frequency = 0;
 
-                double totalDays = 0;
+                double totalDays = Math.Round((DateTime.Now - firstPublicationDate).TotalDays);
+                
+
                 foreach (var popularHashtagCount in mostPopularHashtags) {
                     if (!result.ContainsKey(popularHashtagCount.Key)) {
-                    totalDays = Math.Round((DateTime.Now - firstPublicationDate).TotalDays);
-                    if (totalDays == 0) { totalDays = 1; }
+                   // if (totalDays == 0) { totalDays = 1; }
                          frequency = popularHashtagCount.Value/((totalDays)/period); 
                          result.Add(popularHashtagCount.Key, frequency);
                          frequency = 0; 

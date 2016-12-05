@@ -11,7 +11,7 @@
 </select>
         </div>
     <div class="col-md-5" id="marksContainer">
-        <h3 style="text-align:left;">Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus"></span></a></h3>
+        <h3 style="text-align:center;">Marks <a onclick="searching.addHashtag()"><span class="glyphicon glyphicon-plus" style="color:limegreen;"></span></a></h3>
     </div>
     </div>
     <br>
@@ -21,10 +21,9 @@
             </div>
         </div>
 
-    <br><hr><br>
+    <br><br>
 
-    <div id="partialsPlace">
-       <h4>There are no info</h4>
+    <div id="dataPlace">
     </div>
 
     </div>
@@ -77,23 +76,46 @@
             var selectedElement = $('#filter option:selected').val();
             
             switch(selectedElement){
-                case "PostsByMarks" : searchingType = "marks";break;
-                case "PostsByMyStatistics":searchingType = "default";break;
+                case "PostsByMarks" : searchingType = "postsByMarks";break;
+                case "PostsByMyStatistics":searchingType = "postsByDefault";break;
 
             }
 
-            if(selectedElement == "PostsByMarks" || selectedElement == "PostsByMyStatistics"){
+            var dataPlace = $('#dataPlace');
+            var url = "";
+            var lengthZeroError = "";
+
+            if (selectedElement == "PostsByMarks" || selectedElement == "PostsByMyStatistics") {
+                url = "/Search/FindPosts";
+                lengthZeroError = '<h4>There are no posts found</h4>';
+            }
 
                 $.ajax({
                     type: 'POST',
-                    url: "/Search/FindPosts",
+                    url: url,
                     data: { "hashtags": marksCollection,"searchingType": searchingType},
-                    success: function (result) {
-                        alert(result);
+                    success: function (jsonResultresult) {
+                        result = JSON.parse(jsonResultresult);
+
+                        if (result["errorMessage"]) {
+                            dataPlace.html('<h4>' + result["ErrorMessage"] + '</h4>');
+                            return;
+                        }
+                        if (result.length == 0) {
+                            dataPlace.html(lengthZeroError);
+                            return;
+                        }
+
+                        dataPlace.html("");
+                        //dataPlace.append('<h4>'+selectedElement+'</h4>');
+                        for (var i = 0; i < result.length; i++) {
+                            dataPlace.append(common.createPostContainer(result[i]));
+                        }
                     }
                 });
-            }
+            
 
+            
 
         };
 
@@ -105,8 +127,11 @@
 
 
 <style>
-
-
+    #dataPlace {
+        width:inherit;
+      height:auto;
+      position:relative;
+    }
 
     .searchingHashtag {
     background-color:lightgreen;
@@ -118,7 +143,7 @@
     font-family:'Lucida';
     font-size:medium;
     font-style:normal;
-    width:250px;
+    width:290px;
     height:auto;
     color:black;
     margin-left:3px; 

@@ -43,7 +43,7 @@
 
 <script>
 
-    var colorsForCharts = ['lightgreen', 'lightblue', 'lightsalmon', 'orange', 'lightskyblue', 'olive', 'tomato'];
+    var colorsForCharts = ['lightgreen', 'lightblue', 'lightsalmon', 'lightseagreen', 'orange', 'tomato', 'olive'];
     //others will be like gray
 
     //here is functions,that reprepsents another date filters
@@ -90,12 +90,12 @@
                    legend.append('<div class="legend-block" style="background-color:'+mostPopularHashtagsData[i].color+';">'+mostPopularHashtagsData[i].label+'</div>');
                }
 
-               var othersInfoObject = {};
+               /*var othersInfoObject = {};
                othersInfoObject.value = result["PublishedPostsCount"]-anotherHashtagsCount;
                othersInfoObject.label = 'Others';
                othersInfoObject.color = 'gray';
-
-               mostPopularHashtagsData.push(othersInfoObject);
+                //here must be an another code(with correct calculated data)
+               mostPopularHashtagsData.push(othersInfoObject);*/
                var mostPopularHashtagsMarksContext = document.getElementById('mostPopularHashtags').getContext('2d');
                var mostPopularMarksChart = new Chart(mostPopularHashtagsMarksContext).Pie(mostPopularHashtagsData);
                 

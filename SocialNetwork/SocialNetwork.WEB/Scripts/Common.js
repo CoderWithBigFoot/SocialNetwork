@@ -5,6 +5,8 @@
     var allPostsLikes = 0;
     var allPostsLikesId;
 
+    var allReposts = 0;
+    var allRepostsId;
 
     result.setLike = function(postId, publishedPostLikeId) {
         var identityName = 'authorizedProfile';
@@ -19,6 +21,12 @@
             }
         });
     }
+
+    result.repost = function (postId,repostContainerId) {
+        var identityName = 'authorizedProfile';
+        //here ajax to the /Post/Repost
+    }
+
     result.createPostContainer = function (postData) {
         var post = "";
         
