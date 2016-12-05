@@ -67,7 +67,7 @@ namespace SocialNetwork.WEB.Controllers
         }
         
         [HttpPost]
-        public object Publications(int offset,string identityName,string postType,int count=10) {
+        public object Publications(int offset,string identityName,string postType,int count=100) {
             //return JArray.FromObject(new List<string>() { "first", "second", "third" });
             try
             {

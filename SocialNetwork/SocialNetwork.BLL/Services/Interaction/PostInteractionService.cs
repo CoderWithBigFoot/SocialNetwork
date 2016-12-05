@@ -36,10 +36,12 @@ namespace SocialNetwork.BLL.Services.Interaction
             if (post.LikeVoices.Contains(profile)) {
                 post.LikeVoices.Remove(profile);
                 uow.Save();
+                return;
             }
             else/*(!post.LikeVoices.Contains(profile))*/ {
                 post.LikeVoices.Add(profile);
                 uow.Save();
+                return;
             }
 
         }
@@ -47,16 +49,16 @@ namespace SocialNetwork.BLL.Services.Interaction
             SocialNetwork.DAL.EF.Post post = this.GetPost(postId);
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
 
-            if (post.Publisher.IdentityName == identityName) { return; }//here some error message must be added
-
             if (profile.RepostedPosts.Contains(post)) {
                 profile.RepostedPosts.Remove(post);
                 uow.Save();
+                return;
             }
 
             if (!profile.RepostedPosts.Contains(post)) {
                 profile.RepostedPosts.Add(post);
                 uow.Save();
+                return;
             }
         }
         //if there is no such hashtag - add it

@@ -95,7 +95,7 @@
         $.ajax({
             type: 'POST',
             url: '/Post/Publications',
-            data: { "offset": 0, "identityName": identityName, "count": 10, "postType": "publications" },
+            data: { "offset": 0, "identityName": identityName, "count": 100, "postType": "publications" },
 
             success: function (jsonResult) {
                 var publicationsContainer = $('#publicationsContainer');
@@ -114,13 +114,13 @@
                 }
             });
         $.ajax({
-            type: 'post',
+            type: 'POST',
             url: '/Post/Publications',
-            data: { "offset": 0, "identityName": identityName, "count": 10, "postType": "reposts" },
+            data: { "offset": 0, "identityName": identityName, "count": 100, "postType": "reposts" },
             success: function (jsonResult) {
                 var repostsContainer = $('#repostsContainer');
                 var result = JSON.parse(jsonResult);
-
+                //alert(jsonResult);
                 if (result["errorMessage"]) {
                     repostsContainer.empty();
                     repostsContainer.append('<div id="noRepostsErrorMessage" style="text-align:center;"class="common-info-block-text">' + result["errorMessage"] + '</div>');
@@ -128,7 +128,7 @@
                 }
                 else {
                     for (var i = 0; i < result.length; i++) {
-                        publicationsContainer.append(common.createPostContainer(result[i]));
+                        repostsContainer.append(common.createPostContainer(result[i]));
                     }
                 }
             }

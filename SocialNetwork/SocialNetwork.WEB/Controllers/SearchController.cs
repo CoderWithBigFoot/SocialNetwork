@@ -40,7 +40,7 @@ namespace SocialNetwork.WEB.Controllers
                         resultPosts = interaction.SearchingService.PostsByHashtags(
            Mapper.Map<IEnumerable<HashtagDTO>>(hashtags), 0, 100, ControllerContext.HttpContext.User.Identity.Name);break;
 
-                    case "PostsByDefault": resultPosts = interaction.SearchingService.DefaultPostsSearching(0, 100, 3, ControllerContext.HttpContext.User.Identity.Name);break;
+                    case "PostsByDefault": resultPosts = interaction.SearchingService.DefaultPostsSearching(0, 100, 5, ControllerContext.HttpContext.User.Identity.Name);break;
                 }
 
                 
@@ -64,7 +64,7 @@ namespace SocialNetwork.WEB.Controllers
                     Reposts = basicInfo.PostInfoService.GetRepostsCount(currentPost.Id);
                     Likes = basicInfo.PostInfoService.GetLikesCount(currentPost.Id);
 
-                    if (hashtags != null)
+                    if (/*hashtags*/resultHashtags != null)
                     {
                         foreach (var currentHashtag in resultHashtags)
                         {
