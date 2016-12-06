@@ -167,7 +167,9 @@
 
             switch(selectedElement){
                 case "PostsByMarks" : searchingType = "PostsByMarks";break;
-                case "PostsByMyStatistics":searchingType = "PostsByDefault";break;
+                case "PostsByMyStatistics": searchingType = "PostsByDefault"; break;
+                case "ProfilesByMarks": searchingType = "ProfilesByMarks"; break;
+                case "ProfilesByMyStatistics": searchingType = "ProfilesByDefault"; break;
 
             }
 
@@ -195,8 +197,8 @@
                     data: { "hashtags": marksCollection,"searchingType": searchingType},
                     success: function (jsonResult) {
                         result = JSON.parse(jsonResult);
-                        //alert(jsonResult);
-                        if (result["errorMessage"]) {
+                        alert(jsonResult);
+                        /*if (result["errorMessage"]) {
                             dataPlace.html('<h4>' + result["errorMessage"] + '</h4>');
                             return;
                         }
@@ -209,7 +211,7 @@
                         //dataPlace.append('<h4>'+selectedElement+'</h4>');
                         for (var i = 0; i < result.length; i++) {
                             dataPlace.append(handler(result[i]));
-                        }
+                        }*/
                     }
                 });
 

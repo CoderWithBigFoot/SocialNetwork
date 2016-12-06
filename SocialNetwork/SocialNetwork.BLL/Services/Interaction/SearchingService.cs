@@ -9,6 +9,7 @@ using SocialNetwork.DAL.Interfaces;
 using SocialNetwork.BLL.Interfaces.Interaction;
 using SocialNetwork.BLL.Interfaces.Statistics;
 using AutoMapper;
+using SocialNetwork.BLL.Infrastructure.Exceptions;
 namespace SocialNetwork.BLL.Services.Interaction
 {
    public class SearchingService : ISearching
@@ -39,35 +40,37 @@ namespace SocialNetwork.BLL.Services.Interaction
       
         public IEnumerable<ProfileDTO> ProfilesByPopularHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int profilesCount,int hashtagsCount,string currentIdentityName) {
 
-            ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = GetExistingHashtags(hashtags);
+                ICollection<SocialNetwork.DAL.EF.Hashtag> existingHashtags = GetExistingHashtags(hashtags); //0 if there arent
 
-                Mapper.Initialize(cfg => {
-                    cfg.CreateMap<SocialNetwork.DAL.EF.Hashtag, HashtagDTO>() ;
-                    cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>();
-                });
-                
+
                 ICollection<SocialNetwork.DAL.EF.Profile> result = new List<SocialNetwork.DAL.EF.Profile>();
                 IEnumerable<SocialNetwork.DAL.EF.Profile> allProfiles = uow.Profiles.GetAllItems();
 
-                foreach (var currentHashtag in Mapper.Map<ICollection<HashtagDTO>>(existingHashtags)) {
-                    foreach (var currentProfile in allProfiles) {
-                    if (currentProfile == uow.Profiles.FindByIdentityName(currentIdentityName)) {
-                        continue;
-                    }
-                        foreach (var pair in profileStatistics.MostPopularHashtags(currentProfile.IdentityName, hashtagsCount)) {//hashtags count must be replaced on existingHashtags.Count;
-                            if (pair.Key.Name == currentHashtag.Name) { //here maybe error
-                                if (!result.Contains(currentProfile)) {
+                foreach (var currentHashtag in existingHashtags)
+                {
+                    foreach (var currentProfile in allProfiles)
+                    {
+                        if (currentProfile == uow.Profiles.FindByIdentityName(currentIdentityName))
+                        {
+                            continue;
+                        }
+                        foreach (var pair in profileStatistics.MostPopularHashtags(currentProfile.IdentityName, hashtagsCount))
+                        {//hashtags count must be replaced on existingHashtags.Count;
+                            if (pair.Key.Name == currentHashtag.Name)
+                            { //here maybe error
+                                if (!result.Contains(currentProfile))
+                                {
                                     result.Add(currentProfile);
                                 }
                             }
                         }
-                       
+
                     }
                 }
-
-                return Mapper.Map<IEnumerable<ProfileDTO>>(result).Skip(offset).Take(profilesCount);              
-           
-
+            Mapper.Initialize(cfg => cfg.CreateMap<SocialNetwork.DAL.EF.Profile, ProfileDTO>());
+            IEnumerable<ProfileDTO> resultCollection = Mapper.Map<IEnumerable<ProfileDTO>>(result.Skip(offset).Take(profilesCount));
+            return resultCollection;
+                    
         }
         public IEnumerable<PostDTO> PostsByHashtags(IEnumerable<HashtagDTO> hashtags, int offset,int postsCount,string currentIdentityName) {
 
@@ -103,18 +106,24 @@ namespace SocialNetwork.BLL.Services.Interaction
            return this.PostsByHashtags(mostPopularHashtags, offset, postsCount,identityName);
         }
         public IEnumerable<ProfileDTO> DefaultProfilesSearching(int offset, int profilesCount,int popularHashtagsCount, string identityName) {
-            IEnumerable<KeyValuePair<HashtagDTO, int>> mostPopularHashtagsCount = profileStatistics.MostPopularHashtags(identityName, popularHashtagsCount);
-            ICollection<HashtagDTO> mostPopularHashtags = new List<HashtagDTO>();//most popupal hashtags of user
-
-            foreach (var current in mostPopularHashtagsCount)
+            try
             {
-                if (!mostPopularHashtags.Contains(current.Key))
-                {
-                    mostPopularHashtags.Add(current.Key);
-                }
-            }
+                IEnumerable<KeyValuePair<HashtagDTO, int>> mostPopularHashtagsCount = profileStatistics.MostPopularHashtags(identityName, popularHashtagsCount);
+                ICollection<HashtagDTO> mostPopularHashtags = new List<HashtagDTO>();//most popupal hashtags of user
 
-            return this.ProfilesByPopularHashtags(mostPopularHashtags, offset, profilesCount, popularHashtagsCount,identityName);
+                foreach (var current in mostPopularHashtagsCount)
+                {
+                    if (!mostPopularHashtags.Contains(current.Key))
+                    {
+                        mostPopularHashtags.Add(current.Key);
+                    }
+                }
+
+                return this.ProfilesByPopularHashtags(mostPopularHashtags, offset, profilesCount, popularHashtagsCount, identityName);
+            }
+            catch (PublishedPostsNotFoundException) {
+                return new List<ProfileDTO>();
+            }
         }
 
 
