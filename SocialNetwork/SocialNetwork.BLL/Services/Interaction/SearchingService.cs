@@ -55,7 +55,7 @@ namespace SocialNetwork.BLL.Services.Interaction
                         continue;
                     }
                         foreach (var pair in profileStatistics.MostPopularHashtags(currentProfile.IdentityName, hashtagsCount)) {//hashtags count must be replaced on existingHashtags.Count;
-                            if (pair.Key == currentHashtag) {
+                            if (pair.Key.Name == currentHashtag.Name) { //here maybe error
                                 if (!result.Contains(currentProfile)) {
                                     result.Add(currentProfile);
                                 }

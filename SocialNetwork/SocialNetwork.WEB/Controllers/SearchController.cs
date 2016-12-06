@@ -87,6 +87,37 @@ namespace SocialNetwork.WEB.Controllers
             //return JArray.FromObject(hashtags);
         }
 
+        [HttpPost]
+        public object FindProfiles(IEnumerable<string> hashtags, string searchingType) {
+            try
+            {
+                Mapper.Initialize(cfg => cfg.CreateMap<string, HashtagDTO>().ConvertUsing(opt => new HashtagDTO() { Name = opt }));
+                IEnumerable<ProfileDTO> resultProfiles = null;
+
+                switch (searchingType) {
+                    case "ProfilesByMarks":resultProfiles = interaction.SearchingService.ProfilesByPopularHashtags(
+                        Mapper.Map<IEnumerable<HashtagDTO>>(hashtags),0,100,5,ControllerContext.HttpContext.User.Identity.Name);
+                        break;
+
+                    case "ProfilesByMyStatistics":resultProfiles = interaction.SearchingService.DefaultProfilesSearching(0, 100, 5, HttpContext.User.Identity.Name);
+                        break;
+                }
+
+
+                List<ProfileViewModel> result = Mapper.Map<IEnumerable<ProfileViewModel>>(resultProfiles).ToList();
+
+                foreach (var currentProfile in result) {
+                    currentProfile.Followers = basicInfo.ProfileInfoService.GetFollowers(currentProfile.IdentityName);
+                    currentProfile.Subscriptions = basicInfo.ProfileInfoService.GetSubscriptions(currentProfile.IdentityName);
+                }
+
+                return JArray.FromObject(result);
+            }
+            catch (ArgumentNullException) {
+                return JObject.FromObject(new { errorMessage = "Enter the one or more marks" });
+            }
+        }
+
 
     }
 }
