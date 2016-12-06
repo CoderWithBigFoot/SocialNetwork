@@ -1,24 +1,36 @@
-﻿<div class="adaptiveContainer" id="newsPlace">
+﻿
+<div id="publicationsContainer">
     </div>
-<button class="btn btn-default searchButton common-info-block-text"><h5>More posts</h5></button>
+<div class="row">
+    <div class="col-md-10">
+<button class="btn btn-success searchButton common-info-block-text" id="showNextPostsButton" style="display:none;width:100%;color:white;" onclick="showNext()"><h5>More posts</h5></button>
+        </div>
+    </div>
 
 <script>
 
     $(document).ready(function () {
-        getNews(0, 'newsPlace');
-
+        getNews(0, 'publicationsContainer');
+        if ($('#showNextPostsButton').css("display") == "none") {
+            $('#showNextPostsButton').show();
+        }
     });
+
+    function showNext() {
+        var currentElementsCount = $('#publicationsContainer').children().length/2;
+        getNews(currentElementsCount, 'publicationsContainer');
+    }
 
     function getNews(offset, newsPlace) {
         $.ajax({
-            type: 'post',
+            type: 'POST',
             url: '/ProfileInteraction/News',
-            data: { "offset": offset },
+            data: { "offset": offset,"count":6 },
             success: function (jsonResult) {
                 var newsContainer = $('#' + newsPlace);
                 var resultPosts = JSON.parse(jsonResult);
 
-                if (resultPosts.length == 0) { newsContainer.append('More posts not found.'); return; }
+                if (resultPosts.length == 0) { newsContainer.append('<h4 style="text-align:center;">Posts not found.</h4>'); return; }
 
                 for (var i = 0; i < resultPosts.length; i++) {
                     newsContainer.append(common.createPostContainer(resultPosts[i]));

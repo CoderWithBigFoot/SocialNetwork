@@ -28,18 +28,21 @@ namespace SocialNetwork.WEB.Controllers
         public object Subscribe(string targetIdentity) {
             try
             {
-                int subscribers = basicInfo.ProfileInfoService.GetSubscriptions(ControllerContext.HttpContext.User.Identity.Name).Count;
+                int oldSubscriptionsCount = basicInfo.ProfileInfoService.GetSubscriptions(ControllerContext.HttpContext.User.Identity.Name).Count;
+                int newSubscriptionsCount = 0;
                 string result = "";
 
                 interaction.ProfileInteractionService.Subscribe(ControllerContext.HttpContext.User.Identity.Name, targetIdentity);
-                if (subscribers > basicInfo.ProfileInfoService.GetSubscriptions(ControllerContext.HttpContext.User.Identity.Name).Count)
+                newSubscriptionsCount = basicInfo.ProfileInfoService.GetSubscriptions(ControllerContext.HttpContext.User.Identity.Name).Count;
+
+                if (oldSubscriptionsCount < newSubscriptionsCount)
                 {
-                    result = "Successfully unsubscribed";
-                }
-                if(subscribers < basicInfo.ProfileInfoService.GetSubscriptions(ControllerContext.HttpContext.User.Identity.Name).Count) {
                     result = "Successfully subscribed";
                 }
-                return JObject.FromObject(new { completionMessage = result });
+                if(oldSubscriptionsCount == newSubscriptionsCount) { 
+                    result = "Successfully unsubscribed";
+                }
+                return JObject.FromObject(new { completionMessage = result ,newCount = newSubscriptionsCount });
             }
             catch (ProfileNotFoundException) {
                 return JObject.FromObject(new { completionMessage = "Such profile dont exist." });
@@ -47,7 +50,7 @@ namespace SocialNetwork.WEB.Controllers
         }
 
         [HttpPost]
-        public JArray News(int offset, int count = 10)
+        public JArray News(int offset, int count)
         { //here is shet
             ICollection<ProfileDTO> subscriptions = basicInfo.ProfileInfoService.GetSubscriptions(HttpContext.User.Identity.Name);
             ICollection<PostDTO> allPosts = new List<PostDTO>();
@@ -98,7 +101,10 @@ namespace SocialNetwork.WEB.Controllers
             }
             return JArray.FromObject(result);
         }
-
+        [HttpGet]
+        public PartialViewResult NewsPartial() {
+            return PartialView("../Partials/News");
+        }
 
 
     }

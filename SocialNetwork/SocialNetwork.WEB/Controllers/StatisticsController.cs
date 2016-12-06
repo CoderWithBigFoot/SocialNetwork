@@ -37,6 +37,7 @@ namespace SocialNetwork.WEB.Controllers
             StatisticsViewModel model = new StatisticsViewModel();
 
             model.PublishedPostsCount = statistics.GetProfileStatisticsService.PublishedPostsCount(identityName);
+
             foreach (var current in statistics.GetProfileStatisticsService.EachHashtagCount(identityName))
             {
                 model.EachHashtagCount.Add(new KeyValuePair<string, int>(current.Key.Name, current.Value));

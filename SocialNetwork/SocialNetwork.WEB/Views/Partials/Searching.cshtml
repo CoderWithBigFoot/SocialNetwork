@@ -48,43 +48,7 @@
     </div>
 </div>
 
-    <div class="common-info-block common-info-block-text" data-toggle="collapse" data-target="#dataBlockFirstId">
-        <h4 class="h4LowMarginBottom">Zheka korsakas (korsakasPrgmail.com)</h4>
-        <h3 style="color:green;">Subscibed</h3>
-        </div>
-<div class="common-info-block common-info-block-text">
-        <div class="adaptiveContainer  collapse"  id="dataBlockFirstId" style="width:100%;"> <!--this div must be deleted when new statisics is rendered-->
-            <hr class="lowHrMargine"/>
-            <h4>Date of birth : 1235-2-2</h4>
-            <h4>Followers : 12</h4>
-            <h4>Subscriptions : 12</h4>
-            <hr class="lowHrMargine"/>
 
-            <h4>Status</h4>
-            <h4>Some status hereSome</h4>
-
-            <hr class="lowHrMargine"/>
-           
-            <div class="row">
-                <div class="col-md-4">
-                    <button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal" onclick="testShowStatistics()"><h5>Show statistics</h5></button>
-                </div>
-
-                <div class="col-md-4">
-                    <button class="btn btn-default searchButton common-info-block-text"><h5>Show publications</h5></button>
-                </div>
-            
-                <div class="col-md-4">
-                    <button class="btn btn-success searchButton common-info-block-text" style="color:white;"><h5>Subscribe</h5></button>
-                </div>  
-         </div>
-
-
-    </div>
-<br>   
-
-    <div class="dataBlock" id="publicationsContainer1"> 
-    </div>
     <br>
 
 
@@ -118,6 +82,7 @@
                 data: { "targetIdentity": identityName },
                 success: function (jsonResult) {
                     var result = JSON.parse(jsonResult);
+                    alert(jsonResult);
                     $('#' + signinResultContainerId).html(result["completionMessage"]);
                     if ($('#' + signinResultContainerId).css("display") == "none") {
                         $('#' + signinResultContainerId).show();
@@ -165,7 +130,7 @@
            container += '<div class="adaptiveContainer  collapse"  id="'+profileBlockInfoId+'" style="width:100%;">';
 
              container += '<hr class="lowHrMargine"/>';
-             container += '<h4>Date of birth : ' + profileData["DateOfBirth"] + '</h4>';
+             //container += '<h4>Date of birth : ' + profileData["DateOfBirth"] + '</h4>';
              container += '<h4>Followers : ' + profileData["Followers"].length + '</h4>';
              container += '<h4>Subscriptions : '+profileData["Subscriptions"].length+'</h4>';
              container += '<hr class="lowHrMargine"/>';
@@ -192,10 +157,7 @@
              container += '<button class="btn btn-success searchButton common-info-block-text" style="color:white;" onclick="searching.subscribe('+"'"+profileData["IdentityName"]+"'"+','+"'"+signinResultId+"'"+')">';
              container += '<h5>Subscribe</h5>';
              container += '</button>';
-             container += '</div>';
-
-            container += '</div>';
-            container += '</div>';
+             container += '</div></div></div></div><br>';
 
             container += '<div class="adaptiveContainer" id="' + profilePublicationsContainerId + '">';
             container += '</div>';

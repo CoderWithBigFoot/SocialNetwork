@@ -93,7 +93,16 @@
             }
         });
     };
-   
+    result.news = function () {
+        $.ajax({
+            type: 'get',
+            url: "/ProfileInteraction/NewsPartial",
+            success: function (partialViewResult) {
+                $('#partialsPlace').html(partialViewResult);
+            }
+        });
+    }
+
     result.testPartial = function (identityName, partialsPlace) {
         $.ajax({
             type: "POST",
