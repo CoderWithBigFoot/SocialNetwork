@@ -1,4 +1,4 @@
-﻿
+﻿<script src="~/Scripts/Common.js"></script>
 <div class="dataBlock">
     <div class="row">
 
@@ -24,15 +24,33 @@
     <br><br>
 </div>
 
-    <div id="dataPlace">
+    <div id="dataPlace" class="dataBlock">
     </div>
-
     <br>
+
+
+<div id="statisticsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:40%;">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Statistics</h4>
+            </div>
+            <div class="modal-body" id="modalStatisticsBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
     <div class="common-info-block common-info-block-text" data-toggle="collapse" data-target="#dataBlockFirstId">
         <h4 class="h4LowMarginBottom">Zheka korsakas (korsakasPrgmail.com)</h4>
         </div>
-
 <div class="common-info-block common-info-block-text">
         <div class="adaptiveContainer  collapse"  id="dataBlockFirstId" style="width:100%;"> <!--this div must be deleted when new statisics is rendered-->
             <hr class="lowHrMargine"/>
@@ -48,22 +66,39 @@
             
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
+                    <button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal" onclick="testShowStatistics()"><h5>Show statistics</h5></button>
+                </div>
+            </div>
+            <hr class="lowHrMargine" />
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
                     <button class="btn btn-default searchButton common-info-block-text"><h5>Show publications</h5></button>
                 </div>
             </div>
 
          </div>
     </div>
-<br>
-    <div class="adaptiveContainer" id="publicationsContainer1"> 
+<br>   
+
+    <div class="dataBlock" id="publicationsContainer1"> 
     </div>
-
-
-
     <br>
 
 
+
+
+
 <script>
+    function testShowStatistics() {
+       
+        common.statistics('authorizedProfile', 'modalStatisticsBody');
+        //alert("test show statistics");
+    }
+   
+    $(document).ready(function () {
+        //common.statistics('authorizedProfile', 'statisticsPlace');
+    });
+
     var searching = function () {
         var totalMarksCount = 0;
         var result = {};
@@ -72,30 +107,42 @@
         var profileBlockInfoId = 'profileBlockInfo' + profileBlockInfo;
         var profilePublicationsContainerId = 'profilePublicationsContainer' + profileBlockInfo;
 
-        function getPublications(identityName, publicationsPlaceId) {
-            
+        
+        result.getProfileStatistics = function (identityName) {
+            common.statistics(identityName, 'modalStatisticsBody');  
+        }
+        result.getPublications = function (identityName, publicationsPlaceId) {
+            if ($('#' + publicationsPlaceId).html() != "") {
+                $('#' + publicationsPlaceId).slideToggle("500");
+                return;
+            }
+
             $.ajax({
                 type: 'POST',
                 url: '/Post/Publications',
-                data: { "identityName": identityName, "postType": "publications" },
+                data: { "identityName": identityName, "postType": "publications","offset":0 },
                 success: function (jsonResult) {
                     var result = JSON.parse(jsonResult);
                     var publicationsPlace = $('#' + publicationsPlaceId);
                     publicationsPlace.html("");
                     for (var i = 0; i < result.length; i++) {
-                        publicationsPlace.append(common.createPostContainer(result));
+                        publicationsPlace.append(common.createPostContainer(result[i]));
                     }
                 }
             });
         }
 
         function createProfileContainer(profileData) {
+
             var container = "";
-            container += '<div class="common-info-block common-info-block-text" data-toggle="collapse" data-target="' + profileBlockInfoId + '">';
+            container += '<div class="row">';
+            container += '<div class="col-md-12">';
+
+            container += '<div class="common-info-block common-info-block-text" style="width:100%;" data-toggle="collapse" data-target="' + '#' + profileBlockInfoId + '">';
             container += '<h4 class="h4LowMarginBottom">'+profileData["Name"]+" "+profileData["Sername"]+" ("+profileData["IdentityName"]+')</h4>'
             container += '</div>';
 
-           container += '<div class="common-info-block common-info-block-text">';
+           container += '<div class="common-info-block common-info-block-text" style="width:100%;">';
            container += '<div class="adaptiveContainer  collapse"  id="' + profileBlockInfoId + '" style="width:100%;">';
 
              container += '<hr class="lowHrMargine"/>';
@@ -104,13 +151,22 @@
              container += '<h4>Subscriptions : '+profileData["Subscriptions"].length+'</h4>';
              container += '<hr class="lowHrMargine"/>';
              container += '<h4>Status</h4>';
-             container += '<h4>'+profileData["CustomInfo"]+'</h4>';
-             container += '<hr class="lowHrMargine"/>';
+             container += '<h4>' + profileData["CustomInfo"] + '</h4>';
 
+             container += '<hr class="lowHrMargine"/>';
              container += '<div class="row">';
              container += '<div class="col-md-10 col-md-offset-1">';
-             container += '<button class="btn btn-default searchButton common-info-block-text" onclick="getPublications('+profileData["IdentityName"]+','+profilePublicationsContainerId+')">';
-             container += '<h5>Show publications</h5>';
+             container += '<button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal" onclick="searching.getProfileStatistics(' + "'" + profileData["IdentityName"] + "'" + ')">';
+             container += '<h5>Statistics</h5>';
+             container += '</button>';
+             container += '</div></div>';
+          
+
+             container += '<hr class="lowHrMargine"/>';
+             container += '<div class="row">';
+             container += '<div class="col-md-10 col-md-offset-1">';
+             container += '<button class="btn btn-default searchButton common-info-block-text" onclick="searching.getPublications('+"'"+profileData["IdentityName"]+"'"+','+"'"+profilePublicationsContainerId+"'"+')">';
+             container += '<h5>Publications</h5>';
              container += '</button>';
              container += '</div></div>';
 
@@ -119,7 +175,8 @@
             container += '<br>';
             container += '<div class="adaptiveContainer" id="' + profilePublicationsContainerId + '">';
             container += '</div>';
-
+            container += '</div>';
+            container += '</div>';
             profileBlockInfo++;
             return container;
         }
@@ -146,7 +203,7 @@
         };
 
         result.showSelection = function () {
-            alert($('#filter option:selected').val());
+            //alert($('#filter option:selected').val());
 
             var arr = [];
 
@@ -197,8 +254,8 @@
                     data: { "hashtags": marksCollection,"searchingType": searchingType},
                     success: function (jsonResult) {
                         result = JSON.parse(jsonResult);
-                        alert(jsonResult);
-                        /*if (result["errorMessage"]) {
+                        //alert(jsonResult);
+                        if (result["errorMessage"]) {
                             dataPlace.html('<h4>' + result["errorMessage"] + '</h4>');
                             return;
                         }
@@ -211,7 +268,7 @@
                         //dataPlace.append('<h4>'+selectedElement+'</h4>');
                         for (var i = 0; i < result.length; i++) {
                             dataPlace.append(handler(result[i]));
-                        }*/
+                        }
                     }
                 });
 
@@ -228,6 +285,11 @@
 
 
 <style>
+     canvas {
+        width:200px;
+        height:200px;
+    }
+
     .h4LowMarginBottom {
         margin-bottom:1px;
     }
@@ -242,11 +304,6 @@
         margin-bottom:2px;
     }
 
-    #dataPlace {
-        width:inherit;
-      height:auto;
-      position:relative;
-    }
 
     .searchingHashtag {
     background-color:lightblue;

@@ -3,29 +3,19 @@
 <link href="~/Content/Homepage.css" rel="stylesheet" />
 <div class="common-info-block common-info-block-text">
     <div class="row">
-        <div class="col-md-3 col-md-offset-3">Name: </div>
-        <div class="col-md-6">@Model.Name</div>
-
-        <div class="col-md-3 col-md-offset-3">Sername: </div>
-        <div class="col-md-6">@Model.Sername</div>
-
-        <div class="col-md-3 col-md-offset-3">Identity name: </div>
-        <div class="col-md-6">@Model.IdentityName</div>
-
-        <div class="col-md-3 col-md-offset-3">Profile id: </div>
-        <div class="col-md-6">@Model.Id</div>
-
-        <div class="col-md-3 col-md-offset-3">Date of birth: </div>
-        <div class="col-md-6">@Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</div>
-
-        <div class="col-md-3 col-md-offset-3">Status: </div>
-        <div class="col-md-6">@Model.CustomInfo</div>
-    </div>
-    <hr />
-
-    <div class="row">
-        <div class="col-md-3 col-md-offset-3"><span class="glyphicon glyphicon-user"></span> Followers <br>@Model.Followers.Count()</div>
-        <div class="col-md-3"><span class="glyphicon glyphicon-user"></span> Subscriptions<br>@Model.Subscriptions.Count()</div>
+        <div class="col-md-7" style="border-right:1px solid black;">
+        <h3 style="text-align:center;">@Model.Name @Model.Sername</h3>
+            <hr/>
+        <h4>@Model.IdentityName</h4>
+        <h4>Profile id: @Model.Id</h4> 
+        <h4>Date of birth: @Model.DateOfBirth.Day / @Model.DateOfBirth.Month / @Model.DateOfBirth.Year</h4>
+        <h4>Status</h4>
+        <h4>@Model.CustomInfo</h4>
+            </div>
+        <div class="col-md-5" style="margin-top:3%;">
+            <h3><span class="glyphicon glyphicon-user"></span> Followers @Model.Followers.Count()</h3>
+            <h3><span class="glyphicon glyphicon-user"></span> Subscriptions @Model.Subscriptions.Count()</h3>
+            </div>
     </div>
 </div>
 

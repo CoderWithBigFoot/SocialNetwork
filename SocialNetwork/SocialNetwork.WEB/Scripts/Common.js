@@ -72,13 +72,13 @@
             }
         });
     };
-    result.statistics = function (identityName) {
+    result.statistics = function (identityName,partialsPlace) {
         $.ajax({
             type: "POST",
-            url: "/Statistics/StatisticsPartial", //here is error(incorrect partials path,becouse this function called from CommonController)
+            url: "/Statistics/StatisticsPartial", 
             data:{"identityName":identityName},
             success: function (partialViewResult) {
-                $('#partialsPlace').html(partialViewResult);
+                $('#' + partialsPlace).html(partialViewResult);
             }
         });
     };
@@ -92,6 +92,17 @@
         });
     };
    
+    result.testPartial = function (identityName, partialsPlace) {
+        $.ajax({
+            type: "POST",
+            url: "/Statistics/SomeTestPartial",
+            data: { "name": "some name here" },
+            success: function (partialViewResult) {
+                $('#' + partialsPlace).html(partialViewResult);
+                alert("data recieved");
+            }
+        });
+    };
 
 
     return result;

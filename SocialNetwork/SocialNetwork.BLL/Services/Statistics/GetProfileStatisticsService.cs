@@ -56,7 +56,7 @@ namespace SocialNetwork.BLL.Services.Statistics
         {
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
             Dictionary<SocialNetwork.DAL.EF.Hashtag, int> result = new Dictionary<SocialNetwork.DAL.EF.Hashtag, int>();
-            if (profile.PublishedPosts.Count == 0) { throw new PublishedPostsNotFoundException("Profile has no published posts"); }
+            if (profile.PublishedPosts.Count == 0) { return new List<KeyValuePair<HashtagDTO, int>>(); }/*throw new PublishedPostsNotFoundException("Profile has no published posts"); */
 
             foreach (var currentPost in profile.PublishedPosts) {
                     foreach (var currentHashtag in currentPost.Hashtags) {

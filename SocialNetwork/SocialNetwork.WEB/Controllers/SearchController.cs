@@ -103,17 +103,16 @@ namespace SocialNetwork.WEB.Controllers
                         break;
                 }
                 
-                var test = 0;
-               // Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
-
-                /*List<ProfileViewModel> result = Mapper.Map<IEnumerable<ProfileViewModel>>(resultProfiles).ToList();
+                
+                Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
+                List<ProfileViewModel> result = Mapper.Map<IEnumerable<ProfileViewModel>>(resultProfiles).ToList();
 
                 foreach (var currentProfile in result) {
                     currentProfile.Followers = basicInfo.ProfileInfoService.GetFollowers(currentProfile.IdentityName);
                     currentProfile.Subscriptions = basicInfo.ProfileInfoService.GetSubscriptions(currentProfile.IdentityName);
                 }
-                */
-                return JArray.FromObject(resultProfiles);
+                
+                return JArray.FromObject(result);
             }
             catch (ArgumentNullException) {
                 return JObject.FromObject(new { errorMessage = "Enter the one or more marks" });

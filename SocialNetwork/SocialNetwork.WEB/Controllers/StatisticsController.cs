@@ -53,6 +53,9 @@ namespace SocialNetwork.WEB.Controllers
             return JObject.FromObject(model);
         }
 
-
+        [HttpPost]
+        public PartialViewResult SomeTestPartial(string name) {
+            return PartialView("../Partials/TestPartial",name);
+        }
     }
 }

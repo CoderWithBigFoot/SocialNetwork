@@ -313,6 +313,7 @@
     <Content Include="Views\Partials\Statistics.cshtml" />
     <Content Include="Views\Statistics\View.cshtml" />
     <Content Include="Views\Partials\Searching.cshtml" />
+    <Content Include="Views\Partials\TestPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -128,7 +128,7 @@ namespace SocialNetwork.WEB.Controllers
             }
             catch (PublishedPostsNotFoundException ex)
             {
-                return JObject.FromObject(new { errorMessage = ex.Message });
+                return JObject.FromObject(new { errorMessage = ex.Message }); //here changes are needed
             }
             catch (RepostsNotFoundException ex) {
                 return JObject.FromObject(new { errorMessage = ex.Message });
