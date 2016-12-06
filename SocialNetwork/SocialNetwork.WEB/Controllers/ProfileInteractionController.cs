@@ -36,8 +36,8 @@ namespace SocialNetwork.WEB.Controllers
                 {
                     result = "Successfully unsubscribed";
                 }
-                else {
-                    result = "Successfully subscibed";
+                if(subscribers < basicInfo.ProfileInfoService.GetSubscriptions(ControllerContext.HttpContext.User.Identity.Name).Count) {
+                    result = "Successfully subscribed";
                 }
                 return JObject.FromObject(new { completionMessage = result });
             }
@@ -46,7 +46,59 @@ namespace SocialNetwork.WEB.Controllers
             }
         }
 
-       
+        [HttpPost]
+        public JArray News(int offset, int count = 10)
+        { //here is shet
+            ICollection<ProfileDTO> subscriptions = basicInfo.ProfileInfoService.GetSubscriptions(HttpContext.User.Identity.Name);
+            ICollection<PostDTO> allPosts = new List<PostDTO>();
+            IEnumerable<PostDTO> postsToDisplay = null;
+
+            foreach (var current in subscriptions)
+            {
+                foreach (var post in interaction.ProfileInteractionService.GetPublications(current.IdentityName, 0, 100))
+                {
+                    allPosts.Add(post);
+                }
+            }
+
+            postsToDisplay = allPosts.OrderByDescending(x => x.PublishDate).Skip(offset).Take(count);
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<PostDTO, PostViewModel>().ForMember("PublisherId", opt => opt.MapFrom(x => x.ProfileId));
+                cfg.CreateMap<HashtagDTO, HashtagViewModel>();
+            });
+
+            List<PostViewModel> result = Mapper.Map<IEnumerable<PostViewModel>>(postsToDisplay).ToList();
+
+            ProfileDTO publisher;
+            IEnumerable<HashtagDTO> hashtags;
+            int Reposts = 0;
+            int Likes = 0;
+
+            foreach (var currentPost in result)
+            {
+                publisher = basicInfo.ProfileInfoService.GetProfile(currentPost.PublisherId);
+                hashtags = basicInfo.PostInfoService.GetHashtagCollection(currentPost.Id);
+                Reposts = basicInfo.PostInfoService.GetRepostsCount(currentPost.Id);
+                Likes = basicInfo.PostInfoService.GetLikesCount(currentPost.Id);
+
+                if (hashtags != null)
+                {
+                    foreach (var currentHashtag in hashtags)
+                    {
+                        currentPost.Hashtags.Add(currentHashtag.Name);
+                    }
+                }
+                currentPost.Reposts = Reposts;
+                currentPost.Likes = Likes;
+                currentPost.PublisherIdentityName = publisher.IdentityName;
+                currentPost.PublisherName = publisher.Name;
+                currentPost.PublisherSername = publisher.Sername;
+            }
+            return JArray.FromObject(result);
+        }
+
 
 
     }
