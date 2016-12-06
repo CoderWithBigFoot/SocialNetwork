@@ -24,8 +24,7 @@
             </div>
         </div>
         <hr />
-
-        
+     
         <div class="row" id="mostPopularMarksFrequenciesContainer">
             <h4>Most popular marks frequency (per week average)</h4>
             <div class="col-md-offset-2 col-md-8">
@@ -88,10 +87,10 @@
                    legend.append('<div class="legend-block" style="background-color:'+mostPopularHashtagsData[i].color+';">'+mostPopularHashtagsData[i].label+'</div>');
                }
 
-              
+              /*
                var mostPopularHashtagsMarksContext = document.getElementById('mostPopularHashtags').getContext('2d');
                var mostPopularMarksChart = new Chart(mostPopularHashtagsMarksContext).Pie(mostPopularHashtagsData);
-                
+                */
 
                 ////freq barchart
                var mostPopularHashtagsFrequenciesData = {
@@ -110,6 +109,8 @@
                }
                mostPopularHashtagsFrequenciesData.datasets.push(obj);
               
+               var mostPopularHashtagsMarksContext = document.getElementById('mostPopularHashtags').getContext('2d');
+               var mostPopularMarksChart = new Chart(mostPopularHashtagsMarksContext).Pie(mostPopularHashtagsData);
                var mostPopularHashtagsFrequnciesContext = document.getElementById('mostPopularHashtagsFrequncies').getContext('2d');
                var newmostPopularHashtagsFrequnciesChart = new Chart(mostPopularHashtagsFrequnciesContext).Bar(mostPopularHashtagsFrequenciesData);
                mostPopularHashtagsFrequenciesData = {};
