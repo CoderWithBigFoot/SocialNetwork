@@ -3,7 +3,7 @@
 <link href="~/Content/Homepage.css" rel="stylesheet" />
 <div class="common-info-block common-info-block-text">
     <div class="row">
-        <div class="col-md-7" style="border-right:1px solid black;">
+        <div class="col-md-7" style="border-right:1px solid lightgray;">
         <h3 style="text-align:center;">@Model.Name @Model.Sername</h3>
             <hr/>
         <h4>@Model.IdentityName</h4>
@@ -13,8 +13,8 @@
         <h4>@Model.CustomInfo</h4>
             </div>
         <div class="col-md-5" style="margin-top:3%;">
-            <h3><span class="glyphicon glyphicon-user"></span> Followers @Model.Followers.Count()</h3>
-            <h3><span class="glyphicon glyphicon-user"></span> Subscriptions @Model.Subscriptions.Count()</h3>
+            <h3 style="text-align:center;"><span class="glyphicon glyphicon-user"></span> Followers @Model.Followers.Count()</h3>
+            <h3 style="text-align:center;"><span class="glyphicon glyphicon-user"></span> Subscriptions @Model.Subscriptions.Count()</h3>
             </div>
     </div>
 </div>

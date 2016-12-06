@@ -9,7 +9,6 @@ namespace SocialNetwork.BLL.Interfaces.Interaction
    public interface IProfileInteraction : IDisposable
     {
         void Subscribe(string callerIdentityName,string targetIdentityName); 
-        void RemoveSubscription(string callerIdentityName, string targetIdentityName);
         void RemoveFollower(string callerIdentityName, string targetIdentityName);
 
         IEnumerable<PostDTO> GetPublications(string identityName,int offset,int count);

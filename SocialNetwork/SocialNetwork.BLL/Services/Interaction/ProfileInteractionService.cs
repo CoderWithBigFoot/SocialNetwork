@@ -30,12 +30,17 @@ namespace SocialNetwork.BLL.Services.Interaction
             SocialNetwork.DAL.EF.Profile target = this.GetProfile(targetIdentityName);
 
             if (caller.SubscribedOn.Contains(target)) {
-                throw new InvalidSubscriptionException("This user is already exist in your subscriptions");
+                caller.SubscribedOn.Remove(target);
+                uow.Save();
+                return;
             }
-            caller.SubscribedOn.Add(target);
-            uow.Save();
+            if (!caller.SubscribedOn.Contains(target)) {
+                caller.SubscribedOn.Add(target);
+                uow.Save();
+                return;
+            }
         }
-        public void RemoveSubscription(string callerIdentityName,string targetIdentityName) {
+        /*public void RemoveSubscription(string callerIdentityName,string targetIdentityName) {
             SocialNetwork.DAL.EF.Profile caller = this.GetProfile(callerIdentityName);
             SocialNetwork.DAL.EF.Profile target = this.GetProfile(targetIdentityName);
 
@@ -43,7 +48,7 @@ namespace SocialNetwork.BLL.Services.Interaction
 
             caller.SubscribedOn.Remove(target);
             uow.Save();
-        }
+        }*/
         public void RemoveFollower(string callerIdentityName, string targetIdentityName) {
             SocialNetwork.DAL.EF.Profile caller = this.GetProfile(callerIdentityName);
             SocialNetwork.DAL.EF.Profile target = this.GetProfile(targetIdentityName);
