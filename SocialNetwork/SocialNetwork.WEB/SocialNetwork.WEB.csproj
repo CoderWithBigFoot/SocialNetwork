@@ -315,6 +315,7 @@
     <Content Include="Views\Statistics\View.cshtml" />
     <Content Include="Views\Partials\Searching.cshtml" />
     <Content Include="Views\Partials\TestPartial.cshtml" />
+    <Content Include="Views\Partials\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

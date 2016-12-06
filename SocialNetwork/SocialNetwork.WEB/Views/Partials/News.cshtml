@@ -1,0 +1,30 @@
+﻿<div class="adaptiveContainer" id="newsPlace">
+    </div>
+<button class="btn btn-default searchButton common-info-block-text"><h5>More posts</h5></button>
+
+<script>
+
+    $(document).ready(function () {
+        getNews(0, 'newsPlace');
+
+    });
+
+    function getNews(offset, newsPlace) {
+        $.ajax({
+            type: 'post',
+            url: '/ProfileInteraction/News',
+            data: { "offset": offset },
+            success: function (jsonResult) {
+                var newsContainer = $('#' + newsPlace);
+                var resultPosts = JSON.parse(jsonResult);
+
+                if (resultPosts.length == 0) { newsContainer.append('More posts not found.'); return; }
+
+                for (var i = 0; i < resultPosts.length; i++) {
+                    newsContainer.append(common.createPostContainer(resultPosts[i]));
+                }
+            }
+        });
+    }
+
+    </script>
