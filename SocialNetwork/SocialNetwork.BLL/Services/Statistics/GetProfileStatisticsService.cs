@@ -80,7 +80,7 @@ namespace SocialNetwork.BLL.Services.Statistics
                 ICollection<KeyValuePair<HashtagDTO, int>> eachHashtagCount = this.EachHashtagCount(identityName);
                 return eachHashtagCount.OrderByDescending(x => x.Value).Take(count);    
         }      
-        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count=5,TimeInterval interval=TimeInterval.Week)
+        public Dictionary<HashtagDTO, double> MostPopularHashtagsFrequency(string identityName, int count=5,TimeInterval interval=TimeInterval.Day)
         {
             SocialNetwork.DAL.EF.Profile profile = this.GetProfile(identityName);
                 int period = 0;
@@ -100,7 +100,7 @@ namespace SocialNetwork.BLL.Services.Statistics
 
                 foreach (var popularHashtagCount in mostPopularHashtags) {
                     if (!result.ContainsKey(popularHashtagCount.Key)) {
-                   // if (totalDays == 0) { totalDays = 1; }
+                    if (totalDays == 0) { totalDays = 1; }
                          frequency = popularHashtagCount.Value/((totalDays)/period); 
                          result.Add(popularHashtagCount.Key, frequency);
                          frequency = 0; 

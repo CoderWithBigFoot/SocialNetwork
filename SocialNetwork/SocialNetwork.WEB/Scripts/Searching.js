@@ -84,7 +84,7 @@
 
         //onclick="searching.getProfileStatistics(' + "'" + profileData["IdentityName"] + "'" + ')"
         container += '<div class="col-md-4">';
-        container += '<button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal">';
+        container += '<button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal"  onclick="searching.getProfileStatistics(' + "'" + profileData["IdentityName"] + "'" + ')">';
         container += '<h5>Statistics</h5>';
         container += '</button>';
         container += '</div>';
@@ -105,7 +105,7 @@
         container += '</div>';
         container += '</div>';
         container += '</div>';
-        container += '<br>';
+       
 
         profileBlockInfo++;
         return container;

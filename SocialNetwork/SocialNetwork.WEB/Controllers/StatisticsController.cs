@@ -46,7 +46,7 @@ namespace SocialNetwork.WEB.Controllers
                 model.MostPopularHashtags.Add(new KeyValuePair<string, int>(current.Key.Name, current.Value));
             }
 
-            foreach (var current in statistics.GetProfileStatisticsService.MostPopularHashtagsFrequency(identityName)) {
+            foreach (var current in statistics.GetProfileStatisticsService.MostPopularHashtagsFrequency(identityName,interval:TimeInterval.Day)) {
                 model.MostPopularHashtagsFrequencies.Add(new KeyValuePair<string, double>(current.Key.Name, current.Value));
             }
             return JObject.FromObject(model);
