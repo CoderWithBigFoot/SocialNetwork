@@ -21,8 +21,7 @@
         });
     }
 
-    
-
+   
     result.repost = function (postId,repostContainerId) {
        
         $.ajax({
@@ -110,7 +109,7 @@
             data: { "name": "some name here" },
             success: function (partialViewResult) {
                 $('#' + partialsPlace).html(partialViewResult);
-                alert("data recieved");
+               // alert("data recieved");
             }
         });
     };

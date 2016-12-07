@@ -2,10 +2,10 @@
     var totalMarksCount = 0;
     var result = {};
 
-    var profileBlockInfo = 0;
-    var profileBlockInfoId = 'profileBlockInfo' + profileBlockInfo;
-    var profilePublicationsContainerId = 'profilePublicationsContainer' + profileBlockInfo;
-    var signinResultId = 'signinResult' + profileBlockInfoId;
+     var profileBlockInfo = 0;
+     var profileBlockInfoId;
+     var profilePublicationsContainerId;
+     var signinResultId;
 
     result.subscribe = function (identityName, signinResultContainerId) {
         $.ajax({
@@ -15,10 +15,10 @@
             success: function (jsonResult) {
                 var result = JSON.parse(jsonResult);
                 //alert(jsonResult);
-                $('#' + signinResultContainerId).html(result["completionMessage"]);
+                /*$('#' + signinResultContainerId).html(result["completionMessage"]);
                 if ($('#' + signinResultContainerId).css("display") == "none") {
                     $('#' + signinResultContainerId).show();
-                }
+                }*/
             }
         });
     }
@@ -47,17 +47,21 @@
         });
     }
 
-    result.getCanvas = function() {
+    result.getCanvasSize = function() {
         alert($('#mostPopularHashtags').size());
     }
 
-    function createProfileContainer(profileData) {
+     result.createProfileContainer = function(profileData) {
+         
+         profileBlockInfoId = 'profileBlockInfo' + profileBlockInfo;
+         profilePublicationsContainerId = 'profilePublicationsContainer' + profileBlockInfo;
+         signinResultId = 'signinResult' + profileBlockInfoId;
 
         var container = "";
         container += '<div class="row">';
         container += '<div class="col-md-12">';
 
-        container += '<div class="common-info-block common-info-block-text" style="width:100%;" data-toggle="collapse" data-target="' + '#' + profileBlockInfoId + '" onclick="searching.getProfileStatistics(' + "'" + profileData["IdentityName"] + "'" + ')">';
+        container += '<div class="common-info-block common-info-block-text" style="width:100%;" data-toggle="collapse" data-target="' + '#' + profileBlockInfoId + '")">';
         container += '<h4 class="h4LowMarginBottom">' + profileData["Name"] + " " + profileData["Sername"] + " (" + profileData["IdentityName"] + ')</h4>';
         container += '<h3 style="display:none;color:green;" id="' + signinResultId + '"></h3>';
         container += '</div>';
@@ -80,7 +84,7 @@
 
         //onclick="searching.getProfileStatistics(' + "'" + profileData["IdentityName"] + "'" + ')"
         container += '<div class="col-md-4">';
-        container += '<button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal" onclick="'+searching.getCanvas()+'" >';
+        container += '<button class="btn btn-default searchButton common-info-block-text" data-toggle="modal" data-target="#statisticsModal">';
         container += '<h5>Statistics</h5>';
         container += '</button>';
         container += '</div>';
@@ -101,8 +105,9 @@
         container += '</div>';
         container += '</div>';
         container += '</div>';
-        profileBlockInfo++;
+        container += '<br>';
 
+        profileBlockInfo++;
         return container;
     }
 
@@ -127,17 +132,6 @@
         totalMarksCount++;
     };
 
-    result.showSelection = function () {
-        //alert($('#filter option:selected').val());
-
-        var arr = [];
-
-        $('input[name="mark"]').each(function () {
-            arr.push($(this).val());
-        });
-
-
-    };
 
     result.findContent = function () {
         var marksCollection = [];
@@ -169,7 +163,7 @@
         if (selectedElement == "ProfilesByMarks" || selectedElement == "ProfilesByMyStatistics") {
             url = "/Search/FindProfiles";
             lengthZeroError = '<h4>There are no profiles found</h4>';
-            handler = createProfileContainer;
+            handler = searching.createProfileContainer;
         }
 
 
@@ -179,7 +173,6 @@
             data: { "hashtags": marksCollection, "searchingType": searchingType },
             success: function (jsonResult) {
                 result = JSON.parse(jsonResult);
-                //alert(jsonResult);
                 if (result["errorMessage"]) {
                     dataPlace.html('<h4>' + result["errorMessage"] + '</h4>');
                     return;
